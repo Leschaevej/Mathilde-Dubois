@@ -1,4 +1,10 @@
 header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 10;
+    background-color: var(--backgroundColor);
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -6,12 +12,11 @@ header {
     box-shadow: 0 5px 5px rgba(0, 0, 0, 0.1);
     .brand{
         display: flex;
-    align-items: center;
-
+        align-items: center;
         .logo {
             font-family: var(--font-ephesis);
             font-size: 96px;
-            padding-right: 30px;
+            padding-right: 45px;
         }
         .name {
             position: absolute;
