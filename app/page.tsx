@@ -43,6 +43,9 @@ export default function Home() {
                     </div>
                 </div>
             </section>
+            <div className='tagline'>
+                <p className='quote'>"À vos côtés pour donner vie à vos projets, avec clarté, bienveillance et efficacité."</p>
+            </div>
             <section className="services">
                 <div className="content">
                     <h2>
@@ -98,10 +101,22 @@ export default function Home() {
             </section>
             <section className="about">
                 <div className="content">
-                    <h2>
-                        <span className="main">Qui</span><br/>
-                        <span className="sub">suis-je</span>
-                    </h2>
+                    <div className='left'>
+                        <h2>
+                            <span className="main">Qui</span><br/>
+                            <span className="sub">suis-je</span>
+                        </h2>
+                        <div className='box'>
+                            <p>Je suis Mathilde Dubois, dessinatrice projeteuse indépendante, passionnée par la conception et la mise en valeur de projets architecturaux, petits ou grands.</p>
+                            <p>Basée à domicile, je me déplace facilement pour venir à votre rencontre, comprendre vos besoins et vous accompagner.</p>
+                            <p>Je travaille aussi bien pour des particuliers que pour des professionnels de l’immobilier : promoteurs, constructeurs, agences, notaires…</p>
+                            <p>“Mon objectif : transformer vos idées en dossiers clairs, complets et conformes, que ce soit pour une déclaration préalable, un permis de construire, ou pour créer des supports visuels comme des plans 3D ou des affiches de vente.”</p>
+                        </div>
+                    </div>
+                    <div className='right'>
+                        <Image src="/portrait.webp" alt="Portrait" width={520} height={373} />
+                        <p className='quote'>"Qu' il s'agisse d' une piscine, d’une extension, d’une maison neuve ou d’un lotissement je m' adapte à chaque projet avec rigueur, écoute et réactivité."</p>
+                    </div>
                 </div>
             </section>
             <section className="contact">
