@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "title": "Lotissement au cœur du Haut-Var",
+    "description": "Un projet pensé pour allier confort et intégration paysagère. Chaque maison bénéficie d'une conception unique, adaptée au terrain, pour offrir luminosité, vues dégagées et bien être au quotidien.",
+    "image": "/projects/project1.webp"
+  },
+  {
+    "id": 2,
+    "title": "Maison deux pans : modernité et esprit bioclimatique.",
+    "description": "Cette maison à toiture 2 pans revisite les codes traditionnels pour offrir une architecture à la fois élégante et contemporaine. Pensée dans une démarche bioclimatique, elle profite d' une implantation optimale sur le terrain, favorisant l' ensoleillement naturel et  économies d' énergie. De larges ouvertures baignent les espaces de lumière, tandis que l' isolation et l' orientation garantissent confort et performance thermique. Un projet qui conjugue simplicité des lignes, modernité des volumes et respect de l' environnement.",
+    "image": "/projects/project2.webp"
+  },
+  {
+    "id": 3,
+    "title": "Création d' un bâtiment agricole de stockage avec panneaux photovoltaïques.",
+    "description": "Un projet alliant performance et durabilité. Ce bâtiment agricole été conçu pour offrir un espace de stockage optimisé, robuste et parfaitement adapté aux besoins de l'exploitation. La structure accueille également des panneaux photovoltaiques transformant la toiture en véritable source d' énergie renouvelable. Mon accompagnement : de la conception à la mise en plan, en intégrant les contraintes techniques et réglementaires, afin de livrer un projet clé en main, pratique et pérenne.",
+    "image": "/projects/project3.webp"
+  },
+  {
+    "id": 4,
+    "title": "Réhabilitation d' une extension oubliée.",
+    "description": "Au cœur du haut Var, cette extension de maison traditionnelle longtemps inutilisée a retrouvé toute sa valeur grâce à une réhabilitation sur mesure. Transformée en cuisine et coin repas extérieur, elle s' intègre parfaitement à son environnement naturel, entourée d' arbres typiques de la région. Un projet alliant authenticité et confort moderne, pensé pour redonner vie aux espaces existants et profiter pleinement de l' art de vivre provençal.",
+    "image": "/projects/project4.webp"
+  }
+]

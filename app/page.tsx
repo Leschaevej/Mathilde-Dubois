@@ -1,5 +1,7 @@
 import Image from 'next/image'
 import "./page.scss";
+import Carousel from './components/carousel/Carousel';
+import projectsData from './data/projects.json';
 
 export default function Home() {
     return (
@@ -91,6 +93,7 @@ export default function Home() {
                         <span className="main">Mes</span><br/>
                         <span className="sub">réalisations</span>
                     </h2>
+                    <Carousel projects={projectsData} />
                 </div>
             </section>
             <section className="about">
