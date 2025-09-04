@@ -12,15 +12,35 @@
         z-index: 1;
         text-align: center;
         h2 {
-            font-size: 64px;
-        }
-        p {
-            font-size: 96px;
+            .main{
+                font-size: 64px;
+            }
+            .sub{
+                font-size: 96px;
+            }
         }
     }
 }
 .role{
-    padding: 100px 100px 0 100px;
+    padding: 100px;
+    background-color: var(--secondColor);
+    .content{
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+        .grid{
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 30px;
+            .card{
+                display: flex;
+                flex-direction: column;
+                background-color: var(--backgroundColor);
+                padding: 30px;
+                gap: 30px;
+            }
+        }
+    }
 }
 .services{
     padding: 100px 100px 0 100px;
