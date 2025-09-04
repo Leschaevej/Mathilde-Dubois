@@ -44,6 +44,60 @@
 }
 .services{
     padding: 100px 100px 0 100px;
+    .content{
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+        .grid{
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 30px;
+            .card{
+                display: flex;
+                flex-direction: column;
+                border: 3px solid var(--textColor);
+                img{
+                    padding: 1px 1px 0 1px;
+                    width: 100%;
+                    box-sizing: border-box;
+                }
+                .text{
+                    display: flex;
+                    flex-direction: column;
+                    height: 100%;
+                    .main{
+                        flex: 1;
+                        &::after {
+                            content: '';
+                            display: block;
+                            width: 100%;
+                            height: 1px;
+                            background-color: var(--textColor);
+                        }
+                        h3{
+                            height: 186px;
+                            padding: 30px;
+                            font-size: 36px;
+                            font-weight: 400;
+                            position: relative;
+                        }
+                    }
+                    .sub{
+                        flex: 1;
+                        padding: 30px;
+                        p {
+                            flex: 1;
+                        }
+                    }
+                }
+            }
+        }
+        .quote{
+            font-family: var(--font-satisfy);
+            font-size: 32px;
+            text-align: center;
+        }
+    }
 }
 .portfolio{
     padding: 100px 100px 0 100px;

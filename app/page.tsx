@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import "./page.scss";
 
 export default function Home() {
@@ -46,6 +47,42 @@ export default function Home() {
                         <span className="main">Mes</span><br/>
                         <span className="sub">services</span>
                     </h2>
+                    <div className="grid">
+                        <div className="card">
+                            <Image src="/new.webp" alt="Construction, Rénovation & Extention" width={386} height={217} />
+                            <div className='text'>
+                                <div className='main'>
+                                    <h3>Construction, Rénovation & Extention</h3>
+                                </div>
+                                <div className='sub'>
+                                    <p>Je m'occupe de l'intégralité de vos formalités administratives : dépôt de permis de construire ou déclarations préalables de travaux</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="card">
+                            <Image src="/rebuild.webp" alt="Décoration, Rénovation intérieure" width={386} height={217} />
+                            <div className='text'>
+                                <div className='main'>
+                                    <h3>Décoration, Rénovation intérieure</h3>
+                                </div>
+                                <div className='sub'>
+                                    <p>Je vous aide à transformer vos espaces de vie, à redonner de l’harmonie et à créer un intérieur qui vous ressemble, alliant confort, fonctionnalité et esthétique.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="card">
+                            <Image src="/plan.webp" alt="Plans & visuels 3D" width={386} height={217} />
+                            <div className='text'>
+                                <div className='main'>
+                                    <h3>Plans & visuels 3D</h3>
+                                </div>
+                                <div className='sub'>
+                                    <p>Des plans précis et des visuels 3D réalistes pour vous aider à comprendre, imaginer et valider votre projet avant sa réalisation</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <p className='quote'>"J'accompagne particuliers et professionnels de l'immobilier, du premier croquis<br/>jusqu'au dépôt administratif.<br/>Basée à Saint-Aygulf, j'interviens dans toute la région Var et possibilité à distance. "</p>
                 </div>
             </section>
             <section className="portfolio">
