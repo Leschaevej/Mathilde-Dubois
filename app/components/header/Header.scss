@@ -10,6 +10,16 @@ header {
     justify-content: space-between;
     padding: 0 50px;
     box-shadow: 0 5px 5px rgba(0, 0, 0, 0.1);
+    transform: translateY(0);
+    transition: transform 0.3s ease-in-out;
+
+    &.hidden {
+        transform: translateY(-100%);
+    }
+
+    &.visible {
+        transform: translateY(0);
+    }
     .brand{
         display: flex;
         align-items: center;
