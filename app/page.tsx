@@ -46,7 +46,7 @@ export default function Home() {
             <div className='tagline'>
                 <p className='quote'>"À vos côtés pour donner vie à vos projets, avec clarté, bienveillance et efficacité."</p>
             </div>
-            <section className="services">
+            <section id="services" className="services">
                 <div className="content">
                     <h2>
                         <span className="main">Mes</span><br/>
@@ -90,7 +90,7 @@ export default function Home() {
                     <p className='quote'>"J'accompagne particuliers et professionnels de l'immobilier, du premier croquis<br/>jusqu'au dépôt administratif.<br/>Basée à Saint-Aygulf, j'interviens dans toute la région Var et possibilité à distance. "</p>
                 </div>
             </section>
-            <section className="portfolio">
+            <section id="portfolio" className="portfolio">
                 <div className="content">
                     <h2>
                         <span className="main">Mes</span><br/>
@@ -99,7 +99,7 @@ export default function Home() {
                     <Carousel projects={projectsData} />
                 </div>
             </section>
-            <section className="about">
+            <section id="about" className="about">
                 <div className="content">
                     <div className='left'>
                         <h2>
@@ -119,7 +119,7 @@ export default function Home() {
                     </div>
                 </div>
             </section>
-            <section className="contact">
+            <section id="contact" className="contact">
                 <div className="content">
                     <h2>
                         <span className="main">Mon</span><br/>
