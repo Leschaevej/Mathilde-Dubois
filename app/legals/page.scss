@@ -1,0 +1,18 @@
+.legals, .confidentiality, .cookies {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    padding: 100px;
+    h2{
+        font-size: 64px;
+    }
+    h3{
+        font-size: 36px;
+    }
+    h4{
+        font-size: 36px;
+    }
+    p{
+        font-size: 20px;
+    }
+}
