@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import './Contact.scss';
 
 interface FormErrors {
@@ -19,6 +19,30 @@ export default function Contact() {
     });
     const [errors, setErrors] = useState<FormErrors>({});
     const [hasSubmitted, setHasSubmitted] = useState(false);
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [submitMessage, setSubmitMessage] = useState('');
+    const [showSuccess, setShowSuccess] = useState(false);
+    const [showError, setShowError] = useState(false);
+    const [isVisible, setIsVisible] = useState(false);
+    const formRef = useRef<HTMLFormElement>(null);
+    
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                if (entry.isIntersecting) {
+                    setIsVisible(true);
+                }
+            },
+            { threshold: 0.1 }
+        );
+
+        if (formRef.current) {
+            observer.observe(formRef.current);
+        }
+
+        return () => observer.disconnect();
+    }, []);
+    
     const validateField = (name: string, value: string): string => {
         switch (name) {
             case 'nom':
@@ -107,29 +131,63 @@ export default function Contact() {
             }));
         }
     };
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setHasSubmitted(true);
+        setSubmitMessage('');
+        
         const newErrors: FormErrors = {};
         Object.entries(formData).forEach(([key, value]) => {
             const error = validateField(key, value);
             if (error) newErrors[key as keyof FormErrors] = error;
         });
         setErrors(newErrors);
+        
         if (Object.keys(newErrors).length === 0) {
-            console.log('Form submitted:', formData);
-            setFormData({
-                nom: '',
-                email: '',
-                telephone: '',
-                message: ''
-            });
-            setHasSubmitted(false);
+            setIsSubmitting(true);
+            
+            try {
+                const response = await fetch('/api/contact', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData),
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    setShowSuccess(true);
+                    setFormData({
+                        nom: '',
+                        email: '',
+                        telephone: '',
+                        message: ''
+                    });
+                    setHasSubmitted(false);
+                    setTimeout(() => {
+                        setShowSuccess(false);
+                    }, 2000);
+                } else {
+                    setShowError(true);
+                    setTimeout(() => {
+                        setShowError(false);
+                    }, 5000);
+                }
+            } catch (error) {
+                setShowError(true);
+                setTimeout(() => {
+                    setShowError(false);
+                }, 5000);
+            } finally {
+                setIsSubmitting(false);
+            }
         }
     };
     return (
-        <form className="form" onSubmit={handleSubmit}>
-            <div className="group">
+        <form ref={formRef} className="form" onSubmit={handleSubmit}>
+            <div className={`group ${isVisible ? 'slide-in' : ''}`}>
                 <label htmlFor="nom">Nom</label>
                 <input
                     type="text"
@@ -141,7 +199,7 @@ export default function Contact() {
                     className={errors.nom ? 'error' : ''}
                 />
             </div>
-            <div className="group">
+            <div className={`group ${isVisible ? 'slide-in' : ''}`}>
                 <label htmlFor="email">Email</label>
                 <input
                     type="text"
@@ -153,7 +211,7 @@ export default function Contact() {
                     className={errors.email ? 'error' : ''}
                 />
             </div>
-            <div className="group">
+            <div className={`group ${isVisible ? 'slide-in' : ''}`}>
                 <label htmlFor="telephone">Téléphone</label>
                 <input
                     type="tel"
@@ -165,7 +223,7 @@ export default function Contact() {
                     className={errors.telephone ? 'error' : ''}
                 />
             </div>
-            <div className="group">
+            <div className={`group ${isVisible ? 'slide-in' : ''}`}>
                 <label htmlFor="message">Message</label>
                 <textarea
                     id="message"
@@ -177,8 +235,8 @@ export default function Contact() {
                     className={errors.message ? 'error' : ''}
                 ></textarea>
             </div>
-            <button type="submit" className="submit">
-                Concrétiser vos projets
+            <button type="submit" className={`submit ${isVisible ? 'slide-in' : ''} ${showSuccess ? 'success-state' : ''} ${showError ? 'error-state' : ''}`} disabled={isSubmitting || showSuccess || showError}>
+                {isSubmitting ? 'Envoi en cours...' : showSuccess ? 'Message reçu' : showError ? 'Erreur d\'envoi' : 'Concrétiser vos projets'}
             </button>
         </form>
     );

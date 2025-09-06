@@ -3,7 +3,7 @@
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
 import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
-import { useEffect } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import "./Map.scss";
 
 const CustomIcon = L.icon({
@@ -20,8 +20,27 @@ const MapComponent: React.FC<MapComponentProps> = ({
     address = "505 Avenue Imer, Saint-Aygulf", 
     coordinates = [43.38737, 6.71481] 
 }) => {
+    const [isVisible, setIsVisible] = useState(false);
+    const wrapperRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                if (entry.isIntersecting) {
+                    setIsVisible(true);
+                }
+            },
+            { threshold: 0.1 }
+        );
+
+        if (wrapperRef.current) {
+            observer.observe(wrapperRef.current);
+        }
+
+        return () => observer.disconnect();
+    }, []);
     return (
-        <div className="wrapper">
+        <div ref={wrapperRef} className={`wrapper ${isVisible ? 'slide-in' : ''}`}>
         <MapContainer 
             center={coordinates} 
             zoom={10} 

@@ -40,8 +40,10 @@
             background: transparent;
             border: none;
             border-bottom: 3px solid var(--mainColor);
-            font-family: inherit;
+            font-family: 'Montserrat', sans-serif;
             transition: border-color 0.3s ease;
+            color: var(--textColor);
+            
             &:focus {
                 outline: none;
                 border-color: var(--textColor);
@@ -49,6 +51,17 @@
             &.error {
                 border-color: var(--errorColor);
                 animation: shake 0.3s ease-in-out;
+            }
+            &:-webkit-autofill,
+            &:-webkit-autofill:hover,
+            &:-webkit-autofill:focus,
+            &:-webkit-autofill:active {
+                -webkit-box-shadow: 0 0 0 30px transparent inset;
+                -webkit-text-fill-color: var(--textColor);
+                background-color: transparent;
+                transition: background-color 5000s ease-in-out 0s;
+                font-family: 'Montserrat', sans-serif;
+                font-size: 20px;
             }
         }
         textarea {
@@ -67,15 +80,27 @@
         transition: background-color 0.3s ease;
         opacity: 0;
         transform: translateX(50px);
-        transition: opacity 0.8s ease-out, transform 0.8s ease-out, background-color 0.3s ease;
-        transition-delay: 1.0s;
-        
+        transition: background-color 0.3s ease;
         &.slide-in {
             opacity: 1;
             transform: translateX(0);
+            transition: opacity 0.8s ease-out 1.0s, transform 0.8s ease-out 1.0s, background-color 0.3s ease;
         }
         &:hover {
             background-color: var(--mainColor);
+        }
+        &:disabled {
+            cursor: not-allowed;
+            opacity: 1;
+            color: var(--textColor);
+        }
+        &.success-state {
+            opacity: 1;
+            color: var(--textColor);
+        }
+        &.error-state {
+            opacity: 1;
+            color: var(--errorColor);
         }
     }
 }

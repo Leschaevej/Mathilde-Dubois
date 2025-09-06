@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import './Carousel.scss';
 
@@ -16,6 +16,25 @@ interface CarouselProps {
 export default function Carousel({ projects }: CarouselProps) {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [isTransitioning, setIsTransitioning] = useState(false);
+    const [isVisible, setIsVisible] = useState(false);
+    const carouselRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                if (entry.isIntersecting) {
+                    setIsVisible(true);
+                }
+            },
+            { threshold: 0.1 }
+        );
+
+        if (carouselRef.current) {
+            observer.observe(carouselRef.current);
+        }
+
+        return () => observer.disconnect();
+    }, []);
     const handleTransition = (newIndex: number) => {
         setIsTransitioning(true);
         setTimeout(() => {
@@ -42,7 +61,7 @@ export default function Carousel({ projects }: CarouselProps) {
         return projectIndex - currentIndex;
     };
     return (
-        <div className="carousel">
+        <div ref={carouselRef} className={`carousel ${isVisible ? 'fade-in' : ''}`}>
             <div className="container">
                 {projects.map((project, projectIndex) => {
                 const position = getProjectPosition(projectIndex);
