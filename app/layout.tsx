@@ -6,8 +6,57 @@ import Preloader from "./components/preloader/Preloader";
 import "./globals.scss";
 
 export const metadata: Metadata = {
-  title: "Mathilde Dubois",
-  description: "Mathilde Dubois Dessinatrice projeteuse",
+  title: "Mathilde Dubois - Dessinatrice Projeteuse | Conception & Design Architectural",
+  description: "Mathilde Dubois, dessinatrice projeteuse experte en conception architecturale. Services de design, plans techniques et accompagnement de projets dans le Var (83). Contactez-moi pour concrétiser vos projets.",
+  keywords: "Les perspectives de Mathilde, perspectives de Mathilde, dessinatrice projeteuse, conception architecturale, plans techniques, design, architecture, Var, Saint-Aygulf, Fréjus, Mathilde Dubois",
+  authors: [{ name: "Mathilde Dubois" }],
+  creator: "Mathilde Dubois",
+  publisher: "Mathilde Dubois",
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
+  metadataBase: new URL('https://mathildedubois.fr'),
+  alternates: {
+    canonical: '/',
+  },
+  openGraph: {
+    title: "Mathilde Dubois - Dessinatrice Projeteuse",
+    description: "Dessinatrice projeteuse experte en conception architecturale dans le Var. Concrétisez vos projets avec une professionnelle expérimentée.",
+    url: 'https://mathildedubois.fr',
+    siteName: 'Mathilde Dubois',
+    images: [
+      {
+        url: '/social.webp',
+        width: 1200,
+        height: 630,
+        alt: 'Mathilde Dubois - Dessinatrice Projeteuse',
+      }
+    ],
+    locale: 'fr_FR',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: "Mathilde Dubois - Dessinatrice Projeteuse",
+    description: "Dessinatrice projeteuse experte en conception architecturale dans le Var.",
+    images: ['/social.webp'],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+  verification: {
+    google: 'YOUR_GOOGLE_VERIFICATION_CODE',
+  },
 };
 export default function RootLayout({
   children,
@@ -18,6 +67,37 @@ export default function RootLayout({
     <html lang="fr">
       <head>
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet" />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "ProfessionalService",
+              "name": "Mathilde Dubois - Dessinatrice Projeteuse",
+              "description": "Services de dessin technique et conception architecturale dans le Var.",
+              "url": "https://mathildedubois.fr",
+              "telephone": "06 18 35 14 83",
+              "email": "contact@mathildedubois.fr",
+              "address": {
+                "@type": "PostalAddress",
+                "streetAddress": "505 Avenue Imer",
+                "addressLocality": "Saint-Aygulf",
+                "postalCode": "83370",
+                "addressRegion": "Var",
+                "addressCountry": "FR"
+              },
+              "geo": {
+                "@type": "GeoCoordinates",
+                "latitude": 43.38737,
+                "longitude": 6.71481
+              },
+              "serviceArea": {
+                "@type": "State",
+                "name": "Var"
+              }
+            })
+          }}
+        />
       </head>
       <body className={`${montserrat.variable} ${ephesis.variable} ${satisfy.variable}`}>
         <Preloader />
