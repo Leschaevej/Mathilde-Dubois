@@ -15,6 +15,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="fr">
+      <head>
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet" />
+      </head>
       <body className={`${montserrat.variable} ${ephesis.variable} ${satisfy.variable}`}>
         <Header />
         {children}

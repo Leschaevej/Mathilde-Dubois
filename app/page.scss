@@ -137,13 +137,48 @@
     padding: 100px;
     .content{
         display: flex;
-        flex-direction: column;
-        gap: 30px;
+        gap: 100px;
         .left {
             display: flex;
             flex-direction: column;
             gap: 30px;
             width: 50%;
+        }
+        .right{
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            width: 50%;
+            .info {
+                display: flex;
+                flex-direction: column;
+                gap: 20px;
+                .item {
+                    display: flex;
+                    align-items: center;
+                    gap: 15px;
+                    .circle {
+                        width: 50px;
+                        height: 50px;
+                        border-radius: 50%;
+                        background-color: var(--mainColor);
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        .icons {
+                            font-family: 'Material Icons Outlined';
+                            font-size: 30px;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            color: var(--textColor);
+                        }
+                    }
+                    p {
+                            font-size: 20px;
+                    }
+                }
+            }
         }
     }
 }

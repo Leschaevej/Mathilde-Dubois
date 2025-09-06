@@ -55,6 +55,9 @@ ul {
         font-size: 20px;
     }
 }
+::placeholder{
+    font-family: var(--font-montserrat);
+}
 .quote{
     font-family: var(--font-satisfy);
     font-size: 32px;

@@ -2,6 +2,7 @@ import Image from 'next/image'
 import "./page.scss";
 import Carousel from './components/carousel/Carousel';
 import Map from './components/map/Map';
+import Contact from './components/contact/Contact';
 import projectsData from './data/projects.json';
 
 export default function Home() {
@@ -122,14 +123,37 @@ export default function Home() {
             </section>
             <section id="contact" className="contact">
                 <div className="content">
-                    <h2>
-                        <span className="main">Mon</span><br/>
-                        <span className="sub">contact</span>
-                    </h2>
                     <div className="left">
+                        <h2>
+                            <span className="main">Mon</span><br/>
+                            <span className="sub">contact</span>
+                        </h2>
                         <p>Un projet en tête ?</p>
                         <p>Parlons-en autour d'un plan, d'un café ou même par visio.<br/>Je suis là pour vous simplifier les démarches et donner forme à vos idées, avec sérieux, douceur et bonne humeur.</p>
                         <Map />
+                    </div>
+                    <div className='right'>
+                        <Contact />
+                        <div className="info">
+                            <div className="item">
+                                <div className="circle">
+                                    <span className="icons">location_on</span>
+                                </div>
+                                <p>Saint-Aygulf</p>
+                            </div>
+                            <div className="item">
+                                <div className="circle">
+                                    <span className="icons">email</span>
+                                </div>
+                                <p>contact@mathildedubois.fr</p>
+                            </div>
+                            <div className="item">
+                                <div className="circle">
+                                    <span className="icons">phone</span>
+                                </div>
+                                <p>06 18 35 14 83</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>

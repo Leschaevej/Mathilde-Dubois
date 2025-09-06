@@ -7,9 +7,9 @@ export default function Legals() {
             <h2>Mentions légales</h2>
             <h3>1- Présentation du site</h3>
             <p>En vertu de l'article 6 de la loi n° 2004-575 du 21 juin 2004 pour la confiance dans l'économie numérique, il est précisé aux utilisateurs du site mathildedubois.fr l'identité des différents intervenants dans le cadre de sa réalisation et de son suivi :</p>
-            <p><strong>Propriétaire :</strong> Mathilde Dubois – Auto entreprise – Siret : [xxx xxx xxx xxxxx] – 505 Avenue Imer 83370 Fréjus – Tél : 06 18 35 14 83 – Email : contact@mathildedubois.fr</p>
+            <p><strong>Propriétaire :</strong> Mathilde Dubois – Auto entreprise – Siret : 512 383 217 0035 – 505 Avenue Imer 83370 Fréjus – Tél : 06 18 35 14 83 – Email : contact@mathildedubois.fr</p>
             <p><strong>Créateur :</strong> Skybound Studio – 1 Bis Cour D'orbitelle 13100 Aix en Provence – Tél : 07 81 07 63 89 – Email : contact@skyboundstudio.fr</p>
-            <p><strong>Hébergeur :</strong> Vercel Inc. – 340 S Lemon Ave, Suite 4133, Walnut, CA 91789, USA – Tél : [non communiqué] – Email : support@vercel.com</p>
+            <p><strong>Hébergeur :</strong> Vercel Inc. – 340 S Lemon Ave, Suite 4133, Walnut, CA 91789, USA – Email : support@vercel.com</p>
             <h3>2- Conditions générales d'utilisation du site et des services proposés</h3>
             <p>L'utilisation du site mathildedubois.fr implique l'acceptation pleine et entière des conditions générales d'utilisation ci-après décrites. Ces conditions d'utilisation sont susceptibles d'être modifiées ou complétées à tout moment, les utilisateurs sont donc invités à les consulter régulièrement.</p>
             <p>Le site est normalement accessible à tout moment aux utilisateurs. Une interruption pour raison de maintenance technique peut être décidée par Mathilde Dubois qui s'efforcera de communiquer préalablement aux utilisateurs les dates et heures d'intervention. Le site est mis à jour régulièrement par Skybound Studio.</p>
