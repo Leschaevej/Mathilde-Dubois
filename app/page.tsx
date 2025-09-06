@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import "./page.scss";
 import Carousel from './components/carousel/Carousel';
+import Map from './components/map/Map';
 import projectsData from './data/projects.json';
 
 export default function Home() {
@@ -125,6 +126,11 @@ export default function Home() {
                         <span className="main">Mon</span><br/>
                         <span className="sub">contact</span>
                     </h2>
+                    <div className="left">
+                        <p>Un projet en tête ?</p>
+                        <p>Parlons-en autour d'un plan, d'un café ou même par visio.<br/>Je suis là pour vous simplifier les démarches et donner forme à vos idées, avec sérieux, douceur et bonne humeur.</p>
+                        <Map />
+                    </div>
                 </div>
             </section>
         </>

@@ -1,0 +1,41 @@
+.loading {
+    width: 100%;
+    aspect-ratio: 1.69/1;
+    background-color: var(--backgroundColor);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--textColor);
+    font-size: 20px;
+    border: 3px solid var(--mainColor);
+    border-radius: 30px;
+}
+.wrapper {
+    width: 100%;
+    aspect-ratio: 1.69/1;
+    overflow: hidden;
+    border: 3px solid var(--mainColor);
+    border-radius: 30px;
+    .box {
+        height: 100%;
+        width: 100%;
+        font-family: inherit;
+    }
+    .popup {
+        text-align: center;
+        padding: 10px;
+        font-size: 20px;
+        background-color: var(--backgroundColor);
+        font-family: 'Montserrat', sans-serif;
+        strong {
+            font-size: 20px;
+            color: var(--textColor);
+            font-family: inherit;
+        }
+        em {
+            color: var(--textColor);
+            font-style: italic;
+            font-family: inherit;
+        }
+    }
+}

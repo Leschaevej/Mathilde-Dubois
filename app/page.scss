@@ -135,4 +135,15 @@
 }
 .contact{
     padding: 100px;
+    .content{
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+        .left {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            width: 50%;
+        }
+    }
 }
