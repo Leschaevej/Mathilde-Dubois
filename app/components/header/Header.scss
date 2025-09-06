@@ -12,11 +12,9 @@ header {
     box-shadow: 0 5px 5px rgba(0, 0, 0, 0.1);
     transform: translateY(0);
     transition: transform 0.3s ease-in-out;
-
     &.hidden {
         transform: translateY(-100%);
     }
-
     &.visible {
         transform: translateY(0);
     }
@@ -28,7 +26,6 @@ header {
             align-items: center;
             text-decoration: none;
             color: inherit;
-            
             &:hover {
                 text-decoration: none;
             }

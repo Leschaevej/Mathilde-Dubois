@@ -39,7 +39,6 @@ export default function Header() {
             setIsVisible(false);
         }
     };
-
     return (
         <header className={isVisible ? 'visible' : 'hidden'}>
             <div className="brand">

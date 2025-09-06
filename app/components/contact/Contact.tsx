@@ -127,7 +127,6 @@ export default function Contact() {
             setHasSubmitted(false);
         }
     };
-
     return (
         <form className="form" onSubmit={handleSubmit}>
             <div className="group">

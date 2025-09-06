@@ -11,12 +11,10 @@ const MapComponent = dynamic(() => import('./MapComponent'), {
     </div>
   )
 })
-
 interface MapProps {
   address?: string
   coordinates?: [number, number]
 }
-
 const Map: React.FC<MapProps> = ({ 
   address, 
   coordinates 
@@ -25,5 +23,4 @@ const Map: React.FC<MapProps> = ({
     <MapComponent address={address} coordinates={coordinates} />
   )
 }
-
 export default Map
