@@ -41,7 +41,7 @@ export const metadata: Metadata = {
         card: 'summary_large_image',
         title: "Mathilde Dubois - Dessinatrice Projeteuse",
         description: "Dessinatrice projeteuse experte en conception architecturale dans le Var.",
-        images: ['/social.png'],
+        images: ['https://mathildedubois.fr/social.png'],
     },
     robots: {
         index: true,
