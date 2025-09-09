@@ -14,75 +14,79 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        height: 450px;
+        height: clamp(240px, 240px + (450 - 240) * ((100vw - 768px) / (1440 - 768)), 450px);
         position: relative;
+        width: 100%;
+        max-width: 100%;
+        overflow: hidden;
+        
+        @media (max-width: 768px) {
+            height: 70vw;
+            gap: 10px;
+            overflow: visible;
+        }
     }
     .item {
         cursor: pointer;
         transition: all 0.6s ease;
         transform-origin: center;
         position: absolute;
-        opacity: 1;
-        &.hidden {
-            display: none;
-        }
         &.position-0 {
             z-index: 3;
+            transform: translateX(0);
+            opacity: 1;
             .image {
+                width: clamp(240px, 55.56vw, 800px);
+                height: clamp(135px, 31.25vw, 450px);
                 filter: blur(0px);
-                @include width(240px, 800px, 800px);
-                @include height(240px, 450px, 450px);
+                
+                @media (max-width: 768px) {
+                    width: 70vw;
+                    height: 70vw;
+                }
             }
         }
         &.position-1 {
-            transform: translateX(240px);
             z-index: 2;
+            transform: translateX(300px);
+            opacity: 0.8;
             .image {
-                width: 600px;
-                height: 330px;
-                filter: blur(2px);
-                box-shadow: inset 0 0 0 1000px rgba(var(--backgroundColorRgb), 0.3);
-                @include width(240px, 600px, 600px);
-                @include height(240px, 330px, 330px);
+                width: clamp(180px, 41.67vw, 600px);
+                height: clamp(99px, 22.92vw, 330px);
+                filter: blur(1px);
+                
+                @media (max-width: 768px) {
+                    width: 70vw;
+                    height: 70vw;
+                    filter: none;
+                }
+            }
+            
+            @media (max-width: 768px) {
+                transform: translateX(calc(70vw + 10px));
+                opacity: 1;
             }
         }
         &.position--1 {
-            transform: translateX(-240px);
             z-index: 2;
+            transform: translateX(-300px);
+            opacity: 0.8;
             .image {
-                width: 600px;
-                height: 330px;
-                filter: blur(2px);
-                box-shadow: inset 0 0 0 1000px rgba(var(--backgroundColorRgb), 0.3);
-                @include width(240px, 600px, 600px);
-                @include height(240px, 330px, 330px);
+                width: clamp(180px, 41.67vw, 600px);
+                height: clamp(99px, 22.92vw, 330px);
+                filter: blur(1px);
+                
+                @media (max-width: 768px) {
+                    width: 70vw;
+                    height: 70vw;
+                    filter: none;
+                }
             }
-        }
-        &.position-2 {
-            transform: translateX(500px);
-            z-index: 1;
-            opacity: 0;
-            .image {
-                width: 240px;
-                height: 180px;
-                filter: blur(3px);
-                box-shadow: inset 0 0 0 1000px rgba(var(--backgroundColorRgb), 0.6);
+            
+            @media (max-width: 768px) {
+                transform: translateX(calc(-70vw - 10px));
+                opacity: 1;
             }
-        }
-        &.position--2 {
-            transform: translateX(-500px);
-            z-index: 1;
-            opacity: 0;
-            .image {
-                width: 240px;
-                height: 180px;
-                filter: blur(3px);
-                box-shadow: inset 0 0 0 1000px rgba(var(--backgroundColorRgb), 0.6);
-            }
-        }
-        &.position-3, &.position--3, &.position-4, &.position--4, &.position-5, &.position--5 {
-            opacity: 0;
-            transform: scale(0);
         }
     }
     .image {
@@ -105,7 +109,6 @@
             font-size: clamp(36px, 36px + (48 - 36) * ((100vw - 768px) / (1440 - 768)), 48px);
         }
         p {
-            font-size: 20px;
             font-size: clamp(16px, 16px + (24 - 16) * ((100vw - 768px) / (1440 - 768)), 24px);
         }
     }
@@ -119,6 +122,7 @@
         cursor: pointer;
         transition: all 0.3s ease;
         background: none;
+        border: none;
         &:hover {
             color: var(--mainColor);
         }

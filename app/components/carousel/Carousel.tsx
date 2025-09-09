@@ -10,9 +10,11 @@ interface Project {
     description: string;
     image: string;
 }
+
 interface CarouselProps {
     projects: Project[];
 }
+
 export default function Carousel({ projects }: CarouselProps) {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [isTransitioning, setIsTransitioning] = useState(false);
@@ -35,52 +37,63 @@ export default function Carousel({ projects }: CarouselProps) {
 
         return () => observer.disconnect();
     }, []);
+
     const handleTransition = (newIndex: number) => {
         setIsTransitioning(true);
         setTimeout(() => {
-        setCurrentIndex(newIndex);
-        setTimeout(() => {
-            setIsTransitioning(false);
-        }, 50);
+            setCurrentIndex(newIndex);
+            setTimeout(() => {
+                setIsTransitioning(false);
+            }, 50);
         }, 300);
     };
+
     const handlePrevious = () => {
         const newIndex = currentIndex === 0 ? projects.length - 1 : currentIndex - 1;
         handleTransition(newIndex);
     };
+
     const handleNext = () => {
         const newIndex = currentIndex === projects.length - 1 ? 0 : currentIndex + 1;
         handleTransition(newIndex);
     };
+
     const handleImageClick = (index: number) => {
         if (index !== currentIndex) {
-        handleTransition(index);
+            handleTransition(index);
         }
     };
-    const getProjectPosition = (projectIndex: number) => {
-        return projectIndex - currentIndex;
+    const getVisibleProjects = () => {
+        const total = projects.length;
+        const visible = [];
+        for (let i = -1; i <= 1; i++) {
+            const index = (currentIndex + i + total) % total;
+            visible.push({
+                project: projects[index],
+                originalIndex: index,
+                position: i
+            });
+        }
+        return visible;
     };
     return (
         <div ref={carouselRef} className={`carousel ${isVisible ? 'fade-in' : ''}`}>
             <div className="container">
-                {projects.map((project, projectIndex) => {
-                const position = getProjectPosition(projectIndex);
-                return (
+                {getVisibleProjects().map(({ project, originalIndex, position }) => (
                     <div
-                    key={project.id}
-                    className={`item position-${position}`}
-                    onClick={() => handleImageClick(projectIndex)}
+                        key={`${project.id}-${currentIndex}`}
+                        className={`item position-${position}`}
+                        onClick={() => handleImageClick(originalIndex)}
                     >
-                    <Image
-                        src={project.image}
-                        alt={project.title}
-                        width={800}
-                        height={450}
-                        className="image"
-                    />
+                        <Image
+                            src={project.image}
+                            alt={project.title}
+                            width={800}
+                            height={450}
+                            className="image"
+                        />
                     </div>
-                );
-                })}
+                ))}
             </div>
             <div className={`info ${isTransitioning ? 'transitioning' : ''}`}>
                 <h3>{projects[currentIndex].title}</h3>
