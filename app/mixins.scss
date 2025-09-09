@@ -1,0 +1,108 @@
+$mobile-max: 768px;
+$tablet-max: 1024px;
+
+@mixin height($mobile, $tablet, $desktop) {
+  height: $desktop;
+  @media (max-width: #{$tablet-max}) {
+    height: $tablet;
+  }
+  @media (max-width: #{$mobile-max}) {
+    height: $mobile;
+  }
+}
+@mixin width($mobile, $tablet, $desktop) {
+  width: $desktop;
+  @media (max-width: #{$tablet-max}) {
+    width: $tablet;
+  }
+  @media (max-width: #{$mobile-max}) {
+    width: $mobile;
+  }
+}
+@mixin flexDirection($mobile, $tablet, $desktop) {
+  flex-direction: $desktop;
+  @media (max-width: #{$tablet-max}) {
+    flex-direction: $tablet;
+  }
+  @media (max-width: #{$mobile-max}) {
+    flex-direction: $mobile;
+  }
+}
+@mixin justifyContent($mobile, $tablet, $desktop) {
+  justify-content: $desktop;
+  @media (max-width: #{$tablet-max}) {
+    justify-content: $tablet;
+  }
+  @media (max-width: #{$mobile-max}) {
+    justify-content: $mobile;
+  }
+}
+@mixin alignItems($mobile, $tablet, $desktop) {
+  align-items: $desktop;
+  @media (max-width: #{$tablet-max}) {
+    align-items: $tablet;
+  }
+  @media (max-width: #{$mobile-max}) {
+    align-items: $mobile;
+  }
+}
+@mixin textAlign($mobile, $tablet, $desktop) {
+  text-align: $desktop;
+  @media (max-width: #{$tablet-max}) {
+    text-align: $tablet;
+  }
+  @media (max-width: #{$mobile-max}) {
+    text-align: $mobile;
+  }
+}
+@mixin padding($mobile, $tablet, $desktop) {
+  padding: $desktop;
+  @media (max-width: #{$tablet-max}) {
+    padding: $tablet;
+  }
+  @media (max-width: #{$mobile-max}) {
+    padding: $mobile;
+  }
+}
+@mixin margin($mobile, $tablet, $desktop) {
+  margin: $desktop;
+  @media (max-width: #{$tablet-max}) {
+    margin: $tablet;
+  }
+  @media (max-width: #{$mobile-max}) {
+    margin: $mobile;
+  }
+}
+@mixin gap($mobile, $tablet, $desktop) {
+  gap: $desktop;
+  @media (max-width: #{$tablet-max}) {
+    gap: $tablet;
+  }
+  @media (max-width: #{$mobile-max}) {
+    gap: $mobile;
+  }
+}
+@mixin gridColumns($mobile, $tablet, $desktop) {
+  grid-template-columns: $desktop;
+  @media (max-width: #{$tablet-max}) {
+    grid-template-columns: $tablet;
+  }
+  @media (max-width: #{$mobile-max}) {
+    grid-template-columns: $mobile;
+  }
+}
+@mixin display($mobile, $tablet, $desktop) {
+  display: $desktop;
+  @media (max-width: #{$tablet-max}) {
+    display: $tablet;
+  }
+  @media (max-width: #{$mobile-max}) {
+    display: $mobile;
+  }
+}
+@mixin centeredContent($max-width: 1240px, $breakpoint: 1440px) {
+  @media (min-width: #{$breakpoint}) {
+    padding-left: calc((100vw - #{$max-width}) / 2);
+    padding-right: calc((100vw - #{$max-width}) / 2);
+  }
+}

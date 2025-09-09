@@ -1,8 +1,12 @@
+@use '../mixins' as *;
+
 .legals, .confidentiality, .cookies {
     display: flex;
     flex-direction: column;
     gap: 30px;
-    padding: 100px;
+    padding-top: 100px;
+    padding-bottom: 100px;
+    @include sidePadding(100px, 30px);
     h2{
         font-size: 64px;
     }

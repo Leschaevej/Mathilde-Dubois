@@ -1,11 +1,16 @@
+@use './mixins' as *;
+
 .hero {
     position: relative;
-    height: calc(100vh - 124px);
+    height: 100vh;
     padding: 100px;
     background: url('/fond.webp') no-repeat center center;
     background-size: cover;
     display: flex;
     align-items: center;
+    justify-content: center;
+    @include justifyContent(center, flex-start, flex-start);
+    @include centeredContent();
     .content {
         position: relative;
         z-index: 1;
@@ -15,34 +20,35 @@
             transform: translateX(0);
             transition: none;
             .main{
-                font-size: 64px;
+                font-size: clamp(48px, 48px + (64 - 48) * ((100vw - 768px) / (1440 - 768)), 64px);
             }
             .sub{
-                font-size: 96px;
+                font-size: clamp(48px, 48px + (96 - 48) * ((100vw - 768px) / (1440 - 768)), 96px);
             }
         }
     }
 }
 .role{
-    padding: 100px;
     background-color: var(--secondColor);
+    padding: clamp(30px, 30px + (100 - 30) * ((100vw - 768px) / (1440 - 768)), 100px) clamp(30px, 30px + (100 - 30) * ((100vw - 768px) / (1440 - 768)), 100px);
+    @include centeredContent();
     .content{
         display: flex;
         flex-direction: column;
         gap: 30px;
         .grid{
             display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
+            @include gridColumns(1fr, 1fr, 1fr 1fr 1fr);
             gap: 30px;
             .card{
                 display: flex;
                 flex-direction: column;
                 background-color: var(--backgroundColor);
-                padding: 30px;
-                gap: 30px;
                 opacity: 0;
                 transform: translateX(50px);
                 transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+                padding: 30px;
+                @include gap(30px, 30px, 30px);
                 &.slide-in {
                     opacity: 1;
                     transform: translateX(0);
@@ -57,18 +63,19 @@
 .tagline{
     background-color: var(--thirdColor);
     .quote{
-        padding: 30px 0;
+        padding: 30px;
     }
 }
 .services{
-    padding: 100px 100px 0 100px;
+    padding: clamp(30px, 30px + (100 - 30) * ((100vw - 768px) / (1440 - 768)), 100px) clamp(30px, 30px + (100 - 30) * ((100vw - 768px) / (1440 - 768)), 100px);
+    @include centeredContent();
     .content{
         display: flex;
         flex-direction: column;
         gap: 30px;
         .grid{
             display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
+            @include gridColumns(1fr, 1fr, 1fr 1fr 1fr);
             gap: 30px;
             .card{
                 display: flex;
@@ -85,16 +92,14 @@
                 &:nth-child(2) { transition-delay: 0.4s; }
                 &:nth-child(3) { transition-delay: 0.6s; }
                 img{
-                    padding: 1px 1px 0 1px;
                     width: 100%;
+                    height: auto;
                     box-sizing: border-box;
                 }
                 .text{
                     display: flex;
                     flex-direction: column;
-                    height: 100%;
                     .main{
-                        flex: 1;
                         &::after {
                             content: '';
                             display: block;
@@ -103,19 +108,15 @@
                             background-color: var(--textColor);
                         }
                         h3{
-                            height: 186px;
                             padding: 30px;
-                            font-size: 36px;
                             font-weight: 400;
                             position: relative;
+                            @include height(fit-content, fit-content, 186px);
+                            font-size: clamp(24px, 24px + (36 - 24) * ((100vw - 768px) / (1440 - 768)), 36px);
                         }
                     }
                     .sub{
-                        flex: 1;
                         padding: 30px;
-                        p {
-                            flex: 1;
-                        }
                     }
                 }
             }
@@ -123,24 +124,28 @@
     }
 }
 .portfolio{
-    padding: 100px;
     box-sizing: border-box;
+    padding: clamp(30px, 30px + (100 - 30) * ((100vw - 768px) / (1440 - 768)), 100px) clamp(30px, 30px + (100 - 30) * ((100vw - 768px) / (1440 - 768)), 100px);
+    @include centeredContent();
     .content {
         display: flex;
         flex-direction: column;
-        gap: 50px;
+        gap: 30px;
     }
 }
 .about{
-    padding: 100px;
     background-color: var(--mainColor);
+    padding: clamp(30px, 30px + (100 - 30) * ((100vw - 768px) / (1440 - 768)), 100px) clamp(30px, 30px + (100 - 30) * ((100vw - 768px) / (1440 - 768)), 100px);
+    @include centeredContent();
     .content {
         display: flex;
         gap: 30px;
+        @include flexDirection(column, column, row);
         .left{
             display: flex;
             flex-direction: column;
             gap: 30px;
+            @include width(100%, 100%, 50%);
             .box{
                 display: flex;
                 flex-direction: column;
@@ -160,7 +165,10 @@
             display: flex;
             flex-direction: column;
             gap: 30px;
+            @include width(100%, 100%, 50%);
             img {
+                width: 100%;
+                height: auto;
                 opacity: 0;
                 transform: translateX(50px);
                 transition: opacity 0.8s ease-out, transform 0.8s ease-out;
@@ -184,15 +192,17 @@
     }
 }
 .contact{
-    padding: 100px;
+    padding: clamp(30px, 30px + (100 - 30) * ((100vw - 768px) / (1440 - 768)), 100px) clamp(30px, 30px + (100 - 30) * ((100vw - 768px) / (1440 - 768)), 100px);
+    @include centeredContent();
     .content{
         display: flex;
-        gap: 100px;
+        gap: 30px;
+        @include flexDirection(column, column, row);
         .left {
             display: flex;
             flex-direction: column;
             gap: 30px;
-            width: 50%;
+            @include width(100%, 100%, 50%);
             p {
                 opacity: 0;
                 transform: translateX(-30px);
@@ -209,7 +219,7 @@
             display: flex;
             flex-direction: column;
             gap: 30px;
-            width: 50%;
+            @include width(100%, 100%, 50%);
             > div:first-child {
                 opacity: 0;
                 transform: translateX(50px);
@@ -238,24 +248,21 @@
                     &:nth-child(2) { transition-delay: 0.6s; }
                     &:nth-child(3) { transition-delay: 0.8s; }
                     .circle {
-                        width: 50px;
-                        height: 50px;
                         border-radius: 50%;
                         background-color: var(--mainColor);
                         display: flex;
                         align-items: center;
                         justify-content: center;
+                        @include height(25px, 50px, 50px);
+                        @include width(25px, 50px, 50px);
                         .icons {
                             font-family: 'Material Icons Outlined';
-                            font-size: 30px;
                             display: flex;
                             align-items: center;
                             justify-content: center;
                             color: var(--textColor);
+                            font-size: clamp(15px, 15px + (30 - 15) * ((100vw - 768px) / (1440 - 768)), 30px);
                         }
-                    }
-                    p {
-                        font-size: 20px;
                     }
                 }
             }

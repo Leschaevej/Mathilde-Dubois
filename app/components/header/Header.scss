@@ -1,3 +1,5 @@
+@use '../../mixins.scss' as *;
+
 header {
     position: fixed;
     top: 0;
@@ -12,6 +14,10 @@ header {
     box-shadow: 0 5px 5px rgba(0, 0, 0, 0.1);
     transform: translateY(0);
     transition: transform 0.3s ease-in-out;
+    width: 100%;
+    max-width: 100vw;
+    overflow: visible;
+    padding: clamp(0px, 0px + (15 - 0) * ((100vw - 1440px) / (768 - 1440)), 15px) clamp(30px, 30px + (50 - 30) * ((100vw - 768px) / (1440 - 768)), 50px);
     &.hidden {
         transform: translateY(-100%);
     }
@@ -33,8 +39,9 @@ header {
         .logo {
             font-family: var(--font-ephesis);
             font-weight: 400;
-            font-size: 96px;
             padding-right: 45px;
+            font-size: clamp(40px, 40px + (96 - 40) * ((100vw - 768px) / (1440 - 768)), 96px);
+            padding-right: clamp(10px, 10px + (45 - 10) * ((100vw - 768px) / (1440 - 768)), 45px);
         }
         .name {
             position: absolute;
@@ -48,14 +55,56 @@ header {
             border: 0;
         }
         p {
-            font-size: 24px;
             font-family: var(--font-montserrat);
+            font-size: clamp(20px, 20px + (24 - 20) * ((100vw - 768px) / (1440 - 768)), 24px);
         }
     }
-    nav {
+    .nav {
+        @include display(none, none, flex);
         ul {
             list-style: none;
             display: flex;
+            margin: 0;
+            padding: 0;
+            gap: 30px;
+        }
+    }
+    .menu {
+        background: none;
+        border: none;
+        cursor: pointer;
+        color: var(--textColor);
+        @include display(block, block, none);
+        .icon {
+            font-size: 40px
+        }
+    }
+    .modal {
+        width: fit-content;
+        position: absolute;
+        right: 10px;
+        background-color: var(--thirdColor);
+        box-shadow: -5px 5px 5px rgba(0, 0, 0, 0.2);
+        z-index: 9999;
+        padding: 30px;
+        border-radius: 10px;
+        transform: translateX(120%);
+        transition: transform 0.3s ease-in-out;
+        ul {
+            list-style: none;
+            margin: 0;
+            li {
+                a {
+                    display: block;
+                    padding: 15px 0;
+                }
+            }
+        }
+        &.open {
+            transform: translateX(0);
+        }
+        &.closing {
+            transform: translateX(120%);
         }
     }
 }

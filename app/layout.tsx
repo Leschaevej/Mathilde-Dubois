@@ -3,6 +3,7 @@ import { ephesis, satisfy, montserrat } from './font'
 import Header from "./components/header/Header";
 import Footer from "./components/footer/Footer";
 import Preloader from "./components/preloader/Preloader";
+import PreloaderWrapper from "./components/preloader/PreloaderWrapper";
 import "./globals.scss";
 
 export const metadata: Metadata = {
@@ -66,7 +67,9 @@ export default function RootLayout({
   return (
     <html lang="fr">
       <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -101,9 +104,11 @@ export default function RootLayout({
       </head>
       <body className={`${montserrat.variable} ${ephesis.variable} ${satisfy.variable}`}>
         <Preloader />
-        <Header />
-        {children}
-        <Footer />
+        <PreloaderWrapper>
+          <Header />
+          {children}
+          <Footer />
+        </PreloaderWrapper>
       </body>
     </html>
   )

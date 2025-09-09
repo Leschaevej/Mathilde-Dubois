@@ -1,10 +1,12 @@
+@use '../../mixins.scss' as *;
+
 .carousel {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 30px;
     opacity: 0;
     transition: opacity 0.8s ease-out;
+    @include gap(10px, 30px, 30px);
     &.fade-in {
         opacity: 1;
     }
@@ -27,9 +29,9 @@
         &.position-0 {
             z-index: 3;
             .image {
-                width: 800px;
-                height: 450px;
                 filter: blur(0px);
+                @include width(240px, 800px, 800px);
+                @include height(240px, 450px, 450px);
             }
         }
         &.position-1 {
@@ -40,6 +42,8 @@
                 height: 330px;
                 filter: blur(2px);
                 box-shadow: inset 0 0 0 1000px rgba(var(--backgroundColorRgb), 0.3);
+                @include width(240px, 600px, 600px);
+                @include height(240px, 330px, 330px);
             }
         }
         &.position--1 {
@@ -50,6 +54,8 @@
                 height: 330px;
                 filter: blur(2px);
                 box-shadow: inset 0 0 0 1000px rgba(var(--backgroundColorRgb), 0.3);
+                @include width(240px, 600px, 600px);
+                @include height(240px, 330px, 330px);
             }
         }
         &.position-2 {
@@ -88,17 +94,19 @@
         flex-direction: column;
         text-align: center;
         max-width: 800px;
-        gap: 30px;
         opacity: 1;
         transition: opacity 0.3s ease;
+        @include gap(10px, 30px, 30px);
         &.transitioning {
             opacity: 0;
         }
         h3 {
-            font-size: 48px;
+            font-family: inherit;
+            font-size: clamp(36px, 36px + (48 - 36) * ((100vw - 768px) / (1440 - 768)), 48px);
         }
         p {
             font-size: 20px;
+            font-size: clamp(16px, 16px + (24 - 16) * ((100vw - 768px) / (1440 - 768)), 24px);
         }
     }
     .controls {

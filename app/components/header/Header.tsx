@@ -7,8 +7,30 @@ export default function Header() {
     const [isVisible, setIsVisible] = useState(true);
     const [lastScrollY, setLastScrollY] = useState(0);
     const [activeSection, setActiveSection] = useState('');
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const [isModalClosing, setIsModalClosing] = useState(false);
+    const [isModalOpening, setIsModalOpening] = useState(false);
 
     useEffect(() => {
+        const updateBodyMargin = () => {
+            const header = document.querySelector('header');
+            if (header) {
+                const headerHeight = header.offsetHeight;
+                document.body.style.marginTop = `${headerHeight}px`;
+                
+                const heroSection = document.querySelector('.hero') as HTMLElement;
+                if (heroSection) {
+                    heroSection.style.height = `calc(100vh - ${headerHeight}px)`;
+                }
+                
+                // Positionner le modal 10px sous le header
+                const modal = document.querySelector('.modal') as HTMLElement;
+                if (modal) {
+                    modal.style.top = `${headerHeight + 10}px`;
+                }
+            }
+        };
+
         const handleScroll = () => {
             const currentScrollY = window.scrollY;
             if (currentScrollY > lastScrollY && currentScrollY > 100) {
@@ -17,6 +39,12 @@ export default function Header() {
                 setIsVisible(true);
             }
             setLastScrollY(currentScrollY);
+            
+            // Fermer la modal mobile lors du défilement
+            if (isMobileMenuOpen && !isModalClosing) {
+                closeMobileMenu();
+            }
+            
             const sections = ['services', 'portfolio', 'about', 'contact'];
             let current = '';
             for (const section of sections) {
@@ -31,12 +59,41 @@ export default function Header() {
             }
             setActiveSection(current);
         };
+
+        updateBodyMargin();
         window.addEventListener('scroll', handleScroll);
-        return () => window.removeEventListener('scroll', handleScroll);
-    }, [lastScrollY]);
+        window.addEventListener('resize', updateBodyMargin);
+        
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+            window.removeEventListener('resize', updateBodyMargin);
+        };
+    }, [lastScrollY, isMobileMenuOpen, isModalClosing]);
+
+    const closeMobileMenu = () => {
+        setIsModalClosing(true);
+        setIsModalOpening(false);
+        setTimeout(() => {
+            setIsMobileMenuOpen(false);
+            setIsModalClosing(false);
+        }, 300);
+    };
+
     const handleLinkClick = (targetSection: string) => {
         if (targetSection !== activeSection) {
             setIsVisible(false);
+        }
+        closeMobileMenu();
+    };
+
+    const toggleMobileMenu = () => {
+        if (isMobileMenuOpen) {
+            closeMobileMenu();
+        } else {
+            setIsMobileMenuOpen(true);
+            setTimeout(() => {
+                setIsModalOpening(true);
+            }, 10);
         }
     };
     return (
@@ -50,7 +107,10 @@ export default function Header() {
                     <p>Dessinatrice<br/>projeteuse</p>
                 </a>
             </div>
-            <nav>
+            <button className="menu" onClick={toggleMobileMenu} aria-label="Toggle menu">
+                <span className="material-icons icon">menu</span>
+            </button>
+            <nav className="nav">
                 <ul>
                     <li><a href="#services" onClick={() => handleLinkClick('services')}>Services</a></li>
                     <li><a href="#portfolio" onClick={() => handleLinkClick('portfolio')}>Réalisations</a></li>
@@ -58,6 +118,16 @@ export default function Header() {
                     <li><a href="#contact" onClick={() => handleLinkClick('contact')}>Contact</a></li>
                 </ul>
             </nav>
+            {isMobileMenuOpen && (
+                <div className={`modal ${isModalClosing ? 'closing' : ''} ${isModalOpening ? 'open' : ''}`}>
+                    <ul>
+                        <li><a href="#services" onClick={() => handleLinkClick('services')}>Services</a></li>
+                        <li><a href="#portfolio" onClick={() => handleLinkClick('portfolio')}>Réalisations</a></li>
+                        <li><a href="#about" onClick={() => handleLinkClick('about')}>À propos</a></li>
+                        <li><a href="#contact" onClick={() => handleLinkClick('contact')}>Contact</a></li>
+                    </ul>
+                </div>
+            )}
         </header>
     )
 }

@@ -1,15 +1,19 @@
+@use '../../mixins.scss' as *;
+
 footer {
-    padding: 50px 100px;
     background-color: var(--thirdColor);
-    text-align: center;
+    @include textAlign(left, center, center);
+    @include padding(30px, 50px 100px, 50px 100px);
     .content{
         display: flex;
         justify-content: space-between;
-        align-items: center;
+        padding: 0 0 10px 0;
+        @include flexDirection(column-reverse, row, row);
+        @include alignItems(flex-start, center, center);
         .logo {
+            align-self: flex-end;
             font-family: var(--font-ephesis);
-            font-weight: 400;
-            font-size: 128px;
+            font-size: clamp(96px, 96px + (128 - 96) * ((100vw - 768px) / (1440 - 768)), 128px);
         }
     }
 }
