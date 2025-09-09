@@ -28,7 +28,7 @@ export const metadata: Metadata = {
         siteName: 'Mathilde Dubois',
         images: [
         {
-            url: '/social.webp',
+            url: '/social.png',
             width: 1200,
             height: 630,
             alt: 'Mathilde Dubois - Dessinatrice Projeteuse',
@@ -41,7 +41,7 @@ export const metadata: Metadata = {
         card: 'summary_large_image',
         title: "Mathilde Dubois - Dessinatrice Projeteuse",
         description: "Dessinatrice projeteuse experte en conception architecturale dans le Var.",
-        images: ['/social.webp'],
+        images: ['/social.png'],
     },
     robots: {
         index: true,
