@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
@@ -10,17 +10,14 @@ interface Project {
     description: string;
     image: string;
 }
-
 interface CarouselProps {
     projects: Project[];
 }
-
 export default function Carousel({ projects }: CarouselProps) {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [isTransitioning, setIsTransitioning] = useState(false);
     const [isVisible, setIsVisible] = useState(false);
     const carouselRef = useRef<HTMLDivElement>(null);
-
     useEffect(() => {
         const observer = new IntersectionObserver(
             ([entry]) => {
@@ -30,14 +27,11 @@ export default function Carousel({ projects }: CarouselProps) {
             },
             { threshold: 0.1 }
         );
-
         if (carouselRef.current) {
             observer.observe(carouselRef.current);
         }
-
         return () => observer.disconnect();
     }, []);
-
     const handleTransition = (newIndex: number) => {
         setIsTransitioning(true);
         setTimeout(() => {
@@ -47,17 +41,14 @@ export default function Carousel({ projects }: CarouselProps) {
             }, 50);
         }, 300);
     };
-
     const handlePrevious = () => {
         const newIndex = currentIndex === 0 ? projects.length - 1 : currentIndex - 1;
         handleTransition(newIndex);
     };
-
     const handleNext = () => {
         const newIndex = currentIndex === projects.length - 1 ? 0 : currentIndex + 1;
         handleTransition(newIndex);
     };
-
     const handleImageClick = (index: number) => {
         if (index !== currentIndex) {
             handleTransition(index);

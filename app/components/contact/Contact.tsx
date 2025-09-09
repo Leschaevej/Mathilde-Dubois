@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { useState, useEffect, useRef } from 'react';
 import './Contact.scss';
@@ -25,7 +25,6 @@ export default function Contact() {
     const [showError, setShowError] = useState(false);
     const [isVisible, setIsVisible] = useState(false);
     const formRef = useRef<HTMLFormElement>(null);
-    
     useEffect(() => {
         const observer = new IntersectionObserver(
             ([entry]) => {
@@ -35,14 +34,11 @@ export default function Contact() {
             },
             { threshold: 0.1 }
         );
-
         if (formRef.current) {
             observer.observe(formRef.current);
         }
-
         return () => observer.disconnect();
     }, []);
-    
     const validateField = (name: string, value: string): string => {
         switch (name) {
             case 'nom':
@@ -113,17 +109,14 @@ export default function Contact() {
     };
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
-        
         let formattedValue = value;
         if (name === 'telephone') {
             formattedValue = formatPhoneNumber(value);
         }
-        
         setFormData(prev => ({
             ...prev,
             [name]: formattedValue
         }));
-        
         if (hasSubmitted && errors[name as keyof FormErrors]) {
             setErrors(prev => ({
                 ...prev,
@@ -135,17 +128,14 @@ export default function Contact() {
         e.preventDefault();
         setHasSubmitted(true);
         setSubmitMessage('');
-        
         const newErrors: FormErrors = {};
         Object.entries(formData).forEach(([key, value]) => {
             const error = validateField(key, value);
             if (error) newErrors[key as keyof FormErrors] = error;
         });
         setErrors(newErrors);
-        
         if (Object.keys(newErrors).length === 0) {
             setIsSubmitting(true);
-            
             try {
                 const response = await fetch('/api/contact', {
                     method: 'POST',
@@ -154,9 +144,7 @@ export default function Contact() {
                     },
                     body: JSON.stringify(formData),
                 });
-                
                 const result = await response.json();
-                
                 if (result.success) {
                     setShowSuccess(true);
                     setFormData({

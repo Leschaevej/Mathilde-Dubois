@@ -5,9 +5,14 @@
     --secondColor: #ED8761;
     --thirdColor: #EEE4DB;
     --backgroundColor: #FFFBF5;
-    --backgroundColorRgb: 255, 242, 255;
+    --backgroundColorRgb: 255, 252, 245;
     --textColor: #222222;
     --errorColor:#c4301f;
+    --animation-duration-fast: 0.3s;
+    --animation-duration-normal: 0.6s;
+    --animation-duration-slow: 0.8s;
+    --animation-easing: ease-out;
+    --animation-easing-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
 * {
     margin: 0;
@@ -15,6 +20,8 @@
     box-sizing: border-box;
 }
 html {
+    scrollbar-width: thin;
+    scrollbar-color: color-mix(in srgb, var(--mainColor) 60%, transparent) color-mix(in srgb, var(--mainColor) 10%, transparent);
     scroll-behavior: smooth;
     overflow-x: hidden;
 }
@@ -31,7 +38,7 @@ h2{
     font-weight: 400;
     opacity: 0;
     transform: translateX(-50px);
-    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    transition: opacity var(--animation-duration-slow) var(--animation-easing), transform var(--animation-duration-slow) var(--animation-easing);
     &.fade-in {
         opacity: 1;
         transform: translateX(0);
@@ -59,10 +66,13 @@ a {
     font-weight: 400;
     text-decoration: none;
     color: inherit;
-    font-size: 20px;
+    font-size: 24px;
+    transition: color var(--animation-duration-fast) var(--animation-easing);
+    &:hover {
+        color: var(--mainColor);
+    }
 }
 ul {
-    margin-left: 20px;
     gap: 30px;
 }
 ::placeholder{
@@ -89,15 +99,11 @@ button {
 ::-webkit-scrollbar-thumb {
     background: color-mix(in srgb, var(--mainColor) 60%, transparent);
     border-radius: 10px;
-    transition: background 0.3s ease;
+    transition: background var(--animation-duration-fast) var(--animation-easing);
 }
 ::-webkit-scrollbar-thumb:hover {
     background: color-mix(in srgb, var(--mainColor) 80%, transparent);
 }
 ::-webkit-scrollbar-corner {
     background: transparent;
-}
-html {
-    scrollbar-width: thin;
-    scrollbar-color: color-mix(in srgb, var(--mainColor) 60%, transparent) color-mix(in srgb, var(--mainColor) 10%, transparent);
 }

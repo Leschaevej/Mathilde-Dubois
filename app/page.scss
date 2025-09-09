@@ -67,7 +67,7 @@
     }
 }
 .services{
-    padding: clamp(30px, 30px + (100 - 30) * ((100vw - 768px) / (1440 - 768)), 100px) clamp(30px, 30px + (100 - 30) * ((100vw - 768px) / (1440 - 768)), 100px);
+    padding: clamp(30px, 30px + (100 - 30) * ((100vw - 768px) / (1440 - 768)), 100px) clamp(30px, 30px + (100 - 30) * ((100vw - 768px) / (1440 - 768)), 100px) 0;
     @include centeredContent();
     .content{
         display: flex;
@@ -232,11 +232,11 @@
             .info {
                 display: flex;
                 flex-direction: column;
-                gap: 20px;
+                gap: 30px;
                 .item {
                     display: flex;
                     align-items: center;
-                    gap: 15px;
+                    gap: 30px;
                     opacity: 0;
                     transform: translateY(20px);
                     transition: opacity 0.8s ease-out, transform 0.8s ease-out;
