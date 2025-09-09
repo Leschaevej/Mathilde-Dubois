@@ -5,6 +5,7 @@ import Footer from "./components/footer/Footer";
 import Preloader from "./components/preloader/Preloader";
 import "./globals.scss";
 
+export const metadataBase = new URL("https://mathildedubois.fr/");
 export const metadata: Metadata = {
     title: "Mathilde Dubois - Dessinatrice Projeteuse | Conception & Design Architectural",
     description: "Mathilde Dubois, dessinatrice projeteuse experte en conception architecturale. Services de design, plans techniques et accompagnement de projets dans le Var (83). Contactez-moi pour concrétiser vos projets.",
@@ -17,7 +18,6 @@ export const metadata: Metadata = {
         address: false,
         telephone: false,
     },
-    metadataBase: new URL('https://mathildedubois.fr'),
     alternates: {
         canonical: '/',
     },
@@ -26,22 +26,20 @@ export const metadata: Metadata = {
         description: "Dessinatrice projeteuse experte en conception architecturale dans le Var. Concrétisez vos projets avec une professionnelle expérimentée.",
         url: 'https://mathildedubois.fr',
         siteName: 'Mathilde Dubois',
-        images: [
-        {
-            url: '/social.png',
+        images: [{
+            url: "https://mathildedubois.fr/social.png",
             width: 1200,
             height: 630,
-            alt: 'Mathilde Dubois - Dessinatrice Projeteuse',
-        }
-        ],
+            alt: "Mathilde Dubois - Dessinatrice Projeteuse",
+        }],
         locale: 'fr_FR',
         type: 'website',
     },
     twitter: {
-        card: 'summary_large_image',
+        card: "summary_large_image",
         title: "Mathilde Dubois - Dessinatrice Projeteuse",
         description: "Dessinatrice projeteuse experte en conception architecturale dans le Var.",
-        images: ['https://mathildedubois.fr/social.png'],
+        images: ["https://mathildedubois.fr/social.png"],
     },
     robots: {
         index: true,
