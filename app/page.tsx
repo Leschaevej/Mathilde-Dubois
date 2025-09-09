@@ -110,7 +110,7 @@ export default function Home() {
                     </h2>
                     <div className="grid">
                         <div className="card">
-                            <h3>Qu'est ce qu'un<br/>dessinateur en bâtiment ?</h3>
+                            <h3>Qu&apos;est ce qu&apos;un<br/>dessinateur en bâtiment ?</h3>
                             <p>Il réalise les <strong>plans</strong> techniques et les <strong>documents</strong> administratifs</p>
                             <p>Il vous guide dans la partie technique de votre projet, en respectant les règles d’urbanisme en vigueur</p>
                             <p>II peut aussi proposer des <strong>modélisations 3D réalistes</strong> pour vous aider à visualiser votre projet</p>
@@ -125,14 +125,14 @@ export default function Home() {
                             <p>Pour un <strong>accompagnement simple et fiable</strong>, sans passer par un architecte</p>
                         </div>
                         <div className="card">
-                            <h3>A qui s'adresse<br/>mes services ?</h3>
-                            <p>Mes services s'adressent aux <strong>particuliers</strong>, <strong>artisans</strong>, <strong>professionnels</strong> de l'immobilier, <strong>architectes</strong> et <strong>collectivités</strong> pour la réalisation de plans et dossiers conformes, facilitant toutes leurs démarches administratives</p>
+                            <h3>A qui s&apos;adresse<br/>mes services ?</h3>
+                            <p>Mes services s&apos;adressent aux <strong>particuliers</strong>, <strong>artisans</strong>, <strong>professionnels</strong> de l&apos;immobilier, <strong>architectes</strong> et <strong>collectivités</strong> pour la réalisation de plans et dossiers conformes, facilitant toutes leurs démarches administratives</p>
                         </div>
                     </div>
                 </div>
             </section>
             <div className='tagline'>
-                <p className='quote'>"À vos côtés pour donner vie à vos projets, avec clarté, bienveillance et efficacité."</p>
+                <p className='quote'>&ldquo;À vos côtés pour donner vie à vos projets, avec clarté, bienveillance et efficacité.&rdquo;</p>
             </div>
             <section id="services" className="services">
                 <div className="content">
@@ -148,7 +148,7 @@ export default function Home() {
                                     <h3>Construction, Rénovation & Extention</h3>
                                 </div>
                                 <div className='sub'>
-                                    <p>Je m'occupe de l'intégralité de vos formalités administratives : dépôt de permis de construire ou déclarations préalables de travaux</p>
+                                    <p>Je m&apos;occupe de l&apos;intégralité de vos formalités administratives : dépôt de permis de construire ou déclarations préalables de travaux</p>
                                 </div>
                             </div>
                         </div>
@@ -175,7 +175,7 @@ export default function Home() {
                             </div>
                         </div>
                     </div>
-                    <p className='quote'>"J'accompagne particuliers et professionnels de l'immobilier, du premier croquis<br/>jusqu'au dépôt administratif.<br/>Basée à Saint-Aygulf, j'interviens dans toute la région Var et possibilité à distance. "</p>
+                    <p className='quote'>&ldquo;J&apos;accompagne particuliers et professionnels de l&apos;immobilier, du premier croquis<br/>jusqu&apos;au dépôt administratif.<br/>Basée à Saint-Aygulf, j&apos;interviens dans toute la région Var et possibilité à distance. &rdquo;</p>
                 </div>
             </section>
             <section id="portfolio" className="portfolio">
@@ -198,12 +198,12 @@ export default function Home() {
                             <p>Je suis Mathilde Dubois, dessinatrice projeteuse indépendante, passionnée par la conception et la mise en valeur de projets architecturaux, petits ou grands.</p>
                             <p>Basée à domicile, je me déplace facilement pour venir à votre rencontre, comprendre vos besoins et vous accompagner.</p>
                             <p>Je travaille aussi bien pour des particuliers que pour des professionnels de l’immobilier : promoteurs, constructeurs, agences, notaires…</p>
-                            <p>“Mon objectif : transformer vos idées en dossiers clairs, complets et conformes, que ce soit pour une déclaration préalable, un permis de construire, ou pour créer des supports visuels comme des plans 3D ou des affiches de vente.”</p>
+                            <p>&ldquo;Mon objectif : transformer vos idées en dossiers clairs, complets et conformes, que ce soit pour une déclaration préalable, un permis de construire, ou pour créer des supports visuels comme des plans 3D ou des affiches de vente.&rdquo;</p>
                         </div>
                     </div>
                     <div className='right'>
                         <Image src="/portrait.webp" alt="Portrait" width={520} height={373} />
-                        <p className='quote'>"Qu' il s'agisse d' une piscine, d’une extension, d’une maison neuve ou d’un lotissement je m' adapte à chaque projet avec rigueur, écoute et réactivité."</p>
+                        <p className='quote'>&ldquo;Qu&apos; il s&apos;agisse d&apos; une piscine, d&apos;une extension, d&apos;une maison neuve ou d&apos;un lotissement je m&apos; adapte à chaque projet avec rigueur, écoute et réactivité.&rdquo;</p>
                     </div>
                 </div>
             </section>
@@ -215,7 +215,7 @@ export default function Home() {
                             <span className="sub">contact</span>
                         </h2>
                         <p>Un projet en tête ?</p>
-                        <p>Parlons-en autour d'un plan, d'un café ou même par visio.<br/>Je suis là pour vous simplifier les démarches et donner forme à vos idées, avec sérieux, douceur et bonne humeur.</p>
+                        <p>Parlons-en autour d&apos;un plan, d&apos;un café ou même par visio.<br/>Je suis là pour vous simplifier les démarches et donner forme à vos idées, avec sérieux, douceur et bonne humeur.</p>
                         <Map />
                     </div>
                     <div className='right'>

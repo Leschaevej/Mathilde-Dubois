@@ -20,7 +20,6 @@ export default function Contact() {
     const [errors, setErrors] = useState<FormErrors>({});
     const [hasSubmitted, setHasSubmitted] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
-    const [submitMessage, setSubmitMessage] = useState('');
     const [showSuccess, setShowSuccess] = useState(false);
     const [showError, setShowError] = useState(false);
     const [isVisible, setIsVisible] = useState(false);
@@ -127,7 +126,6 @@ export default function Contact() {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setHasSubmitted(true);
-        setSubmitMessage('');
         const newErrors: FormErrors = {};
         Object.entries(formData).forEach(([key, value]) => {
             const error = validateField(key, value);
@@ -163,7 +161,7 @@ export default function Contact() {
                         setShowError(false);
                     }, 5000);
                 }
-            } catch (error) {
+            } catch {
                 setShowError(true);
                 setTimeout(() => {
                     setShowError(false);
