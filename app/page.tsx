@@ -106,7 +106,7 @@ export default function Home() {
                 <div className="content">
                     <h2>
                         <span className="main">Mon rôle dans vos</span><br/>
-                        <span className="sub">projet</span>
+                        <span className="sub">projets</span>
                     </h2>
                     <div className="grid">
                         <div className="card">
@@ -159,7 +159,7 @@ export default function Home() {
                                     <h3>Décoration, Rénovation intérieure</h3>
                                 </div>
                                 <div className='sub'>
-                                    <p>Je vous aide à transformer vos espaces de vie, à redonner de l’harmonie et à créer un intérieur qui vous ressemble, alliant confort, fonctionnalité et esthétique.</p>
+                                    <p>Je vous aide à transformer vos espaces de vie, à redonner de l’harmonie et à créer un intérieur qui vous ressemble, alliant confort, fonctionnalité et esthétique</p>
                                 </div>
                             </div>
                         </div>
@@ -175,7 +175,7 @@ export default function Home() {
                             </div>
                         </div>
                     </div>
-                    <p className='quote'>&ldquo;J&apos;accompagne particuliers et professionnels de l&apos;immobilier, du premier croquis<br/>jusqu&apos;au dépôt administratif.<br/>Basée à Saint-Aygulf, j&apos;interviens dans toute la région Var et possibilité à distance. &rdquo;</p>
+                    <p className='quote'>&ldquo;J&apos;accompagne particuliers et professionnels de l&apos;immobilier, du premier croquis<br/>jusqu&apos;au dépôt administratif.<br/>Implantée à Saint-Aygulf, j&apos;interviens dans toute la région Var et possibilité à distance. &rdquo;</p>
                 </div>
             </section>
             <section id="portfolio" className="portfolio">

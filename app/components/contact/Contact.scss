@@ -76,6 +76,7 @@
         font-size: 20px;
         margin-top: 25px;
         cursor: pointer;
+        color: var(--textColor);
         transition: background-color 0.3s ease;
         opacity: 0;
         transform: translateX(50px);

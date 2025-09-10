@@ -20,7 +20,7 @@
         max-width: 100%;
         overflow: hidden;
         @media (max-width: 768px) {
-            height: 70vw;
+            height: 40vw;
             gap: 10px;
             overflow: visible;
         }
@@ -40,7 +40,7 @@
                 filter: blur(0px);
                 @media (max-width: 768px) {
                     width: 70vw;
-                    height: 70vw;
+                    height: 40vw;
                 }
             }
         }
@@ -54,7 +54,7 @@
                 filter: blur(1px);
                 @media (max-width: 768px) {
                     width: 70vw;
-                    height: 70vw;
+                    height: 40vw;
                     filter: none;
                 }
             }
@@ -73,7 +73,7 @@
                 filter: blur(1px);
                 @media (max-width: 768px) {
                     width: 70vw;
-                    height: 70vw;
+                    height: 40vw;
                     filter: none;
                 }
             }
