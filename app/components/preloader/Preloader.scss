@@ -12,6 +12,7 @@
     z-index: 9999;
     transform: translateY(0);
     transition: transform 0.8s ease-in-out;
+    overflow: visible;
     &.slide-up {
         transform: translateY(-100%);
     }
