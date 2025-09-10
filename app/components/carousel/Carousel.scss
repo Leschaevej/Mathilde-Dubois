@@ -100,9 +100,11 @@
         }
         h3 {
             font-family: inherit;
-            font-size: clamp(36px, 36px + (48 - 36) * ((100vw - 768px) / (1440 - 768)), 48px);
+            height: clamp(102px, calc(102px + (110 - 102) * ((100vw - 768px) / (1440 - 768))), 110px);
+            font-size: clamp(30px, 30px + (48 - 30) * ((100vw - 768px) / (1440 - 768)), 48px);
         }
         p {
+            height: clamp(116px, calc(152px + (116 - 152) * ((100vw - 768px) / (1440 - 768))), 152px);
             font-size: clamp(16px, 16px + (24 - 16) * ((100vw - 768px) / (1440 - 768)), 24px);
         }
     }

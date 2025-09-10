@@ -1,14 +1,14 @@
 [
   {
     "id": 1,
-    "title": "Lotissement au cœur du Haut-Var",
-    "description": "Un projet pensé pour allier confort et intégration paysagère. Chaque maison bénéficie d'une conception unique, adaptée au terrain, pour offrir luminosité, vues dégagées et bien être.",
+    "title": "Lotissement de 4 maisons au cœur du Haut Var",
+    "description": "Un projet combinant confort, luminosité et intégration paysagère, avec une conception adaptée à chaque terrain.",
     "image": "/projects/project1.webp"
   },
   {
     "id": 2,
-    "title": "Maison bioclimatique moderne",
-    "description": "Architecture contemporaine alliant élégance et performance bioclimatique. Implantation optimale favorisant l'ensoleillement naturel et les économies d'énergie pour un confort optimal.",
+    "title": "Maison à toiture 2 pans, élégante et contemporaine",
+    "description": "Pensée dans une démarche bioclimatique, elle allie lumière naturelle et performance thermique. Un projet qui combine modernité et simplicité des lignes.",
     "image": [
         "/projects/project2-1.webp",
         "/projects/project2-2.webp"
@@ -16,14 +16,14 @@
   },
   {
     "id": 3,
-    "title": "Bâtiment agricole photovoltaïque",
-    "description": "Bâtiment agricole optimisé avec panneaux photovoltaïques. Stockage robuste et énergie renouvelable pour une exploitation moderne, durable et performante.",
+    "title": "Bâtiment agricole",
+    "description": "Ce bâtiment agricole a été conçu pour offrir un espace de stockage parfaitement adapté aux besoins de l'exploitation. Un projet alliant performance et durabilité, avec sa toiture équipée de panneaux photovoltaïques",
     "image": "/projects/project3.webp"
   },
   {
     "id": 4,
-    "title": "Réhabilitation d'extension",
-    "description": "Réhabilitation d'une extension traditionnelle en cuisine extérieure. Intégration parfaite dans l'environnement naturel du Haut-Var pour un art de vivre authentique.",
+    "title": "Réhabilitation d'une extension oubliée",
+    "description": "Un projet sur mesure qui conjugue authenticité et confort moderne, transformant l'espace en cuisine et coin repas extérieur, au cœur du paysage provençal.",
     "image": "/projects/project4.webp"
   }
 ]

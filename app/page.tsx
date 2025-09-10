@@ -195,9 +195,8 @@ export default function Home() {
                             <span className="sub">suis-je</span>
                         </h2>
                         <div className='box'>
-                            <p>Je suis Mathilde Dubois, dessinatrice projeteuse indépendante, passionnée par la conception et la mise en valeur de projets architecturaux, petits ou grands.</p>
-                            <p>Basée à domicile, je me déplace facilement pour venir à votre rencontre, comprendre vos besoins et vous accompagner.</p>
-                            <p>Je travaille aussi bien pour des particuliers que pour des professionnels de l’immobilier : promoteurs, constructeurs, agences, notaires…</p>
+                            <p>Mathilde Dubois, dessinatrice projeteuse indépendante, passionnée par la conception et la mise en valeur de projets architecturaux, petits ou grands.</p>
+                            <p>Je me déplace facilement pour venir à votre rencontre, comprendre vos besoins et vous accompagner. Particuliers ou professionnels de l' immobilier (promoteurs, constructeurs, agences, notaires… ) : chaque projet bénéficie du même engagement.</p>
                             <p>&ldquo;Mon objectif : transformer vos idées en dossiers clairs, complets et conformes, que ce soit pour une déclaration préalable, un permis de construire, ou pour créer des supports visuels comme des plans 3D ou des affiches de vente.&rdquo;</p>
                         </div>
                     </div>
