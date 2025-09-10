@@ -121,4 +121,36 @@
             color: var(--mainColor);
         }
     }
+    .select {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        background: transparent;
+        color: var(--backgroundColor);
+        border: none;
+        height: 100%;
+        font-size: 36px;
+        cursor: pointer;
+        z-index: 4;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background-color 0.3s ease;
+        width: clamp(50px, 50px + (100 - 50) * ((100vw - 768px) / (1440 - 768)), 100px);
+        &:hover {
+            background: rgba(0, 0, 0, 0.7);
+        }
+        &.prev {
+            left: calc(50% - clamp(240px, 55.56vw, 800px) / 2);
+            @media (max-width: 768px) {
+                left: calc(50% - 35vw);
+            }
+        }
+        &.next {
+            right: calc(50% - clamp(240px, 55.56vw, 800px) / 2);
+            @media (max-width: 768px) {
+                right: calc(50% - 35vw);
+            }
+        }
+    }
 }

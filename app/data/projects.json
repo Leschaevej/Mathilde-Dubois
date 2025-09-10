@@ -9,7 +9,10 @@
     "id": 2,
     "title": "Maison bioclimatique moderne",
     "description": "Architecture contemporaine alliant élégance et performance bioclimatique. Implantation optimale favorisant l'ensoleillement naturel et les économies d'énergie pour un confort optimal.",
-    "image": "/projects/project2.webp"
+    "image": [
+        "/projects/project2-1.webp",
+        "/projects/project2-2.webp"
+    ]
   },
   {
     "id": 3,
