@@ -7,11 +7,18 @@ interface PreloaderProps {
     children?: React.ReactNode;
 }
 export default function Preloader({ children }: PreloaderProps) {
-    const [isLoading, setIsLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(false);
     const [showLogo, setShowLogo] = useState(false);
     const [slideUp, setSlideUp] = useState(false);
     const [showContent, setShowContent] = useState(false);
+    
     useEffect(() => {
+        const hasVisited = sessionStorage.getItem('hasVisited');
+        
+        if (!hasVisited) {
+            setIsLoading(true);
+            sessionStorage.setItem('hasVisited', 'true');
+            
             const logoTimer = setTimeout(() => {
                 setShowLogo(true);
             }, 200);
@@ -24,12 +31,16 @@ export default function Preloader({ children }: PreloaderProps) {
             const hideTimer = setTimeout(() => {
                 setIsLoading(false);
             }, 2000);
+            
             return () => {
                 clearTimeout(logoTimer);
                 clearTimeout(contentTimer);
                 clearTimeout(slideTimer);
                 clearTimeout(hideTimer);
             };
+        } else {
+            setShowContent(true);
+        }
     }, []);
     return (
         <>
