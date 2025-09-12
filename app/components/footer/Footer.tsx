@@ -7,7 +7,7 @@ export default function Footer() {
                 <a href="/legals">Mentions légales</a>
                 <p className="logo">MD</p>
             </div>
-            <p>© 2025 Mathilde Dubois by Skybound Studio</p>
+            <p>© 2025 Mathilde Dubois by <a href="https://skybound-studio.vercel.app/" target="_blank" rel="noopener noreferrer">Skybound Studio</a></p>
         </footer>
     )
 }
