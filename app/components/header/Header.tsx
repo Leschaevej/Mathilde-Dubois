@@ -86,7 +86,7 @@ export default function Header() {
     return (
         <header className={isVisible ? 'visible' : 'hidden'}>
             <div className="brand">
-                <a href="#" className="link">
+                <a href="/" className="link">
                     <h1>
                         <span className="logo">MD</span>
                         <span className="name">Mathilde Dubois</span>
@@ -99,19 +99,19 @@ export default function Header() {
             </button>
             <nav className="nav">
                 <ul>
-                    <li><a href="#services" onClick={() => handleLinkClick('services')}>Services</a></li>
-                    <li><a href="#portfolio" onClick={() => handleLinkClick('portfolio')}>Réalisations</a></li>
-                    <li><a href="#about" onClick={() => handleLinkClick('about')}>À propos</a></li>
-                    <li><a href="#contact" onClick={() => handleLinkClick('contact')}>Contact</a></li>
+                    <li><a href="/#services" onClick={() => handleLinkClick('services')}>Services</a></li>
+                    <li><a href="/#portfolio" onClick={() => handleLinkClick('portfolio')}>Réalisations</a></li>
+                    <li><a href="/#about" onClick={() => handleLinkClick('about')}>À propos</a></li>
+                    <li><a href="/#contact" onClick={() => handleLinkClick('contact')}>Contact</a></li>
                 </ul>
             </nav>
             {isMobileMenuOpen && (
                 <div className={`modal ${isModalClosing ? 'closing' : ''} ${isModalOpening ? 'open' : ''}`}>
                     <ul>
-                        <li><a href="#services" onClick={() => handleLinkClick('services')}>Services</a></li>
-                        <li><a href="#portfolio" onClick={() => handleLinkClick('portfolio')}>Réalisations</a></li>
-                        <li><a href="#about" onClick={() => handleLinkClick('about')}>À propos</a></li>
-                        <li><a href="#contact" onClick={() => handleLinkClick('contact')}>Contact</a></li>
+                        <li><a href="/#services" onClick={() => handleLinkClick('services')}>Services</a></li>
+                        <li><a href="/#portfolio" onClick={() => handleLinkClick('portfolio')}>Réalisations</a></li>
+                        <li><a href="/#about" onClick={() => handleLinkClick('about')}>À propos</a></li>
+                        <li><a href="/#contact" onClick={() => handleLinkClick('contact')}>Contact</a></li>
                     </ul>
                 </div>
             )}

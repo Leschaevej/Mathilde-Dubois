@@ -10,6 +10,18 @@ import { useEffect } from 'react';
 
 export default function Home() {
     useEffect(() => {
+        const hash = window.location.hash;
+        if (hash) {
+            setTimeout(() => {
+                const element = document.querySelector(hash);
+                if (element) {
+                    element.scrollIntoView({ 
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            }, 100);
+        }
         const observerOptions = {
             threshold: 0.1,
             rootMargin: '0px 0px -50px 0px'
@@ -175,7 +187,7 @@ export default function Home() {
                             </div>
                         </div>
                     </div>
-                    <p className='quote'>&ldquo;J&apos;accompagne particuliers et professionnels de l&apos;immobilier, du premier croquis<br/>jusqu&apos;au dépôt administratif.<br/>Implantée à Saint-Aygulf, j&apos;interviens dans toute la région Var et possibilité à distance. &rdquo;</p>
+                    <p className='quote'>&ldquo;J&apos;accompagne particuliers et professionnels de l&apos;immobilier, du premier croquis<br/>jusqu&apos;au dépôt administratif.<br/>Installée à Saint-Aygulf, j&apos;interviens dans toute la région Var et peux répondre à vos demandes à distance. &rdquo;</p>
                 </div>
             </section>
             <section id="portfolio" className="portfolio">

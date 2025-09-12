@@ -3,6 +3,10 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
     devIndicators: false,
     productionBrowserSourceMaps: true,
+    images: {
+        formats: ['image/webp', 'image/avif'],
+        unoptimized: false,
+    },
     webpack(config) {
         const fileLoaderRule = config.module.rules.find(
         (rule: any) => rule.test instanceof RegExp && rule.test.test(".svg")
