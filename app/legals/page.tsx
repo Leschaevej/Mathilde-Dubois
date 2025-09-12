@@ -1,6 +1,12 @@
+"use client";
+
 import "./page.scss";
 
 export default function Legals() {
+    const handleCookieSettings = () => {
+        // Déclencher un événement personnalisé pour ouvrir la modal en mode "gérer"
+        window.dispatchEvent(new CustomEvent('openCookieModal', { detail: { mode: 'manage' } }));
+    };
     return (
         <>
         <section className="legals">
@@ -73,6 +79,13 @@ export default function Legals() {
             <h3>Durée de validité de votre accord</h3>
             <p>Votre accord concernant le dépôt des cookies de mesure d&apos;audience est valable 13 mois. Passé ce délai, un bandeau vous informant de l&apos;utilisation de ces cookies et vous permettant de vous y opposer réapparaîtra sur la page d&apos;accueil. Vous pouvez également vous opposer au dépôt de ces cookies à tout moment via le lien prévu à cet effet dans la section « mentions légales » du site.</p>
             <p>Concernant les cookies générés par les réseaux sociaux lors du partage de contenus, la durée de validité est fixée par ces réseaux. Nous vous invitons à consulter leurs politiques de protection de la vie privée pour connaître la durée et les informations recueillies grâce à leurs boutons de partage.</p>
+            
+            <div className="cookie-settings">
+                <button onClick={handleCookieSettings} className="cookie-settings-btn">
+                    <span className="material-icons">cookie</span>
+                    <span>Gérer mes cookies</span>
+                </button>
+            </div>
         </section>
         </>
     );

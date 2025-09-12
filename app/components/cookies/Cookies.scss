@@ -1,0 +1,152 @@
+@use '../../mixins.scss' as *;
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 10;
+    padding: 30px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    .modal {
+        display: flex;
+        flex-direction: column;
+        background-color: var(--backgroundColor);
+        border-radius: 30px;
+        max-width: 600px;
+        width: 100%;
+        max-height: 80vh;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        padding: 30px;
+        @include gap (10px, 30px, 30px);
+        .header {
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+            gap: 10px;
+            h2 {
+                opacity: 1;
+                font-family: var(--font-montserrat);
+                font-size: clamp(20px, 20px + (24 - 20) * ((100vw - 768px) / (1440 - 768)), 24px);
+                color: var(--textColor);
+                transform: translateX(0);
+            }
+            p{
+                font-size: clamp(16px, 16px + (20 - 16) * ((100vw - 768px) / (1440 - 768)), 20px);
+            }
+        }
+        .content {
+            display: flex;
+            flex-direction: column;
+            @include gap (10px, 30px, 30px);
+            .cookie {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+                border: 3px solid var(--mainColor);
+                @include padding (10px, 30px, 30px);
+                .top {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 10px;
+                    h3 {
+                        font-family: var(--font-montserrat);
+                        font-size: clamp(18px, 18px + (20 - 18) * ((100vw - 768px) / (1440 - 768)), 20px);
+                        color: var(--textColor);
+                        margin: 0;
+                    }
+                    .text{
+                        font-family: var(--font-montserrat);
+                    }
+                    .switch {
+                        display: flex;
+                        align-items: center;
+                        gap: 12px;
+                        .toggle {
+                            width: 50px;
+                            height: 30px;
+                            background-color: var(--backgroundColor);
+                            border-radius: 15px;
+                            position: relative;
+                            cursor: pointer;
+                            border: 3px solid var(--mainColor);
+                            transition: background-color var(--animation-duration-fast) var(--animation-easing);
+                            &.enabled {
+                                background-color: var(--mainColor);
+                                .dot {
+                                    transform: translateX(20px);
+                                    background-color: var(--backgroundColor);
+                                }
+                            }
+                            .dot {
+                                width: 22px;
+                                height: 22px;
+                                background-color: var(--mainColor);
+                                border-radius: 50%;
+                                position: absolute;
+                                top: 2px;
+                                left: 2px;
+                                transition: transform var(--animation-duration-fast) var(--animation-easing);
+                            }
+                        }
+                    }
+                }
+                p {
+                    font-size: 16px;
+                }
+            }
+        }
+        .actions {
+            display: flex;
+            @include gap (10px, 30px, 30px);
+            @include flexDirection (column, row, row);
+            button {
+                font-family: var(--font-montserrat);
+                font-size: clamp(16px, 16px + (20 - 16) * ((100vw - 768px) / (1440 - 768)), 20px);
+                padding: 12px 20px;
+                border: 2px solid;
+                cursor: pointer;
+                transition: all var(--animation-duration-fast) var(--animation-easing);
+                flex: 1;
+                &.accept {
+                    background-color: var(--mainColor);
+                    border-color: var(--mainColor);
+                    color: white;
+                    &:hover {
+                        background-color: var(--secondColor);
+                        border-color: var(--secondColor);
+                    }
+                }
+                &.minimum {
+                    background-color: var(--backgroundColor);
+                    border-color: var(--mainColor);
+                    color: var(--mainColor);
+                    &:hover {
+                        background-color: var(--thirdColor);
+                    }
+                }
+                &.manage {
+                    background-color: transparent;
+                    border-color: var(--textColor);
+                    color: var(--textColor);
+                    &:hover {
+                        background-color: var(--textColor);
+                        color: var(--backgroundColor);
+                    }
+                }
+                &.save {
+                    background-color: var(--mainColor);
+                    border-color: var(--mainColor);
+                    color: white;
+                    &:hover {
+                        background-color: var(--secondColor);
+                        border-color: var(--secondColor);
+                    }
+                }
+            }
+        }
+    }
+}

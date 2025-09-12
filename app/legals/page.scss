@@ -18,4 +18,36 @@
     p{
         font-size: 20px;
     }
+    
+    .cookie-settings {
+        margin-top: 40px;
+        display: flex;
+        justify-content: center;
+        
+        .cookie-settings-btn {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background-color: var(--mainColor);
+            color: white;
+            border: 2px solid var(--mainColor);
+            padding: 15px 25px;
+            border-radius: 8px;
+            font-family: var(--font-montserrat);
+            font-size: 18px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all var(--animation-duration-fast) var(--animation-easing);
+            
+            &:hover {
+                background-color: var(--secondColor);
+                border-color: var(--secondColor);
+                transform: translateY(-2px);
+            }
+            
+            .material-icons {
+                font-size: 24px;
+            }
+        }
+    }
 }

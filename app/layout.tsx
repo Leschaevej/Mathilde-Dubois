@@ -1,8 +1,11 @@
 import type { Metadata } from "next";
+import { Analytics } from "@vercel/analytics/next"
+import { SpeedInsights } from "@vercel/speed-insights/next"
 import { ephesis, satisfy, montserrat } from './font'
 import Header from "./components/header/Header";
 import Footer from "./components/footer/Footer";
 import Preloader from "./components/preloader/Preloader";
+import Cookies from "./components/cookies/Cookies";
 import "./globals.scss";
 
 export const metadataBase = new URL("https://mathildedubois.fr/");
@@ -108,6 +111,9 @@ export default function RootLayout({
                 {children}
                 <Footer />
             </Preloader>
+            <Cookies />
+            <Analytics />
+            <SpeedInsights />
         </body>
         </html>
     )
