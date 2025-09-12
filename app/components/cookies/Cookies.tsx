@@ -71,9 +71,10 @@ export default function Cookies() {
         }
 
         // Écouter l'événement pour ouvrir la modal depuis la page legals
-        const handleOpenModal = (event: any) => {
+        const handleOpenModal = (event: Event) => {
             setShowModal(true);
-            if (event.detail?.mode === 'manage') {
+            const customEvent = event as CustomEvent;
+            if (customEvent.detail?.mode === 'manage') {
                 setShowContent(true); // Ouvrir directement en mode gérer
             } else {
                 setShowContent(false); // Reset à l'état initial
@@ -129,7 +130,7 @@ export default function Cookies() {
                     <div className="modal">
                         <div className="header">
                             <h2>Gestion des cookies</h2>
-                            <p>Nous utilisons des cookies pour améliorer votre expérience et mesurer l'audience.</p>
+                            <p>Nous utilisons des cookies pour améliorer votre expérience et mesurer l&apos;audience.</p>
                         </div>
                         {showContent && (
                             <div className="content">
@@ -155,7 +156,7 @@ export default function Cookies() {
                                         </div>
                                     </div>
                                 </div>
-                                <p>Cookies pour analyser l'audience du site.</p>
+                                <p>Cookies pour analyser l&apos;audience du site.</p>
                             </div>
                             </div>
                         )}
