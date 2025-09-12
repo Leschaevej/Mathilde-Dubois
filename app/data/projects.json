@@ -11,14 +11,20 @@
     "description": "Pensée dans une démarche bioclimatique, elle allie lumière naturelle et performance thermique. Un projet qui combine modernité et simplicité des lignes.",
     "image": [
         "/projects/project2-1.webp",
-        "/projects/project2-2.webp"
+        "/projects/project2-2.webp",
+        "/projects/project2-3.webp",
+        "/projects/project2-4.webp"
     ]
   },
   {
     "id": 3,
     "title": "Bâtiment agricole",
     "description": "Ce bâtiment agricole a été conçu pour offrir un espace de stockage parfaitement adapté aux besoins de l'exploitation. Un projet alliant performance et durabilité, avec sa toiture équipée de panneaux photovoltaïques",
-    "image": "/projects/project3.webp"
+    "image": [
+        "/projects/project3-1.webp",
+        "/projects/project3-2.webp",
+        "/projects/project3-3.webp"
+        ]
   },
   {
     "id": 4,
