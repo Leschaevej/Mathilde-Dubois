@@ -74,6 +74,7 @@ export default function RootLayout({
             <link rel="manifest" href="/site.webmanifest" />
             <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet" />
             <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+            <script src="https://cdn.jsdelivr.net/npm/css-vars-ponyfill@2"></script>
             <script
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{
@@ -104,6 +105,9 @@ export default function RootLayout({
                     })
                 }}
             />
+            <script dangerouslySetInnerHTML={{
+                __html: `cssVars();`
+            }} />
         </head>
         <body className={`${montserrat.variable} ${ephesis.variable} ${satisfy.variable}`}>
             <Preloader>
