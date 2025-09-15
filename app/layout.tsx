@@ -74,7 +74,7 @@ export default function RootLayout({
             <link rel="manifest" href="/site.webmanifest" />
             <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet" />
             <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
-            <script src="https://cdn.jsdelivr.net/npm/css-vars-ponyfill@2"></script>
+            <script src="https://cdn.jsdelivr.net/npm/css-vars-ponyfill@2" async></script>
             <script
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{
