@@ -12,10 +12,10 @@ export const metadataBase = new URL("https://mathildedubois.fr/");
 export const metadata: Metadata = {
     title: "Mathilde Dubois - Dessinatrice Projeteuse | Conception & Design Architectural",
     description: "Mathilde Dubois, dessinatrice projeteuse experte en conception architecturale. Services de design, plans techniques et accompagnement de projets dans le Var (83). Contactez-moi pour concrétiser vos projets.",
-    keywords: "Les perspectives de Mathilde, perspectives de Mathilde, dessinatrice projeteuse, conception architecturale, plans techniques, design, architecture, Var, Saint-Aygulf, Fréjus, Mathilde Dubois",
+    keywords: "Les perspectives de Mathilde, perspectives de Mathilde, dessinatrice projeteuse, conception architecturale, plans techniques, design, architecture, Var, Saint-Aygulf, Fréjus, Mathilde Dubois, dessinateur bâtiment, dessinateur bâtiment indépendant, dessinateur bâtiment freelance, permis de construire sans architecte, déclaration préalable travaux, plans maison individuelle, plan extension maison, plan rénovation maison, permis piscine, PCMI, plan garage, plan carport, plan abri jardin, plan abri voiture, plan lotissement, plan bâtiment agricole, aide dépôt permis de construire, constitution dossier mairie travaux, dessinateur bâtiment particulier, dessinateur bâtiment investisseur, dessinateur bâtiment promoteur, plan aménagement intérieur, maison neuve sans architecte, déclaration travaux terrasse",
     authors: [{ name: "Mathilde Dubois" }],
-    creator: "Mathilde Dubois",
-    publisher: "Mathilde Dubois",
+    creator: "Skybound Studio",
+    publisher: "Skybound Studio",
     formatDetection: {
         email: false,
         address: false,
