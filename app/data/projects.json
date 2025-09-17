@@ -31,5 +31,16 @@
     "title": "Réhabilitation d'une extension oubliée",
     "description": "Un projet sur mesure qui conjugue authenticité et confort moderne, transformant l'espace en cuisine et coin repas extérieur, au cœur du paysage provençal.",
     "image": "/projects/project4.webp"
+  },
+  {
+    "id": 5,
+    "title": "Conception d' une maison familiale au design cubique et épuré",
+    "description": "Projet PCMI en instruction, implanté dans un quartier dynamique de Saint-Raphaël.",
+    "image": [
+        "/projects/project5-1.webp",
+        "/projects/project5-2.webp",
+        "/projects/project5-3.webp",
+        "/projects/project5-4.webp"
+        ]
   }
 ]
