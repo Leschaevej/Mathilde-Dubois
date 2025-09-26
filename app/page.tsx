@@ -2,26 +2,32 @@
 
 import Image from 'next/image'
 import "./page.scss";
-import Carousel from './components/carousel/Carousel';
-import Map from './components/map/Map';
 import Contact from './components/contact/Contact';
 import projectsData from './data/projects.json';
-import { useEffect } from 'react';
+import { useEffect, lazy, Suspense } from 'react';
 
-export default function Home() {
+const Carousel = lazy(() => import('./components/carousel/Carousel'));
+const Map = lazy(() => import('./components/map/Map'));
+
+function useHashNavigation() {
     useEffect(() => {
         const hash = window.location.hash;
         if (hash) {
             setTimeout(() => {
                 const element = document.querySelector(hash);
                 if (element) {
-                    element.scrollIntoView({ 
+                    element.scrollIntoView({
                         behavior: 'smooth',
                         block: 'start'
                     });
                 }
             }, 100);
         }
+    }, []);
+}
+
+function useScrollAnimations() {
+    useEffect(() => {
         const observerOptions = {
             threshold: 0.1,
             rootMargin: '0px 0px -50px 0px'
@@ -57,6 +63,7 @@ export default function Home() {
                 }
             });
         }, observerOptions);
+
         const h2Elements = document.querySelectorAll('h2');
         const cardElements = document.querySelectorAll('.card');
         const carouselElement = document.querySelector('.carousel');
@@ -64,6 +71,7 @@ export default function Home() {
         const portraitElement = document.querySelector('.about img');
         const aboutQuoteElement = document.querySelector('.about .quote');
         const contactParagraphs = document.querySelectorAll('.contact .left p');
+
         const checkForMap = () => {
             const mapElement = document.querySelector('.wrapper');
             if (mapElement) {
@@ -73,10 +81,12 @@ export default function Home() {
             }
         };
         checkForMap();
+
         const contactForm = document.querySelector('.contact .right > div:first-child');
         const formGroups = document.querySelectorAll('.form .group');
         const submitButton = document.querySelector('.form .submit');
         const contactItems = document.querySelectorAll('.contact .item');
+
         h2Elements.forEach((h2) => observer.observe(h2));
         cardElements.forEach((card) => observer.observe(card));
         if (carouselElement) observer.observe(carouselElement);
@@ -88,6 +98,7 @@ export default function Home() {
         formGroups.forEach((group) => observer.observe(group));
         if (submitButton) observer.observe(submitButton);
         contactItems.forEach((item) => observer.observe(item));
+
         return () => {
             h2Elements.forEach((h2) => observer.unobserve(h2));
             cardElements.forEach((card) => observer.unobserve(card));
@@ -104,6 +115,11 @@ export default function Home() {
             contactItems.forEach((item) => observer.unobserve(item));
         };
     }, []);
+}
+
+export default function Home() {
+    useHashNavigation();
+    useScrollAnimations();
     return (
         <>
             <section className="hero">
@@ -196,7 +212,9 @@ export default function Home() {
                         <span className="main">Mes</span><br/>
                         <span className="sub">réalisations</span>
                     </h2>
-                    <Carousel projects={projectsData} />
+                    <Suspense fallback={<div className="carousel loading">Chargement...</div>}>
+                        <Carousel projects={projectsData} />
+                    </Suspense>
                 </div>
             </section>
             <section id="about" className="about">
@@ -227,7 +245,9 @@ export default function Home() {
                         </h2>
                         <p>Un projet en tête ?</p>
                         <p>Parlons-en autour d&apos;un plan, d&apos;un café ou même par visio.<br/>Je suis là pour vous simplifier les démarches et donner forme à vos idées, avec sérieux, douceur et bonne humeur.</p>
-                        <Map />
+                        <Suspense fallback={<div className="wrapper loading">Chargement de la carte...</div>}>
+                            <Map />
+                        </Suspense>
                     </div>
                     <div className='right'>
                         <Contact />

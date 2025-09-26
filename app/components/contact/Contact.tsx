@@ -161,7 +161,8 @@ export default function Contact() {
                         setShowError(false);
                     }, 5000);
                 }
-            } catch {
+            } catch (error) {
+                console.error('Erreur envoi:', error);
                 setShowError(true);
                 setTimeout(() => {
                     setShowError(false);
