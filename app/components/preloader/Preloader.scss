@@ -12,17 +12,21 @@
     z-index: 9999;
     transform: translateY(0);
     transition: transform 0.8s ease-in-out;
+    overflow: visible;
     &.slide-up {
         transform: translateY(-100%);
     }
     .logo {
         font-family: var(--font-ephesis);
-        font-size: clamp(120px, 120px + (250 - 120) * ((100vw - 768px) / (1440 - 768)), 250px);
+        font-size: clamp(120px, 20vw, 250px);
         opacity: 0;
         transition: opacity 0.8s ease-out;
+        text-align: center;
+        padding: 0 40px;
+        overflow: visible;
+        white-space: nowrap;
         &.show {
             opacity: 1;
-            overflow: visible;
         }
     }
 }
