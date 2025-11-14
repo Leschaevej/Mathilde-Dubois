@@ -7,6 +7,21 @@ const nextConfig: NextConfig = {
         formats: ['image/webp', 'image/avif'],
         unoptimized: false,
     },
+    async redirects() {
+        return [
+            {
+                source: '/:path*',
+                has: [
+                    {
+                        type: 'host',
+                        value: 'mathilde-dubois.fr',
+                    },
+                ],
+                destination: 'https://www.mathilde-dubois.fr/:path*',
+                permanent: true,
+            },
+        ];
+    },
     headers: async () => {
         return [
             {
