@@ -8,6 +8,8 @@
     @include centeredContent();
     h2{
         font-size: 64px;
+        opacity: 1;
+        transform: none;
     }
     h3{
         font-size: 36px;
