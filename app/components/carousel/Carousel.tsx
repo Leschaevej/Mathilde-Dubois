@@ -21,7 +21,9 @@ export default function Carousel({ projects }: CarouselProps) {
     const [isVisible, setIsVisible] = useState(false);
     const [touchStart, setTouchStart] = useState<number | null>(null);
     const [isDragging, setIsDragging] = useState(false);
+    const [hasMoved, setHasMoved] = useState(false);
     const [rotation, setRotation] = useState(0);
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const carouselRef = useRef<HTMLDivElement>(null);
     const containerRef = useRef<HTMLDivElement>(null);
     const anglePerProject = 360 / projects.length;
@@ -54,19 +56,26 @@ export default function Carousel({ projects }: CarouselProps) {
         }, 600);
     };
     const onTouchStart = (e: React.TouchEvent) => {
+        if (isModalOpen) return; // Ne pas gérer le touch si la modale est ouverte
         const target = e.target as HTMLElement;
         if (target.closest('.info') || target.closest('.controls')) return;
         setTouchStart(e.targetTouches[0].clientX);
         setIsDragging(true);
+        setHasMoved(false);
     };
     const onTouchMove = (e: React.TouchEvent) => {
+        if (isModalOpen) return; // Ne pas gérer le touch si la modale est ouverte
         if (!isDragging || touchStart === null) return;
         const currentX = e.targetTouches[0].clientX;
         const diff = currentX - touchStart;
+        if (Math.abs(diff) > 1) {
+            setHasMoved(true);
+        }
         const rotationChange = (diff / window.innerWidth) * 180;
         setRotation(rotationChange);
     };
     const onTouchEnd = () => {
+        if (isModalOpen) return; // Ne pas gérer le touch si la modale est ouverte
         if (!isDragging) return;
         const rotationDegrees = rotation;
         const projectsToMove = Math.round(rotationDegrees / anglePerProject);
@@ -85,11 +94,15 @@ export default function Carousel({ projects }: CarouselProps) {
         e.preventDefault();
         setTouchStart(e.clientX);
         setIsDragging(true);
+        setHasMoved(false);
     };
     useEffect(() => {
         const handleMouseMove = (e: MouseEvent) => {
             if (!isDragging || touchStart === null) return;
             const diff = e.clientX - touchStart;
+            if (Math.abs(diff) > 1) {
+                setHasMoved(true);
+            }
             const rotationChange = (diff / window.innerWidth) * 360;
             setRotation(rotationChange);
         };
@@ -142,7 +155,10 @@ export default function Carousel({ projects }: CarouselProps) {
         handleImageClick(newIndex);
     };
     const handleImageClick = (clickedIndex: number) => {
-        if (clickedIndex !== currentIndex && !isTransitioning) {
+        if (clickedIndex === currentIndex && !isTransitioning && !hasMoved) {
+            // Si on clique sur l'image centrale, ouvrir la modale
+            setIsModalOpen(true);
+        } else if (clickedIndex !== currentIndex && !isTransitioning && !hasMoved) {
             setIsTransitioning(true);
             setCurrentIndex(clickedIndex);
             setTimeout(() => {
@@ -151,14 +167,93 @@ export default function Carousel({ projects }: CarouselProps) {
             setTimeout(() => setIsTransitioning(false), 600);
         }
     };
+
+    const closeModal = () => {
+        setIsModalOpen(false);
+    };
+
+    // Bloquer le scroll et gérer la touche Échap
+    useEffect(() => {
+        if (isModalOpen) {
+            const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+
+            document.documentElement.style.overflow = 'hidden';
+            document.body.style.overflow = 'hidden';
+
+            if (scrollbarWidth > 0) {
+                document.body.style.paddingRight = `${scrollbarWidth}px`;
+            }
+
+            const handleEscape = (e: KeyboardEvent) => {
+                if (e.key === 'Escape') {
+                    closeModal();
+                }
+            };
+
+            document.addEventListener('keydown', handleEscape);
+
+            return () => {
+                document.documentElement.style.overflow = '';
+                document.body.style.overflow = '';
+                document.body.style.paddingRight = '';
+                document.removeEventListener('keydown', handleEscape);
+            };
+        }
+    }, [isModalOpen]);
+
+    const handleModalPrevImage = (e: React.MouseEvent) => {
+        e.stopPropagation();
+        const images = getCurrentProjectImages();
+        setCurrentImageIndex(prev => prev === 0 ? images.length - 1 : prev - 1);
+    };
+
+    const handleModalNextImage = (e: React.MouseEvent) => {
+        e.stopPropagation();
+        const images = getCurrentProjectImages();
+        setCurrentImageIndex(prev => prev === images.length - 1 ? 0 : prev + 1);
+    };
+
+    // Swipe dans la modale
+    const [modalTouchStart, setModalTouchStart] = useState<number | null>(null);
+
+    const handleModalTouchStart = (e: React.TouchEvent) => {
+        e.stopPropagation();
+        setModalTouchStart(e.touches[0].clientX);
+    };
+
+    const handleModalTouchEnd = (e: React.TouchEvent) => {
+        e.stopPropagation();
+        if (modalTouchStart === null) return;
+
+        const touchEnd = e.changedTouches[0].clientX;
+        const diff = modalTouchStart - touchEnd;
+
+        // Swipe minimum de 50px
+        if (Math.abs(diff) > 50) {
+            const images = getCurrentProjectImages();
+
+            // Ne changer d'image que si le projet a plusieurs images
+            if (images.length > 1) {
+                if (diff > 0) {
+                    // Swipe vers la gauche - image suivante
+                    setCurrentImageIndex(prev => prev === images.length - 1 ? 0 : prev + 1);
+                } else {
+                    // Swipe vers la droite - image précédente
+                    setCurrentImageIndex(prev => prev === 0 ? images.length - 1 : prev - 1);
+                }
+            }
+        }
+
+        setModalTouchStart(null);
+    };
     return (
         <div
             ref={carouselRef}
             className={`carousel ${isVisible ? 'fade-in' : ''}`}
-            onTouchStart={onTouchStart}
-            onTouchMove={onTouchMove}
-            onTouchEnd={onTouchEnd}
-            onMouseDown={onMouseDown}
+            onTouchStart={!isModalOpen ? onTouchStart : undefined}
+            onTouchMove={!isModalOpen ? onTouchMove : undefined}
+            onTouchEnd={!isModalOpen ? onTouchEnd : undefined}
+            onMouseDown={!isModalOpen ? onMouseDown : undefined}
         >
             <div
                 ref={containerRef}
@@ -255,6 +350,52 @@ export default function Carousel({ projects }: CarouselProps) {
                 <button onClick={handlePreviousProject} className="btn">←</button>
                 <button onClick={handleNextProject} className="btn">→</button>
             </div>
+
+            {isModalOpen && (
+                <div
+                    className="modal-overlay"
+                    onClick={closeModal}
+                    onTouchStart={(e) => e.stopPropagation()}
+                    onTouchMove={(e) => e.stopPropagation()}
+                    onTouchEnd={(e) => e.stopPropagation()}
+                >
+                    <button className="modal-close" onClick={closeModal}>×</button>
+                    <div
+                        className="modal-content"
+                        onClick={(e) => e.stopPropagation()}
+                    >
+                        <Image
+                            src={getCurrentProjectImages()[currentImageIndex]}
+                            alt={projects[currentIndex].title}
+                            width={1920}
+                            height={1080}
+                            className="modal-image"
+                            draggable={false}
+                            onTouchStart={handleModalTouchStart}
+                            onTouchEnd={handleModalTouchEnd}
+                            onTouchMove={(e) => e.stopPropagation()}
+                        />
+                        {getCurrentProjectImages().length > 1 && (
+                            <>
+                                <button
+                                    onClick={handleModalPrevImage}
+                                    className="modal-arrow modal-prev"
+                                    aria-label="Image précédente"
+                                >
+                                    ←
+                                </button>
+                                <button
+                                    onClick={handleModalNextImage}
+                                    className="modal-arrow modal-next"
+                                    aria-label="Image suivante"
+                                >
+                                    →
+                                </button>
+                            </>
+                        )}
+                    </div>
+                </div>
+            )}
         </div>
     );
 }
