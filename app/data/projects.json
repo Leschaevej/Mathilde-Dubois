@@ -1,46 +1,67 @@
 [
-  {
-    "id": 1,
-    "title": "Lotissement de 4 maisons au cœur du Haut Var",
-    "description": "Un projet combinant confort, luminosité et intégration paysagère, avec une conception adaptée à chaque terrain.",
-    "image": "/projects/project1.webp"
-  },
-  {
-    "id": 2,
-    "title": "Maison à toiture 2 pans, élégante et contemporaine",
-    "description": "Pensée dans une démarche bioclimatique, elle allie lumière naturelle et performance thermique. Un projet qui combine modernité et simplicité des lignes.",
-    "image": [
-        "/projects/project2-1.webp",
-        "/projects/project2-2.webp",
-        "/projects/project2-3.webp",
-        "/projects/project2-4.webp"
-    ]
-  },
-  {
-    "id": 3,
-    "title": "Bâtiment agricole",
-    "description": "Ce bâtiment agricole a été conçu pour offrir un espace de stockage parfaitement adapté aux besoins de l'exploitation. Un projet alliant performance et durabilité, avec sa toiture équipée de panneaux photovoltaïques",
-    "image": [
-        "/projects/project3-1.webp",
-        "/projects/project3-2.webp",
-        "/projects/project3-3.webp"
+    {
+        "id": 1,
+        "title": "Lotissement de 4 maisons au cœur du Haut Var",
+        "description": "Un projet combinant confort, luminosité et intégration paysagère, avec une conception adaptée à chaque terrain.",
+        "image": "/projects/project1.webp"
+    },
+    {
+        "id": 2,
+        "title": "Maison à toiture 2 pans, élégante et contemporaine",
+        "description": "Pensée dans une démarche bioclimatique, elle allie lumière naturelle et performance thermique. Un projet qui combine modernité et simplicité des lignes.",
+        "image": [
+            "/projects/project2-1.webp",
+            "/projects/project2-2.webp",
+            "/projects/project2-3.webp",
+            "/projects/project2-4.webp"
         ]
-  },
-  {
-    "id": 4,
-    "title": "Réhabilitation d'une extension oubliée",
-    "description": "Un projet sur mesure qui conjugue authenticité et confort moderne, transformant l'espace en cuisine et coin repas extérieur, au cœur du paysage provençal.",
-    "image": "/projects/project4.webp"
-  },
-  {
-    "id": 5,
-    "title": "Conception d' une maison familiale au design cubique et épuré",
-    "description": "Projet PCMI en instruction, implanté dans un quartier dynamique de Saint-Raphaël.",
+    },
+    {
+        "id": 3,
+        "title": "Bâtiment agricole",
+        "description": "Ce bâtiment agricole a été conçu pour offrir un espace de stockage adapté aux besoins de l'exploitation, alliant performance et durabilité avec sa toiture équipée de panneaux photovoltaïques",
+        "image": [
+            "/projects/project3-1.webp",
+            "/projects/project3-2.webp",
+            "/projects/project3-3.webp"
+            ]
+    },
+    {
+        "id": 4,
+        "title": "Réhabilitation d'une extension oubliée",
+        "description": "Un projet sur mesure qui conjugue authenticité et confort moderne, transformant l'espace en cuisine et coin repas extérieur, au cœur du paysage provençal.",
+        "image": "/projects/project4.webp"
+    },
+    {
+        "id": 5,
+        "title": "Maison familiale au design cubique et épuré",
+        "description": "Projet PCMI en instruction, implanté dans un quartier dynamique de Saint-Raphaël.",
+        "image": [
+            "/projects/project5-1.webp",
+            "/projects/project5-2.webp",
+            "/projects/project5-3.webp",
+            "/projects/project5-4.webp"
+            ]
+    },
+    {
+    "id": 6,
+    "title": "Construction intégrée au Paysage Provençal",
+    "description": "Habitation inspirée des mas provençaux, matériaux locaux et intégration paysagère soignée pour une harmonie naturelle avec le site.",
     "image": [
-        "/projects/project5-1.webp",
-        "/projects/project5-2.webp",
-        "/projects/project5-3.webp",
-        "/projects/project5-4.webp"
+        "/projects/project6-1.webp",
+        "/projects/project6-2.webp",
+        "/projects/project6-3.webp",
+        "/projects/project6-4.webp",
+        "/projects/project6-5.webp",
+        "/projects/project6-6.webp",
+        "/projects/project6-7.webp",
+        "/projects/project6-8.webp",
+        "/projects/project6-9.webp",
+        "/projects/project6-10.webp",
+        "/projects/project6-11.webp",
+        "/projects/project6-12.webp",
+        "/projects/project6-13.webp",
+        "/projects/project6-14.webp"
         ]
-  }
+    }
 ]
