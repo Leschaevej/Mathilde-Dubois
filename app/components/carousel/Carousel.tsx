@@ -119,13 +119,15 @@ export default function Carousel({ projects }: CarouselProps) {
         const currentProject = projects[currentIndex];
         return Array.isArray(currentProject.image) ? currentProject.image : [currentProject.image];
     };
-    const handlePreviousImage = () => {
+    const handlePreviousImage = (e: React.MouseEvent) => {
+        e.stopPropagation();
         const images = getCurrentProjectImages();
         if (images.length > 1) {
             setCurrentImageIndex(prev => prev === 0 ? images.length - 1 : prev - 1);
         }
     };
-    const handleNextImage = () => {
+    const handleNextImage = (e: React.MouseEvent) => {
+        e.stopPropagation();
         const images = getCurrentProjectImages();
         if (images.length > 1) {
             setCurrentImageIndex(prev => prev === images.length - 1 ? 0 : prev + 1);
