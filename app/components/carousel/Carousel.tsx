@@ -15,6 +15,7 @@ interface CarouselProps {
 }
 export default function Carousel({ projects }: CarouselProps) {
     const [currentIndex, setCurrentIndex] = useState(0);
+    const [displayedIndex, setDisplayedIndex] = useState(0);
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
     const [isTransitioning, setIsTransitioning] = useState(false);
     const [isVisible, setIsVisible] = useState(false);
@@ -46,6 +47,9 @@ export default function Carousel({ projects }: CarouselProps) {
         setIsTransitioning(true);
         setCurrentIndex(newIndex);
         setTimeout(() => {
+            setDisplayedIndex(newIndex);
+        }, 300);
+        setTimeout(() => {
             setIsTransitioning(false);
         }, 600);
     };
@@ -68,7 +72,8 @@ export default function Carousel({ projects }: CarouselProps) {
         const projectsToMove = Math.round(rotationDegrees / anglePerProject);
         if (Math.abs(projectsToMove) > 0) {
             const newIndex = (currentIndex - projectsToMove + projects.length) % projects.length;
-            handleTransition(newIndex);
+            setCurrentIndex(newIndex);
+            setDisplayedIndex(newIndex);
         }
         setIsDragging(false);
         setRotation(0);
@@ -94,7 +99,8 @@ export default function Carousel({ projects }: CarouselProps) {
             const projectsToMove = Math.round(rotationDegrees / anglePerProject);
             if (Math.abs(projectsToMove) > 0) {
                 const newIndex = (currentIndex - projectsToMove + projects.length) % projects.length;
-                handleTransition(newIndex);
+                setCurrentIndex(newIndex);
+                setDisplayedIndex(newIndex);
             }
             setIsDragging(false);
             setRotation(0);
@@ -137,6 +143,9 @@ export default function Carousel({ projects }: CarouselProps) {
         if (clickedIndex !== currentIndex && !isTransitioning) {
             setIsTransitioning(true);
             setCurrentIndex(clickedIndex);
+            setTimeout(() => {
+                setDisplayedIndex(clickedIndex);
+            }, 300);
             setTimeout(() => setIsTransitioning(false), 600);
         }
     };
@@ -237,8 +246,8 @@ export default function Carousel({ projects }: CarouselProps) {
                 })}
             </div>
             <div className={`info ${isTransitioning || isDragging ? 'transitioning' : ''}`}>
-                <h3>{projects[currentIndex].title}</h3>
-                <p>{projects[currentIndex].description}</p>
+                <h3>{projects[displayedIndex].title}</h3>
+                <p>{projects[displayedIndex].description}</p>
             </div>
             <div className="controls">
                 <button onClick={handlePreviousProject} className="btn">←</button>
