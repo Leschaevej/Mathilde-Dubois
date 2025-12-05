@@ -17,6 +17,7 @@ export default function Carousel({ projects }: CarouselProps) {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [displayedIndex, setDisplayedIndex] = useState(0);
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
+    const [prevImageIndex, setPrevImageIndex] = useState(0);
     const [isTransitioning, setIsTransitioning] = useState(false);
     const [isVisible, setIsVisible] = useState(false);
     const [touchStart, setTouchStart] = useState<number | null>(null);
@@ -24,6 +25,8 @@ export default function Carousel({ projects }: CarouselProps) {
     const [hasMoved, setHasMoved] = useState(false);
     const [rotation, setRotation] = useState(0);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [imageSlideDirection, setImageSlideDirection] = useState<'left' | 'right' | null>(null);
+    const [isImageTransitioning, setIsImageTransitioning] = useState(false);
     const carouselRef = useRef<HTMLDivElement>(null);
     const containerRef = useRef<HTMLDivElement>(null);
     const anglePerProject = 360 / projects.length;
@@ -135,15 +138,29 @@ export default function Carousel({ projects }: CarouselProps) {
     const handlePreviousImage = (e: React.MouseEvent) => {
         e.stopPropagation();
         const images = getCurrentProjectImages();
-        if (images.length > 1) {
+        if (images.length > 1 && !isImageTransitioning) {
+            setPrevImageIndex(currentImageIndex);
+            setImageSlideDirection('right');
+            setIsImageTransitioning(true);
             setCurrentImageIndex(prev => prev === 0 ? images.length - 1 : prev - 1);
+            setTimeout(() => {
+                setImageSlideDirection(null);
+                setIsImageTransitioning(false);
+            }, 500);
         }
     };
     const handleNextImage = (e: React.MouseEvent) => {
         e.stopPropagation();
         const images = getCurrentProjectImages();
-        if (images.length > 1) {
+        if (images.length > 1 && !isImageTransitioning) {
+            setPrevImageIndex(currentImageIndex);
+            setImageSlideDirection('left');
+            setIsImageTransitioning(true);
             setCurrentImageIndex(prev => prev === images.length - 1 ? 0 : prev + 1);
+            setTimeout(() => {
+                setImageSlideDirection(null);
+                setIsImageTransitioning(false);
+            }, 500);
         }
     };
     const handlePreviousProject = () => {
@@ -204,13 +221,31 @@ export default function Carousel({ projects }: CarouselProps) {
     const handleModalPrevImage = (e: React.MouseEvent) => {
         e.stopPropagation();
         const images = getCurrentProjectImages();
-        setCurrentImageIndex(prev => prev === 0 ? images.length - 1 : prev - 1);
+        if (images.length > 1 && !isImageTransitioning) {
+            setPrevImageIndex(currentImageIndex);
+            setImageSlideDirection('right');
+            setIsImageTransitioning(true);
+            setCurrentImageIndex(prev => prev === 0 ? images.length - 1 : prev - 1);
+            setTimeout(() => {
+                setImageSlideDirection(null);
+                setIsImageTransitioning(false);
+            }, 500);
+        }
     };
 
     const handleModalNextImage = (e: React.MouseEvent) => {
         e.stopPropagation();
         const images = getCurrentProjectImages();
-        setCurrentImageIndex(prev => prev === images.length - 1 ? 0 : prev + 1);
+        if (images.length > 1 && !isImageTransitioning) {
+            setPrevImageIndex(currentImageIndex);
+            setImageSlideDirection('left');
+            setIsImageTransitioning(true);
+            setCurrentImageIndex(prev => prev === images.length - 1 ? 0 : prev + 1);
+            setTimeout(() => {
+                setImageSlideDirection(null);
+                setIsImageTransitioning(false);
+            }, 500);
+        }
     };
 
     // Swipe dans la modale
@@ -233,14 +268,22 @@ export default function Carousel({ projects }: CarouselProps) {
             const images = getCurrentProjectImages();
 
             // Ne changer d'image que si le projet a plusieurs images
-            if (images.length > 1) {
+            if (images.length > 1 && !isImageTransitioning) {
+                setPrevImageIndex(currentImageIndex);
+                setIsImageTransitioning(true);
                 if (diff > 0) {
                     // Swipe vers la gauche - image suivante
+                    setImageSlideDirection('left');
                     setCurrentImageIndex(prev => prev === images.length - 1 ? 0 : prev + 1);
                 } else {
                     // Swipe vers la droite - image précédente
+                    setImageSlideDirection('right');
                     setCurrentImageIndex(prev => prev === 0 ? images.length - 1 : prev - 1);
                 }
+                setTimeout(() => {
+                    setImageSlideDirection(null);
+                    setIsImageTransitioning(false);
+                }, 500);
             }
         }
 
@@ -309,15 +352,38 @@ export default function Carousel({ projects }: CarouselProps) {
                                 pointerEvents: isClickable ? 'auto' : 'none'
                             }}
                         >
-                            <Image
-                                src={imageSrc}
-                                alt={project.title}
-                                width={1414}
-                                height={1000}
-                                className="image"
-                                draggable={false}
-                                style={{ filter: `blur(${blur}px)` }}
-                            />
+                            {index === currentIndex && isImageTransitioning && imageSlideDirection ? (
+                                <div className={`image-slide-container slide-${imageSlideDirection}`}>
+                                    <div>
+                                        <Image
+                                            src={projectImages[prevImageIndex]}
+                                            alt={project.title}
+                                            width={1414}
+                                            height={1000}
+                                            className="slide-img"
+                                            draggable={false}
+                                        />
+                                        <Image
+                                            src={imageSrc}
+                                            alt={project.title}
+                                            width={1414}
+                                            height={1000}
+                                            className="slide-img"
+                                            draggable={false}
+                                        />
+                                    </div>
+                                </div>
+                            ) : (
+                                <Image
+                                    src={imageSrc}
+                                    alt={project.title}
+                                    width={1414}
+                                    height={1000}
+                                    className="image"
+                                    draggable={false}
+                                    style={{ filter: `blur(${blur}px)` }}
+                                />
+                            )}
                             {hasMultipleImages && (
                                 <>
                                     <button
@@ -364,17 +430,44 @@ export default function Carousel({ projects }: CarouselProps) {
                         className="modal-content"
                         onClick={(e) => e.stopPropagation()}
                     >
-                        <Image
-                            src={getCurrentProjectImages()[currentImageIndex]}
-                            alt={projects[currentIndex].title}
-                            width={1920}
-                            height={1080}
-                            className="modal-image"
-                            draggable={false}
-                            onTouchStart={handleModalTouchStart}
-                            onTouchEnd={handleModalTouchEnd}
-                            onTouchMove={(e) => e.stopPropagation()}
-                        />
+                        {isImageTransitioning && imageSlideDirection ? (
+                            <div className={`modal-slide-container slide-${imageSlideDirection}`}
+                                onTouchStart={handleModalTouchStart}
+                                onTouchEnd={handleModalTouchEnd}
+                                onTouchMove={(e) => e.stopPropagation()}
+                            >
+                                <div>
+                                    <Image
+                                        src={getCurrentProjectImages()[prevImageIndex]}
+                                        alt={projects[currentIndex].title}
+                                        width={1920}
+                                        height={1080}
+                                        className="modal-slide-img"
+                                        draggable={false}
+                                    />
+                                    <Image
+                                        src={getCurrentProjectImages()[currentImageIndex]}
+                                        alt={projects[currentIndex].title}
+                                        width={1920}
+                                        height={1080}
+                                        className="modal-slide-img"
+                                        draggable={false}
+                                    />
+                                </div>
+                            </div>
+                        ) : (
+                            <Image
+                                src={getCurrentProjectImages()[currentImageIndex]}
+                                alt={projects[currentIndex].title}
+                                width={1920}
+                                height={1080}
+                                className="modal-image"
+                                draggable={false}
+                                onTouchStart={handleModalTouchStart}
+                                onTouchEnd={handleModalTouchEnd}
+                                onTouchMove={(e) => e.stopPropagation()}
+                            />
+                        )}
                         {getCurrentProjectImages().length > 1 && (
                             <>
                                 <button

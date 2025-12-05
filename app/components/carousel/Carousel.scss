@@ -83,6 +83,33 @@
             height: auto;
         }
     }
+    .image-slide-container {
+        width: clamp(339px, 39.35vw, 566px);
+        aspect-ratio: 1414 / 1000;
+        height: auto;
+        overflow: hidden;
+        position: relative;
+        @media (max-width: 768px) {
+            width: 70vw;
+        }
+        > div {
+            display: flex;
+            width: 200%;
+            height: 100%;
+            .slide-img {
+                width: 50%;
+                height: 100%;
+                flex-shrink: 0;
+                object-fit: cover;
+            }
+        }
+        &.slide-left > div {
+            animation: slideImagesLeft 0.5s ease-in-out forwards;
+        }
+        &.slide-right > div {
+            animation: slideImagesRight 0.5s ease-in-out forwards;
+        }
+    }
     .info {
         display: flex;
         flex-direction: column;
@@ -213,6 +240,29 @@
         height: auto;
         object-fit: contain;
     }
+    .modal-slide-container {
+        max-width: 95vw;
+        max-height: 95vh;
+        overflow: hidden;
+        position: relative;
+        > div {
+            display: flex;
+            width: 200%;
+            height: 100%;
+            .modal-slide-img {
+                width: 50%;
+                height: 100%;
+                flex-shrink: 0;
+                object-fit: contain;
+            }
+        }
+        &.slide-left > div {
+            animation: slideImagesLeft 0.5s ease-in-out forwards;
+        }
+        &.slide-right > div {
+            animation: slideImagesRight 0.5s ease-in-out forwards;
+        }
+    }
     .modal-arrow {
         position: absolute;
         top: 0;
@@ -258,6 +308,22 @@
         to {
             transform: scale(1);
             opacity: 1;
+        }
+    }
+    @keyframes slideImagesLeft {
+        from {
+            transform: translateX(0);
+        }
+        to {
+            transform: translateX(-50%);
+        }
+    }
+    @keyframes slideImagesRight {
+        from {
+            transform: translateX(-50%);
+        }
+        to {
+            transform: translateX(0);
         }
     }
 }
