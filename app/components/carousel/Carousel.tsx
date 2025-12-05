@@ -28,6 +28,7 @@ export default function Carousel({ projects }: CarouselProps) {
     const [isModalClosing, setIsModalClosing] = useState(false);
     const [imageSlideDirection, setImageSlideDirection] = useState<'left' | 'right' | null>(null);
     const [isImageTransitioning, setIsImageTransitioning] = useState(false);
+    const [isLoadingImage, setIsLoadingImage] = useState(false);
     const [modalZoom, setModalZoom] = useState(1);
     const [modalPosition, setModalPosition] = useState({ x: 0, y: 0 });
     const [isDraggingModal, setIsDraggingModal] = useState(false);
@@ -62,17 +63,6 @@ export default function Carousel({ projects }: CarouselProps) {
             }
         });
     }, [currentIndex, projects]);
-    const handleTransition = (newIndex: number, immediate = false) => {
-        if (isTransitioning && !immediate) return;
-        setIsTransitioning(true);
-        setCurrentIndex(newIndex);
-        setTimeout(() => {
-            setDisplayedIndex(newIndex);
-        }, 300);
-        setTimeout(() => {
-            setIsTransitioning(false);
-        }, 600);
-    };
     const onTouchStart = (e: React.TouchEvent) => {
         if (isModalOpen) return; // Ne pas gérer le touch si la modale est ouverte
         const target = e.target as HTMLElement;
@@ -103,6 +93,7 @@ export default function Carousel({ projects }: CarouselProps) {
             setDisplayedIndex(newIndex);
         }
         setIsDragging(false);
+        setHasMoved(false);
         setRotation(0);
         setTouchStart(null);
     };
@@ -134,6 +125,7 @@ export default function Carousel({ projects }: CarouselProps) {
                 setDisplayedIndex(newIndex);
             }
             setIsDragging(false);
+            setHasMoved(false);
             setRotation(0);
             setTouchStart(null);
         };
@@ -152,69 +144,85 @@ export default function Carousel({ projects }: CarouselProps) {
     };
     const handlePreviousImage = (e: React.MouseEvent) => {
         e.stopPropagation();
-        const images = getCurrentProjectImages();
-        if (images.length > 1 && !isImageTransitioning) {
-            const nextImageIndex = currentImageIndex === 0 ? images.length - 1 : currentImageIndex - 1;
-            const nextImageSrc = images[nextImageIndex];
 
-            // Précharger l'image avant de lancer l'animation
-            const img = new window.Image();
-            img.onload = () => {
-                setPrevImageIndex(currentImageIndex);
-                setImageSlideDirection('right');
-                setIsImageTransitioning(true);
-                setCurrentImageIndex(nextImageIndex);
-                setTimeout(() => {
-                    setImageSlideDirection(null);
-                    setIsImageTransitioning(false);
-                }, 500);
-            };
-            img.onerror = () => {
-                // En cas d'erreur, on lance quand même l'animation
-                setPrevImageIndex(currentImageIndex);
-                setImageSlideDirection('right');
-                setIsImageTransitioning(true);
-                setCurrentImageIndex(nextImageIndex);
-                setTimeout(() => {
-                    setImageSlideDirection(null);
-                    setIsImageTransitioning(false);
-                }, 500);
-            };
-            img.src = nextImageSrc;
+        // Bloquer si en transition de projet OU si déjà en train de charger/animer
+        if (isTransitioning || isLoadingImage || isImageTransitioning) {
+            return;
         }
+
+        const images = getCurrentProjectImages();
+        if (images.length <= 1) return;
+
+        const nextImageIndex = currentImageIndex === 0 ? images.length - 1 : currentImageIndex - 1;
+        const nextImageSrc = images[nextImageIndex];
+
+        // Bloquer immédiatement les nouveaux clics
+        setIsLoadingImage(true);
+
+        // Précharger l'image et attendre qu'elle soit complètement chargée
+        const img = new window.Image();
+
+        img.onload = () => {
+            // L'image est chargée, maintenant on lance l'animation
+            setIsImageTransitioning(true);
+            setPrevImageIndex(currentImageIndex);
+            setImageSlideDirection('right');
+            setCurrentImageIndex(nextImageIndex);
+            setTimeout(() => {
+                setImageSlideDirection(null);
+                setIsImageTransitioning(false);
+                setIsLoadingImage(false);
+            }, 500);
+        };
+
+        img.onerror = () => {
+            // En cas d'erreur de chargement, débloquer
+            console.error('Erreur de chargement de l\'image:', nextImageSrc);
+            setIsLoadingImage(false);
+        };
+
+        img.src = nextImageSrc;
     };
     const handleNextImage = (e: React.MouseEvent) => {
         e.stopPropagation();
-        const images = getCurrentProjectImages();
-        if (images.length > 1 && !isImageTransitioning) {
-            const nextImageIndex = currentImageIndex === images.length - 1 ? 0 : currentImageIndex + 1;
-            const nextImageSrc = images[nextImageIndex];
 
-            // Précharger l'image avant de lancer l'animation
-            const img = new window.Image();
-            img.onload = () => {
-                setPrevImageIndex(currentImageIndex);
-                setImageSlideDirection('left');
-                setIsImageTransitioning(true);
-                setCurrentImageIndex(nextImageIndex);
-                setTimeout(() => {
-                    setImageSlideDirection(null);
-                    setIsImageTransitioning(false);
-                }, 500);
-            };
-            img.onerror = () => {
-                // En cas d'erreur, on lance quand même l'animation
-                setPrevImageIndex(currentImageIndex);
-                setImageSlideDirection('left');
-                setIsImageTransitioning(true);
-                setCurrentImageIndex(nextImageIndex);
-                setTimeout(() => {
-                    setImageSlideDirection(null);
-                    setIsImageTransitioning(false);
-                }, 500);
-            };
-            img.src = nextImageSrc;
+        // Bloquer si en transition de projet OU si déjà en train de charger/animer
+        if (isTransitioning || isLoadingImage || isImageTransitioning) {
+            return;
         }
+
+        const images = getCurrentProjectImages();
+        if (images.length <= 1) return;
+
+        const nextImageIndex = currentImageIndex === images.length - 1 ? 0 : currentImageIndex + 1;
+        const nextImageSrc = images[nextImageIndex];
+
+        // Bloquer immédiatement les nouveaux clics
+        setIsLoadingImage(true);
+
+        // Précharger l'image et attendre qu'elle soit complètement chargée
+        const img = new window.Image();
+
+        img.onload = () => {
+            // L'image est chargée, maintenant on lance l'animation
+            setIsImageTransitioning(true);
+            setPrevImageIndex(currentImageIndex);
+            setImageSlideDirection('left');
+            setCurrentImageIndex(nextImageIndex);
+            setTimeout(() => {
+                setImageSlideDirection(null);
+                setIsImageTransitioning(false);
+                setIsLoadingImage(false);
+            }, 500);
+        };
+
+        img.onerror = () => {
+            // En cas d'erreur de chargement, débloquer
+            console.error('Erreur de chargement de l\'image:', nextImageSrc);
+            setIsLoadingImage(false);
+        };
+
+        img.src = nextImageSrc;
     };
     const handlePreviousProject = () => {
         const newIndex = currentIndex === 0 ? projects.length - 1 : currentIndex - 1;
@@ -225,7 +233,7 @@ export default function Carousel({ projects }: CarouselProps) {
         handleImageClick(newIndex);
     };
     const handleImageClick = (clickedIndex: number) => {
-        if (clickedIndex === currentIndex && !isTransitioning && !hasMoved) {
+        if (clickedIndex === currentIndex && !isTransitioning && !hasMoved && !isImageTransitioning && !isLoadingImage) {
             // Si on clique sur l'image centrale, ouvrir la modale
             setIsModalOpen(true);
         } else if (clickedIndex !== currentIndex && !isTransitioning && !hasMoved) {
@@ -553,7 +561,8 @@ export default function Carousel({ projects }: CarouselProps) {
                                         aria-label="Image précédente"
                                         style={{
                                             opacity: index === currentIndex && !isTransitioning ? 1 : 0,
-                                            pointerEvents: index === currentIndex && !isTransitioning ? 'auto' : 'none'
+                                            pointerEvents: index === currentIndex && !isTransitioning ? 'auto' : 'none',
+                                            cursor: 'pointer'
                                         }}
                                     >
                                         ←
@@ -564,7 +573,8 @@ export default function Carousel({ projects }: CarouselProps) {
                                         aria-label="Image suivante"
                                         style={{
                                             opacity: index === currentIndex && !isTransitioning ? 1 : 0,
-                                            pointerEvents: index === currentIndex && !isTransitioning ? 'auto' : 'none'
+                                            pointerEvents: index === currentIndex && !isTransitioning ? 'auto' : 'none',
+                                            cursor: 'pointer'
                                         }}
                                     >
                                         →
@@ -575,7 +585,7 @@ export default function Carousel({ projects }: CarouselProps) {
                     );
                 })}
             </div>
-            <div className={`info ${isTransitioning || isDragging ? 'transitioning' : ''}`}>
+            <div className={`info ${isTransitioning || hasMoved ? 'transitioning' : ''}`}>
                 <h3>{projects[displayedIndex].title}</h3>
                 <p>{projects[displayedIndex].description}</p>
             </div>

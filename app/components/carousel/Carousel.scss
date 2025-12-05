@@ -63,12 +63,21 @@
         position: absolute;
         pointer-events: auto;
         z-index: 2;
+        &.position-0 {
+            cursor: pointer;
+        }
         &:active {
             cursor: grabbing;
+        }
+        &.position-0:active {
+            cursor: pointer;
         }
     }
     &.dragging .item {
         cursor: grabbing;
+        &.position-0 {
+            cursor: grabbing;
+        }
     }
     .image {
         width: clamp(339px, 39.35vw, 566px);
@@ -174,12 +183,13 @@
     }
     .select {
         position: absolute;
-        top: 0;
-        bottom: 0;
+        top: 50%;
+        transform: translateY(-50%);
         background: transparent;
         color: var(--backgroundColor);
         border: none;
-        height: 100%;
+        height: auto;
+        padding: 10px;
         font-size: 36px;
         cursor: pointer;
         z-index: 11;
@@ -187,7 +197,6 @@
         align-items: center;
         justify-content: center;
         transition: color 0.3s ease, opacity 0.2s ease !important;
-        width: clamp(50px, 50px + (100 - 50) * ((100vw - 768px) / (1440 - 768)), 100px);
         &:hover {
             color: var(--mainColor);
         }
