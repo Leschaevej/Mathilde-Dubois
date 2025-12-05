@@ -348,32 +348,11 @@ export default function Carousel({ projects }: CarouselProps) {
                                 transform: `translateX(${translateX}px) scale(${scale})`,
                                 opacity,
                                 zIndex,
-                                transition: isDragging ? 'none' : 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)',
+                                transition: isDragging ? 'none' : 'transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1)',
                                 pointerEvents: isClickable ? 'auto' : 'none'
                             }}
                         >
-                            {index === currentIndex && isImageTransitioning && imageSlideDirection ? (
-                                <div className={`image-slide-container slide-${imageSlideDirection}`}>
-                                    <div>
-                                        <Image
-                                            src={projectImages[prevImageIndex]}
-                                            alt={project.title}
-                                            width={1414}
-                                            height={1000}
-                                            className="slide-img"
-                                            draggable={false}
-                                        />
-                                        <Image
-                                            src={imageSrc}
-                                            alt={project.title}
-                                            width={1414}
-                                            height={1000}
-                                            className="slide-img"
-                                            draggable={false}
-                                        />
-                                    </div>
-                                </div>
-                            ) : (
+                            <>
                                 <Image
                                     src={imageSrc}
                                     alt={project.title}
@@ -381,9 +360,64 @@ export default function Carousel({ projects }: CarouselProps) {
                                     height={1000}
                                     className="image"
                                     draggable={false}
-                                    style={{ filter: `blur(${blur}px)` }}
+                                    style={{
+                                        filter: `blur(${blur}px)`
+                                    }}
                                 />
-                            )}
+                                {index === currentIndex && isImageTransitioning && imageSlideDirection && (
+                                    <div className={`image-slide-container slide-${imageSlideDirection}`}>
+                                        <div>
+                                            {imageSlideDirection === 'left' ? (
+                                                <>
+                                                    <Image
+                                                        src={projectImages[prevImageIndex]}
+                                                        alt={project.title}
+                                                        width={1414}
+                                                        height={1000}
+                                                        className="slide-img"
+                                                        draggable={false}
+                                                        loading="eager"
+                                                        priority
+                                                    />
+                                                    <Image
+                                                        src={imageSrc}
+                                                        alt={project.title}
+                                                        width={1414}
+                                                        height={1000}
+                                                        className="slide-img"
+                                                        draggable={false}
+                                                        loading="eager"
+                                                        priority
+                                                    />
+                                                </>
+                                            ) : (
+                                                <>
+                                                    <Image
+                                                        src={imageSrc}
+                                                        alt={project.title}
+                                                        width={1414}
+                                                        height={1000}
+                                                        className="slide-img"
+                                                        draggable={false}
+                                                        loading="eager"
+                                                        priority
+                                                    />
+                                                    <Image
+                                                        src={projectImages[prevImageIndex]}
+                                                        alt={project.title}
+                                                        width={1414}
+                                                        height={1000}
+                                                        className="slide-img"
+                                                        draggable={false}
+                                                        loading="eager"
+                                                        priority
+                                                    />
+                                                </>
+                                            )}
+                                        </div>
+                                    </div>
+                                )}
+                            </>
                             {hasMultipleImages && (
                                 <>
                                     <button
@@ -430,32 +464,7 @@ export default function Carousel({ projects }: CarouselProps) {
                         className="modal-content"
                         onClick={(e) => e.stopPropagation()}
                     >
-                        {isImageTransitioning && imageSlideDirection ? (
-                            <div className={`modal-slide-container slide-${imageSlideDirection}`}
-                                onTouchStart={handleModalTouchStart}
-                                onTouchEnd={handleModalTouchEnd}
-                                onTouchMove={(e) => e.stopPropagation()}
-                            >
-                                <div>
-                                    <Image
-                                        src={getCurrentProjectImages()[prevImageIndex]}
-                                        alt={projects[currentIndex].title}
-                                        width={1920}
-                                        height={1080}
-                                        className="modal-slide-img"
-                                        draggable={false}
-                                    />
-                                    <Image
-                                        src={getCurrentProjectImages()[currentImageIndex]}
-                                        alt={projects[currentIndex].title}
-                                        width={1920}
-                                        height={1080}
-                                        className="modal-slide-img"
-                                        draggable={false}
-                                    />
-                                </div>
-                            </div>
-                        ) : (
+                        <>
                             <Image
                                 src={getCurrentProjectImages()[currentImageIndex]}
                                 alt={projects[currentIndex].title}
@@ -467,7 +476,64 @@ export default function Carousel({ projects }: CarouselProps) {
                                 onTouchEnd={handleModalTouchEnd}
                                 onTouchMove={(e) => e.stopPropagation()}
                             />
-                        )}
+                            {isImageTransitioning && imageSlideDirection && (
+                                <div className={`modal-slide-container slide-${imageSlideDirection}`}
+                                    onTouchStart={handleModalTouchStart}
+                                    onTouchEnd={handleModalTouchEnd}
+                                    onTouchMove={(e) => e.stopPropagation()}
+                                >
+                                    <div>
+                                        {imageSlideDirection === 'left' ? (
+                                            <>
+                                                <Image
+                                                    src={getCurrentProjectImages()[prevImageIndex]}
+                                                    alt={projects[currentIndex].title}
+                                                    width={1920}
+                                                    height={1080}
+                                                    className="modal-slide-img"
+                                                    draggable={false}
+                                                    loading="eager"
+                                                    priority
+                                                />
+                                                <Image
+                                                    src={getCurrentProjectImages()[currentImageIndex]}
+                                                    alt={projects[currentIndex].title}
+                                                    width={1920}
+                                                    height={1080}
+                                                    className="modal-slide-img"
+                                                    draggable={false}
+                                                    loading="eager"
+                                                    priority
+                                                />
+                                            </>
+                                        ) : (
+                                            <>
+                                                <Image
+                                                    src={getCurrentProjectImages()[currentImageIndex]}
+                                                    alt={projects[currentIndex].title}
+                                                    width={1920}
+                                                    height={1080}
+                                                    className="modal-slide-img"
+                                                    draggable={false}
+                                                    loading="eager"
+                                                    priority
+                                                />
+                                                <Image
+                                                    src={getCurrentProjectImages()[prevImageIndex]}
+                                                    alt={projects[currentIndex].title}
+                                                    width={1920}
+                                                    height={1080}
+                                                    className="modal-slide-img"
+                                                    draggable={false}
+                                                    loading="eager"
+                                                    priority
+                                                />
+                                            </>
+                                        )}
+                                    </div>
+                                </div>
+                            )}
+                        </>
                         {getCurrentProjectImages().length > 1 && (
                             <>
                                 <button
