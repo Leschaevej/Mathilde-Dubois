@@ -51,7 +51,17 @@ export default function Carousel({ projects }: CarouselProps) {
     }, []);
     useEffect(() => {
         setCurrentImageIndex(0);
-    }, [currentIndex]);
+
+        // Précharger les images du projet actuel
+        const currentProject = projects[currentIndex];
+        const images = Array.isArray(currentProject.image) ? currentProject.image : [currentProject.image];
+        images.forEach((src) => {
+            if (typeof window !== 'undefined') {
+                const img = new window.Image();
+                img.src = src;
+            }
+        });
+    }, [currentIndex, projects]);
     const handleTransition = (newIndex: number, immediate = false) => {
         if (isTransitioning && !immediate) return;
         setIsTransitioning(true);
