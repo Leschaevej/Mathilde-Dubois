@@ -154,28 +154,66 @@ export default function Carousel({ projects }: CarouselProps) {
         e.stopPropagation();
         const images = getCurrentProjectImages();
         if (images.length > 1 && !isImageTransitioning) {
-            setPrevImageIndex(currentImageIndex);
-            setImageSlideDirection('right');
-            setIsImageTransitioning(true);
-            setCurrentImageIndex(prev => prev === 0 ? images.length - 1 : prev - 1);
-            setTimeout(() => {
-                setImageSlideDirection(null);
-                setIsImageTransitioning(false);
-            }, 500);
+            const nextImageIndex = currentImageIndex === 0 ? images.length - 1 : currentImageIndex - 1;
+            const nextImageSrc = images[nextImageIndex];
+
+            // Précharger l'image avant de lancer l'animation
+            const img = new window.Image();
+            img.onload = () => {
+                setPrevImageIndex(currentImageIndex);
+                setImageSlideDirection('right');
+                setIsImageTransitioning(true);
+                setCurrentImageIndex(nextImageIndex);
+                setTimeout(() => {
+                    setImageSlideDirection(null);
+                    setIsImageTransitioning(false);
+                }, 500);
+            };
+            img.onerror = () => {
+                // En cas d'erreur, on lance quand même l'animation
+                setPrevImageIndex(currentImageIndex);
+                setImageSlideDirection('right');
+                setIsImageTransitioning(true);
+                setCurrentImageIndex(nextImageIndex);
+                setTimeout(() => {
+                    setImageSlideDirection(null);
+                    setIsImageTransitioning(false);
+                }, 500);
+            };
+            img.src = nextImageSrc;
         }
     };
     const handleNextImage = (e: React.MouseEvent) => {
         e.stopPropagation();
         const images = getCurrentProjectImages();
         if (images.length > 1 && !isImageTransitioning) {
-            setPrevImageIndex(currentImageIndex);
-            setImageSlideDirection('left');
-            setIsImageTransitioning(true);
-            setCurrentImageIndex(prev => prev === images.length - 1 ? 0 : prev + 1);
-            setTimeout(() => {
-                setImageSlideDirection(null);
-                setIsImageTransitioning(false);
-            }, 500);
+            const nextImageIndex = currentImageIndex === images.length - 1 ? 0 : currentImageIndex + 1;
+            const nextImageSrc = images[nextImageIndex];
+
+            // Précharger l'image avant de lancer l'animation
+            const img = new window.Image();
+            img.onload = () => {
+                setPrevImageIndex(currentImageIndex);
+                setImageSlideDirection('left');
+                setIsImageTransitioning(true);
+                setCurrentImageIndex(nextImageIndex);
+                setTimeout(() => {
+                    setImageSlideDirection(null);
+                    setIsImageTransitioning(false);
+                }, 500);
+            };
+            img.onerror = () => {
+                // En cas d'erreur, on lance quand même l'animation
+                setPrevImageIndex(currentImageIndex);
+                setImageSlideDirection('left');
+                setIsImageTransitioning(true);
+                setCurrentImageIndex(nextImageIndex);
+                setTimeout(() => {
+                    setImageSlideDirection(null);
+                    setIsImageTransitioning(false);
+                }, 500);
+            };
+            img.src = nextImageSrc;
         }
     };
     const handlePreviousProject = () => {
