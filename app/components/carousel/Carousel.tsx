@@ -27,6 +27,10 @@ export default function Carousel({ projects }: CarouselProps) {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [imageSlideDirection, setImageSlideDirection] = useState<'left' | 'right' | null>(null);
     const [isImageTransitioning, setIsImageTransitioning] = useState(false);
+    const [modalZoom, setModalZoom] = useState(1);
+    const [modalPosition, setModalPosition] = useState({ x: 0, y: 0 });
+    const [isDraggingModal, setIsDraggingModal] = useState(false);
+    const [modalDragStart, setModalDragStart] = useState({ x: 0, y: 0 });
     const carouselRef = useRef<HTMLDivElement>(null);
     const containerRef = useRef<HTMLDivElement>(null);
     const anglePerProject = 360 / projects.length;
@@ -187,6 +191,147 @@ export default function Carousel({ projects }: CarouselProps) {
 
     const closeModal = () => {
         setIsModalOpen(false);
+        setModalZoom(1);
+        setModalPosition({ x: 0, y: 0 });
+    };
+
+    // Zoom avec la molette
+    const handleWheel = (e: React.WheelEvent) => {
+        e.preventDefault();
+        const delta = e.deltaY * -0.01;
+        const newZoom = Math.min(Math.max(1, modalZoom + delta), 5);
+        setModalZoom(newZoom);
+
+        // Ajuster la position pour garder l'image visible
+        if (newZoom <= 1) {
+            setModalPosition({ x: 0, y: 0 });
+        } else if (newZoom < modalZoom) {
+            // Si on dézoome, recentrer progressivement
+            const zoomRatio = newZoom / modalZoom;
+            setModalPosition({
+                x: modalPosition.x * zoomRatio,
+                y: modalPosition.y * zoomRatio
+            });
+        }
+    };
+
+    // Double-clic pour reset le zoom
+    const handleDoubleClick = () => {
+        setModalZoom(1);
+        setModalPosition({ x: 0, y: 0 });
+    };
+
+    // Drag pour déplacer l'image zoomée
+    const handleModalMouseDown = (e: React.MouseEvent) => {
+        if (modalZoom > 1) {
+            e.preventDefault();
+            setIsDraggingModal(true);
+            setModalDragStart({ x: e.clientX - modalPosition.x, y: e.clientY - modalPosition.y });
+        }
+    };
+
+    const handleModalMouseMove = (e: React.MouseEvent) => {
+        if (isDraggingModal && modalZoom > 1) {
+            setModalPosition({
+                x: e.clientX - modalDragStart.x,
+                y: e.clientY - modalDragStart.y
+            });
+        }
+    };
+
+    const handleModalMouseUp = () => {
+        setIsDraggingModal(false);
+    };
+
+    // Gestion tactile (pinch-to-zoom et pan) pour mobile
+    const [initialTouchDistance, setInitialTouchDistance] = useState<number | null>(null);
+    const [initialZoom, setInitialZoom] = useState(1);
+    const [lastTouchTime, setLastTouchTime] = useState(0);
+
+    const getTouchDistance = (touch1: React.Touch, touch2: React.Touch) => {
+        const dx = touch1.clientX - touch2.clientX;
+        const dy = touch1.clientY - touch2.clientY;
+        return Math.sqrt(dx * dx + dy * dy);
+    };
+
+    const handleModalTouchStart = (e: React.TouchEvent) => {
+        const now = Date.now();
+
+        if (e.touches.length === 2) {
+            // Pinch zoom avec 2 doigts - réinitialiser le dragging
+            setIsDraggingModal(false);
+            const distance = getTouchDistance(e.touches[0], e.touches[1]);
+            setInitialTouchDistance(distance);
+            setInitialZoom(modalZoom);
+            setLastTouchTime(now);
+        } else if (e.touches.length === 1) {
+            // Attendre un peu avant d'autoriser le pan pour éviter les mouvements accidentels
+            if (modalZoom > 1 && now - lastTouchTime > 100) {
+                setIsDraggingModal(true);
+                setModalDragStart({
+                    x: e.touches[0].clientX - modalPosition.x,
+                    y: e.touches[0].clientY - modalPosition.y
+                });
+            }
+        }
+    };
+
+    const handleModalTouchMove = (e: React.TouchEvent) => {
+        if (e.touches.length === 2 && initialTouchDistance !== null) {
+            // Pinch zoom - bloquer le pan
+            e.preventDefault();
+            setIsDraggingModal(false);
+
+            const distance = getTouchDistance(e.touches[0], e.touches[1]);
+            const scale = distance / initialTouchDistance;
+
+            // Zoom plus progressif avec une courbe d'accélération
+            const smoothScale = scale < 1
+                ? 1 - (1 - scale) * 0.8  // Dézoom plus lent
+                : 1 + (scale - 1) * 1.2; // Zoom un peu plus rapide
+
+            const newZoom = Math.min(Math.max(1, initialZoom * smoothScale), 5);
+            setModalZoom(newZoom);
+
+            // Ajuster la position pour garder l'image visible
+            if (newZoom <= 1) {
+                // Retour complet au centre
+                setModalPosition({ x: 0, y: 0 });
+            } else {
+                // Réduire proportionnellement le déplacement quand on dézoome
+                const zoomRatio = newZoom / modalZoom;
+                setModalPosition({
+                    x: modalPosition.x * zoomRatio,
+                    y: modalPosition.y * zoomRatio
+                });
+            }
+        } else if (e.touches.length === 1 && isDraggingModal && modalZoom > 1) {
+            // Pan quand zoomé
+            e.preventDefault();
+            const newX = e.touches[0].clientX - modalDragStart.x;
+            const newY = e.touches[0].clientY - modalDragStart.y;
+
+            // Limiter le déplacement basé sur le niveau de zoom
+            const maxMove = 200 * modalZoom;
+            setModalPosition({
+                x: Math.max(-maxMove, Math.min(maxMove, newX)),
+                y: Math.max(-maxMove, Math.min(maxMove, newY))
+            });
+        }
+    };
+
+    const handleModalTouchEnd = (e: React.TouchEvent) => {
+        const now = Date.now();
+        setLastTouchTime(now);
+
+        if (e.touches.length < 2) {
+            setInitialTouchDistance(null);
+        }
+
+        if (e.touches.length === 0) {
+            // Petit délai avant de permettre un nouveau pan
+            setTimeout(() => setIsDraggingModal(false), 50);
+        }
     };
 
     // Bloquer le scroll et gérer la touche Échap
@@ -194,6 +339,7 @@ export default function Carousel({ projects }: CarouselProps) {
         if (isModalOpen) {
             const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
 
+            // Bloquer le scroll
             document.documentElement.style.overflow = 'hidden';
             document.body.style.overflow = 'hidden';
 
@@ -218,77 +364,6 @@ export default function Carousel({ projects }: CarouselProps) {
         }
     }, [isModalOpen]);
 
-    const handleModalPrevImage = (e: React.MouseEvent) => {
-        e.stopPropagation();
-        const images = getCurrentProjectImages();
-        if (images.length > 1 && !isImageTransitioning) {
-            setPrevImageIndex(currentImageIndex);
-            setImageSlideDirection('right');
-            setIsImageTransitioning(true);
-            setCurrentImageIndex(prev => prev === 0 ? images.length - 1 : prev - 1);
-            setTimeout(() => {
-                setImageSlideDirection(null);
-                setIsImageTransitioning(false);
-            }, 500);
-        }
-    };
-
-    const handleModalNextImage = (e: React.MouseEvent) => {
-        e.stopPropagation();
-        const images = getCurrentProjectImages();
-        if (images.length > 1 && !isImageTransitioning) {
-            setPrevImageIndex(currentImageIndex);
-            setImageSlideDirection('left');
-            setIsImageTransitioning(true);
-            setCurrentImageIndex(prev => prev === images.length - 1 ? 0 : prev + 1);
-            setTimeout(() => {
-                setImageSlideDirection(null);
-                setIsImageTransitioning(false);
-            }, 500);
-        }
-    };
-
-    // Swipe dans la modale
-    const [modalTouchStart, setModalTouchStart] = useState<number | null>(null);
-
-    const handleModalTouchStart = (e: React.TouchEvent) => {
-        e.stopPropagation();
-        setModalTouchStart(e.touches[0].clientX);
-    };
-
-    const handleModalTouchEnd = (e: React.TouchEvent) => {
-        e.stopPropagation();
-        if (modalTouchStart === null) return;
-
-        const touchEnd = e.changedTouches[0].clientX;
-        const diff = modalTouchStart - touchEnd;
-
-        // Swipe minimum de 50px
-        if (Math.abs(diff) > 50) {
-            const images = getCurrentProjectImages();
-
-            // Ne changer d'image que si le projet a plusieurs images
-            if (images.length > 1 && !isImageTransitioning) {
-                setPrevImageIndex(currentImageIndex);
-                setIsImageTransitioning(true);
-                if (diff > 0) {
-                    // Swipe vers la gauche - image suivante
-                    setImageSlideDirection('left');
-                    setCurrentImageIndex(prev => prev === images.length - 1 ? 0 : prev + 1);
-                } else {
-                    // Swipe vers la droite - image précédente
-                    setImageSlideDirection('right');
-                    setCurrentImageIndex(prev => prev === 0 ? images.length - 1 : prev - 1);
-                }
-                setTimeout(() => {
-                    setImageSlideDirection(null);
-                    setIsImageTransitioning(false);
-                }, 500);
-            }
-        }
-
-        setModalTouchStart(null);
-    };
     return (
         <div
             ref={carouselRef}
@@ -453,105 +528,36 @@ export default function Carousel({ projects }: CarouselProps) {
 
             {isModalOpen && (
                 <div
-                    className="modal-overlay"
+                    className="modal"
                     onClick={closeModal}
-                    onTouchStart={(e) => e.stopPropagation()}
-                    onTouchMove={(e) => e.stopPropagation()}
-                    onTouchEnd={(e) => e.stopPropagation()}
                 >
-                    <button className="modal-close" onClick={closeModal}>×</button>
+                    <button className="close" onClick={closeModal}>×</button>
                     <div
-                        className="modal-content"
+                        className="image-wrapper"
                         onClick={(e) => e.stopPropagation()}
+                        onTouchStart={handleModalTouchStart}
+                        onTouchMove={handleModalTouchMove}
+                        onTouchEnd={handleModalTouchEnd}
                     >
-                        <>
-                            <Image
-                                src={getCurrentProjectImages()[currentImageIndex]}
-                                alt={projects[currentIndex].title}
-                                width={1920}
-                                height={1080}
-                                className="modal-image"
-                                draggable={false}
-                                onTouchStart={handleModalTouchStart}
-                                onTouchEnd={handleModalTouchEnd}
-                                onTouchMove={(e) => e.stopPropagation()}
-                            />
-                            {isImageTransitioning && imageSlideDirection && (
-                                <div className={`modal-slide-container slide-${imageSlideDirection}`}
-                                    onTouchStart={handleModalTouchStart}
-                                    onTouchEnd={handleModalTouchEnd}
-                                    onTouchMove={(e) => e.stopPropagation()}
-                                >
-                                    <div>
-                                        {imageSlideDirection === 'left' ? (
-                                            <>
-                                                <Image
-                                                    src={getCurrentProjectImages()[prevImageIndex]}
-                                                    alt={projects[currentIndex].title}
-                                                    width={1920}
-                                                    height={1080}
-                                                    className="modal-slide-img"
-                                                    draggable={false}
-                                                    loading="eager"
-                                                    priority
-                                                />
-                                                <Image
-                                                    src={getCurrentProjectImages()[currentImageIndex]}
-                                                    alt={projects[currentIndex].title}
-                                                    width={1920}
-                                                    height={1080}
-                                                    className="modal-slide-img"
-                                                    draggable={false}
-                                                    loading="eager"
-                                                    priority
-                                                />
-                                            </>
-                                        ) : (
-                                            <>
-                                                <Image
-                                                    src={getCurrentProjectImages()[currentImageIndex]}
-                                                    alt={projects[currentIndex].title}
-                                                    width={1920}
-                                                    height={1080}
-                                                    className="modal-slide-img"
-                                                    draggable={false}
-                                                    loading="eager"
-                                                    priority
-                                                />
-                                                <Image
-                                                    src={getCurrentProjectImages()[prevImageIndex]}
-                                                    alt={projects[currentIndex].title}
-                                                    width={1920}
-                                                    height={1080}
-                                                    className="modal-slide-img"
-                                                    draggable={false}
-                                                    loading="eager"
-                                                    priority
-                                                />
-                                            </>
-                                        )}
-                                    </div>
-                                </div>
-                            )}
-                        </>
-                        {getCurrentProjectImages().length > 1 && (
-                            <>
-                                <button
-                                    onClick={handleModalPrevImage}
-                                    className="modal-arrow modal-prev"
-                                    aria-label="Image précédente"
-                                >
-                                    ←
-                                </button>
-                                <button
-                                    onClick={handleModalNextImage}
-                                    className="modal-arrow modal-next"
-                                    aria-label="Image suivante"
-                                >
-                                    →
-                                </button>
-                            </>
-                        )}
+                        <Image
+                            src={getCurrentProjectImages()[currentImageIndex]}
+                            alt={projects[currentIndex].title}
+                            width={1920}
+                            height={1080}
+                            className="image"
+                            draggable={false}
+                            onWheel={handleWheel}
+                            onDoubleClick={handleDoubleClick}
+                            onMouseDown={handleModalMouseDown}
+                            onMouseMove={handleModalMouseMove}
+                            onMouseUp={handleModalMouseUp}
+                            style={{
+                                transform: `scale(${modalZoom}) translate3d(${modalPosition.x / modalZoom}px, ${modalPosition.y / modalZoom}px, 0)`,
+                                transition: isDraggingModal ? 'none' : 'transform 0.1s ease-out',
+                                cursor: modalZoom > 1 ? (isDraggingModal ? 'grabbing' : 'grab') : 'default',
+                                willChange: 'transform'
+                            }}
+                        />
                     </div>
                 </div>
             )}
