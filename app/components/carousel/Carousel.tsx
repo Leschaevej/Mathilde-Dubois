@@ -25,6 +25,7 @@ export default function Carousel({ projects }: CarouselProps) {
     const [hasMoved, setHasMoved] = useState(false);
     const [rotation, setRotation] = useState(0);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isModalClosing, setIsModalClosing] = useState(false);
     const [imageSlideDirection, setImageSlideDirection] = useState<'left' | 'right' | null>(null);
     const [isImageTransitioning, setIsImageTransitioning] = useState(false);
     const [modalZoom, setModalZoom] = useState(1);
@@ -190,9 +191,13 @@ export default function Carousel({ projects }: CarouselProps) {
     };
 
     const closeModal = () => {
-        setIsModalOpen(false);
-        setModalZoom(1);
-        setModalPosition({ x: 0, y: 0 });
+        setIsModalClosing(true);
+        setTimeout(() => {
+            setIsModalOpen(false);
+            setIsModalClosing(false);
+            setModalZoom(1);
+            setModalPosition({ x: 0, y: 0 });
+        }, 300); // Durée de l'animation fadeOut
     };
 
     // Zoom avec la molette
@@ -413,7 +418,6 @@ export default function Carousel({ projects }: CarouselProps) {
                     else zIndex = indexDiff < 0 ? 0 : 1;
                     const projectImages = Array.isArray(project.image) ? project.image : [project.image];
                     const hasMultipleImages = projectImages.length > 1;
-                    const arrowsOpacity = hasMultipleImages && absPosition < 0.3 ? 1 : 0;
                     return (
                         <div
                             key={`${project.id}-${index}`}
@@ -499,7 +503,10 @@ export default function Carousel({ projects }: CarouselProps) {
                                         onClick={handlePreviousImage}
                                         className="select prev"
                                         aria-label="Image précédente"
-                                        style={{ opacity: arrowsOpacity }}
+                                        style={{
+                                            opacity: index === currentIndex && !isTransitioning ? 1 : 0,
+                                            pointerEvents: index === currentIndex && !isTransitioning ? 'auto' : 'none'
+                                        }}
                                     >
                                         ←
                                     </button>
@@ -507,7 +514,10 @@ export default function Carousel({ projects }: CarouselProps) {
                                         onClick={handleNextImage}
                                         className="select next"
                                         aria-label="Image suivante"
-                                        style={{ opacity: arrowsOpacity }}
+                                        style={{
+                                            opacity: index === currentIndex && !isTransitioning ? 1 : 0,
+                                            pointerEvents: index === currentIndex && !isTransitioning ? 'auto' : 'none'
+                                        }}
                                     >
                                         →
                                     </button>
@@ -528,7 +538,7 @@ export default function Carousel({ projects }: CarouselProps) {
 
             {isModalOpen && (
                 <div
-                    className="modal"
+                    className={`modal ${isModalClosing ? 'closing' : ''}`}
                     onClick={closeModal}
                 >
                     <button className="close" onClick={closeModal}>×</button>
