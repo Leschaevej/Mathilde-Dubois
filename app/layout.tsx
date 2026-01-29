@@ -129,8 +129,6 @@ export const metadata: Metadata = {
 export const viewport = {
     width: 'device-width',
     initialScale: 1,
-    maximumScale: 1,
-    userScalable: false,
 };
 
 const businessSchema = {
@@ -254,18 +252,24 @@ export default function RootLayout({
             <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
             <link rel="dns-prefetch" href="https://vercel.live" />
             <link rel="dns-prefetch" href="https://vitals.vercel-analytics.com" />
-            <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet" />
-            <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+            <link
+                href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined"
+                rel="preload"
+                as="style"
+            />
+            <link
+                href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined"
+                rel="stylesheet"
+            />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(businessSchema) }} />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }} />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
         </head>
         <body className={`${montserrat.variable} ${ephesis.variable} ${satisfy.variable}`}>
-            <Preloader>
-                <Header />
-                {children}
-                <Footer />
-            </Preloader>
+            <Preloader />
+            <Header />
+            {children}
+            <Footer />
             <Cookies />
             <Analytics />
             <SpeedInsights />

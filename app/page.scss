@@ -4,13 +4,19 @@
     position: relative;
     height: 100vh;
     padding: 100px;
-    background: url('/fond.webp') no-repeat center center;
-    background-size: cover;
     display: flex;
     align-items: center;
     justify-content: center;
     @include justifyContent(center, flex-start, flex-start);
     @include centeredContent();
+    .hero-bg {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        z-index: 0;
+    }
     .content {
         position: relative;
         z-index: 1;

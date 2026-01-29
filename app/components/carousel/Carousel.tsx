@@ -33,9 +33,17 @@ export default function Carousel({ projects }: CarouselProps) {
     const [modalPosition, setModalPosition] = useState({ x: 0, y: 0 });
     const [isDraggingModal, setIsDraggingModal] = useState(false);
     const [modalDragStart, setModalDragStart] = useState({ x: 0, y: 0 });
+    const [windowWidth, setWindowWidth] = useState(1024);
     const carouselRef = useRef<HTMLDivElement>(null);
     const containerRef = useRef<HTMLDivElement>(null);
     const anglePerProject = 360 / projects.length;
+
+    useEffect(() => {
+        setWindowWidth(window.innerWidth);
+        const handleResize = () => setWindowWidth(window.innerWidth);
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
     useEffect(() => {
         const observer = new IntersectionObserver(
             ([entry]) => {
@@ -453,9 +461,9 @@ export default function Carousel({ projects }: CarouselProps) {
                     if (!isDragging && absPosition > 2.5) return null;
                     if (isDragging && absPosition > 10) return null;
                     const isClickable = absPosition <= 1.2;
-                    const maxDistance = window.innerWidth > 768
-                        ? Math.min(400, Math.max(260, window.innerWidth * 0.28))
-                        : window.innerWidth * 0.45;
+                    const maxDistance = windowWidth > 768
+                        ? Math.min(400, Math.max(260, windowWidth * 0.28))
+                        : windowWidth * 0.45;
                     const translateX = position * maxDistance;
                     const scale = Math.max(0.01, 1 - absPosition * 0.3);
                     let opacity = 1;
