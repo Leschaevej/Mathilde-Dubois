@@ -37,7 +37,6 @@ export default function Carousel({ projects }: CarouselProps) {
     const carouselRef = useRef<HTMLDivElement>(null);
     const containerRef = useRef<HTMLDivElement>(null);
     const anglePerProject = 360 / projects.length;
-
     useEffect(() => {
         setWindowWidth(window.innerWidth);
         const handleResize = () => setWindowWidth(window.innerWidth);
@@ -60,8 +59,6 @@ export default function Carousel({ projects }: CarouselProps) {
     }, []);
     useEffect(() => {
         setCurrentImageIndex(0);
-
-        // Précharger les images du projet actuel
         const currentProject = projects[currentIndex];
         const images = Array.isArray(currentProject.image) ? currentProject.image : [currentProject.image];
         images.forEach((src) => {
@@ -72,7 +69,7 @@ export default function Carousel({ projects }: CarouselProps) {
         });
     }, [currentIndex, projects]);
     const onTouchStart = (e: React.TouchEvent) => {
-        if (isModalOpen) return; // Ne pas gérer le touch si la modale est ouverte
+        if (isModalOpen) return;
         const target = e.target as HTMLElement;
         if (target.closest('.info') || target.closest('.controls')) return;
         setTouchStart(e.targetTouches[0].clientX);
@@ -80,7 +77,7 @@ export default function Carousel({ projects }: CarouselProps) {
         setHasMoved(false);
     };
     const onTouchMove = (e: React.TouchEvent) => {
-        if (isModalOpen) return; // Ne pas gérer le touch si la modale est ouverte
+        if (isModalOpen) return;
         if (!isDragging || touchStart === null) return;
         const currentX = e.targetTouches[0].clientX;
         const diff = currentX - touchStart;
@@ -91,7 +88,7 @@ export default function Carousel({ projects }: CarouselProps) {
         setRotation(rotationChange);
     };
     const onTouchEnd = () => {
-        if (isModalOpen) return; // Ne pas gérer le touch si la modale est ouverte
+        if (isModalOpen) return;
         if (!isDragging) return;
         const rotationDegrees = rotation;
         const projectsToMove = Math.round(rotationDegrees / anglePerProject);
@@ -152,26 +149,16 @@ export default function Carousel({ projects }: CarouselProps) {
     };
     const handlePreviousImage = (e: React.MouseEvent) => {
         e.stopPropagation();
-
-        // Bloquer si en transition de projet OU si déjà en train de charger/animer
         if (isTransitioning || isLoadingImage || isImageTransitioning) {
             return;
         }
-
         const images = getCurrentProjectImages();
         if (images.length <= 1) return;
-
         const nextImageIndex = currentImageIndex === 0 ? images.length - 1 : currentImageIndex - 1;
         const nextImageSrc = images[nextImageIndex];
-
-        // Bloquer immédiatement les nouveaux clics
         setIsLoadingImage(true);
-
-        // Précharger l'image et attendre qu'elle soit complètement chargée
         const img = new window.Image();
-
         img.onload = () => {
-            // L'image est chargée, maintenant on lance l'animation
             setIsImageTransitioning(true);
             setPrevImageIndex(currentImageIndex);
             setImageSlideDirection('right');
@@ -182,37 +169,24 @@ export default function Carousel({ projects }: CarouselProps) {
                 setIsLoadingImage(false);
             }, 500);
         };
-
         img.onerror = () => {
-            // En cas d'erreur de chargement, débloquer
             console.error('Erreur de chargement de l\'image:', nextImageSrc);
             setIsLoadingImage(false);
         };
-
         img.src = nextImageSrc;
     };
     const handleNextImage = (e: React.MouseEvent) => {
         e.stopPropagation();
-
-        // Bloquer si en transition de projet OU si déjà en train de charger/animer
         if (isTransitioning || isLoadingImage || isImageTransitioning) {
             return;
         }
-
         const images = getCurrentProjectImages();
         if (images.length <= 1) return;
-
         const nextImageIndex = currentImageIndex === images.length - 1 ? 0 : currentImageIndex + 1;
         const nextImageSrc = images[nextImageIndex];
-
-        // Bloquer immédiatement les nouveaux clics
         setIsLoadingImage(true);
-
-        // Précharger l'image et attendre qu'elle soit complètement chargée
         const img = new window.Image();
-
         img.onload = () => {
-            // L'image est chargée, maintenant on lance l'animation
             setIsImageTransitioning(true);
             setPrevImageIndex(currentImageIndex);
             setImageSlideDirection('left');
@@ -223,13 +197,10 @@ export default function Carousel({ projects }: CarouselProps) {
                 setIsLoadingImage(false);
             }, 500);
         };
-
         img.onerror = () => {
-            // En cas d'erreur de chargement, débloquer
             console.error('Erreur de chargement de l\'image:', nextImageSrc);
             setIsLoadingImage(false);
         };
-
         img.src = nextImageSrc;
     };
     const handlePreviousProject = () => {
@@ -242,7 +213,6 @@ export default function Carousel({ projects }: CarouselProps) {
     };
     const handleImageClick = (clickedIndex: number) => {
         if (clickedIndex === currentIndex && !isTransitioning && !hasMoved && !isImageTransitioning && !isLoadingImage) {
-            // Si on clique sur l'image centrale, ouvrir la modale
             setIsModalOpen(true);
         } else if (clickedIndex !== currentIndex && !isTransitioning && !hasMoved) {
             setIsTransitioning(true);
@@ -253,7 +223,6 @@ export default function Carousel({ projects }: CarouselProps) {
             setTimeout(() => setIsTransitioning(false), 600);
         }
     };
-
     const closeModal = () => {
         setIsModalClosing(true);
         setTimeout(() => {
@@ -261,21 +230,16 @@ export default function Carousel({ projects }: CarouselProps) {
             setIsModalClosing(false);
             setModalZoom(1);
             setModalPosition({ x: 0, y: 0 });
-        }, 300); // Durée de l'animation fadeOut
+        }, 300);
     };
-
-    // Zoom avec la molette
     const handleWheel = (e: React.WheelEvent) => {
         e.preventDefault();
         const delta = e.deltaY * -0.01;
         const newZoom = Math.min(Math.max(1, modalZoom + delta), 5);
         setModalZoom(newZoom);
-
-        // Ajuster la position pour garder l'image visible
         if (newZoom <= 1) {
             setModalPosition({ x: 0, y: 0 });
         } else if (newZoom < modalZoom) {
-            // Si on dézoome, recentrer progressivement
             const zoomRatio = newZoom / modalZoom;
             setModalPosition({
                 x: modalPosition.x * zoomRatio,
@@ -283,14 +247,10 @@ export default function Carousel({ projects }: CarouselProps) {
             });
         }
     };
-
-    // Double-clic pour reset le zoom
     const handleDoubleClick = () => {
         setModalZoom(1);
         setModalPosition({ x: 0, y: 0 });
     };
-
-    // Drag pour déplacer l'image zoomée
     const handleModalMouseDown = (e: React.MouseEvent) => {
         if (modalZoom > 1) {
             e.preventDefault();
@@ -298,7 +258,6 @@ export default function Carousel({ projects }: CarouselProps) {
             setModalDragStart({ x: e.clientX - modalPosition.x, y: e.clientY - modalPosition.y });
         }
     };
-
     const handleModalMouseMove = (e: React.MouseEvent) => {
         if (isDraggingModal && modalZoom > 1) {
             setModalPosition({
@@ -307,34 +266,26 @@ export default function Carousel({ projects }: CarouselProps) {
             });
         }
     };
-
     const handleModalMouseUp = () => {
         setIsDraggingModal(false);
     };
-
-    // Gestion tactile (pinch-to-zoom et pan) pour mobile
     const [initialTouchDistance, setInitialTouchDistance] = useState<number | null>(null);
     const [initialZoom, setInitialZoom] = useState(1);
     const [lastTouchTime, setLastTouchTime] = useState(0);
-
     const getTouchDistance = (touch1: React.Touch, touch2: React.Touch) => {
         const dx = touch1.clientX - touch2.clientX;
         const dy = touch1.clientY - touch2.clientY;
         return Math.sqrt(dx * dx + dy * dy);
     };
-
     const handleModalTouchStart = (e: React.TouchEvent) => {
         const now = Date.now();
-
         if (e.touches.length === 2) {
-            // Pinch zoom avec 2 doigts - réinitialiser le dragging
             setIsDraggingModal(false);
             const distance = getTouchDistance(e.touches[0], e.touches[1]);
             setInitialTouchDistance(distance);
             setInitialZoom(modalZoom);
             setLastTouchTime(now);
         } else if (e.touches.length === 1) {
-            // Attendre un peu avant d'autoriser le pan pour éviter les mouvements accidentels
             if (modalZoom > 1 && now - lastTouchTime > 100) {
                 setIsDraggingModal(true);
                 setModalDragStart({
@@ -344,30 +295,21 @@ export default function Carousel({ projects }: CarouselProps) {
             }
         }
     };
-
     const handleModalTouchMove = (e: React.TouchEvent) => {
         if (e.touches.length === 2 && initialTouchDistance !== null) {
-            // Pinch zoom - bloquer le pan
             e.preventDefault();
             setIsDraggingModal(false);
-
             const distance = getTouchDistance(e.touches[0], e.touches[1]);
             const scale = distance / initialTouchDistance;
-
-            // Zoom plus progressif avec une courbe d'accélération
             const smoothScale = scale < 1
-                ? 1 - (1 - scale) * 0.8  // Dézoom plus lent
-                : 1 + (scale - 1) * 1.2; // Zoom un peu plus rapide
+                ? 1 - (1 - scale) * 0.8
+                : 1 + (scale - 1) * 1.2;
 
             const newZoom = Math.min(Math.max(1, initialZoom * smoothScale), 5);
             setModalZoom(newZoom);
-
-            // Ajuster la position pour garder l'image visible
             if (newZoom <= 1) {
-                // Retour complet au centre
                 setModalPosition({ x: 0, y: 0 });
             } else {
-                // Réduire proportionnellement le déplacement quand on dézoome
                 const zoomRatio = newZoom / modalZoom;
                 setModalPosition({
                     x: modalPosition.x * zoomRatio,
@@ -375,12 +317,9 @@ export default function Carousel({ projects }: CarouselProps) {
                 });
             }
         } else if (e.touches.length === 1 && isDraggingModal && modalZoom > 1) {
-            // Pan quand zoomé
             e.preventDefault();
             const newX = e.touches[0].clientX - modalDragStart.x;
             const newY = e.touches[0].clientY - modalDragStart.y;
-
-            // Limiter le déplacement basé sur le niveau de zoom
             const maxMove = 200 * modalZoom;
             setModalPosition({
                 x: Math.max(-maxMove, Math.min(maxMove, newX)),
@@ -388,42 +327,30 @@ export default function Carousel({ projects }: CarouselProps) {
             });
         }
     };
-
     const handleModalTouchEnd = (e: React.TouchEvent) => {
         const now = Date.now();
         setLastTouchTime(now);
-
         if (e.touches.length < 2) {
             setInitialTouchDistance(null);
         }
-
         if (e.touches.length === 0) {
-            // Petit délai avant de permettre un nouveau pan
             setTimeout(() => setIsDraggingModal(false), 50);
         }
     };
-
-    // Bloquer le scroll et gérer la touche Échap
     useEffect(() => {
         if (isModalOpen) {
             const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
-
-            // Bloquer le scroll
             document.documentElement.style.overflow = 'hidden';
             document.body.style.overflow = 'hidden';
-
             if (scrollbarWidth > 0) {
                 document.body.style.paddingRight = `${scrollbarWidth}px`;
             }
-
             const handleEscape = (e: KeyboardEvent) => {
                 if (e.key === 'Escape') {
                     closeModal();
                 }
             };
-
             document.addEventListener('keydown', handleEscape);
-
             return () => {
                 document.documentElement.style.overflow = '';
                 document.body.style.overflow = '';
@@ -432,7 +359,6 @@ export default function Carousel({ projects }: CarouselProps) {
             };
         }
     }, [isModalOpen]);
-
     return (
         <div
             ref={carouselRef}
