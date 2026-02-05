@@ -7,22 +7,10 @@ import { lazy, Suspense } from 'react';
 const Carousel = lazy(() => import('./components/carousel/Carousel'));
 const Map = lazy(() => import('./components/map/Map'));
 
-import fondImage from '../public/fond.webp';
-
 export default function Home() {
     return (
         <>
             <section className="hero">
-                <Image
-                    src={fondImage}
-                    alt=""
-                    fill
-                    priority
-                    fetchPriority="high"
-                    placeholder="blur"
-                    sizes="100vw"
-                    className="hero-bg"
-                />
                 <div className="content">
                     <h2>
                         <span className="main">Mathilde Dubois</span><br/>
