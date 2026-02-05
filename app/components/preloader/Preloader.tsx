@@ -7,16 +7,17 @@ const slideDelay = 1500;
 export default function Preloader() {
     const [showLogo, setShowLogo] = useState(false);
     const [slideUp, setSlideUp] = useState(false);
-    const [hidden, setHidden] = useState(false);
-    const [checked, setChecked] = useState(false);
+    const [shouldShow, setShouldShow] = useState(false);
+    const [hidden, setHidden] = useState(true);
     useEffect(() => {
-        if (sessionStorage.getItem('preloader-seen') === 'true') {
-            setHidden(true);
+        const seen = sessionStorage.getItem('preloader-seen') === 'true';
+        if (!seen) {
+            setShouldShow(true);
+            setHidden(false);
         }
-        setChecked(true);
     }, []);
     useEffect(() => {
-        if (!checked || hidden) return;
+        if (!shouldShow || hidden) return;
         const logoTimer = setTimeout(() => {
             setShowLogo(true);
         }, 500);
@@ -31,8 +32,8 @@ export default function Preloader() {
             clearTimeout(logoTimer);
             clearTimeout(slideTimer);
         };
-    }, [checked, hidden]);
-    if (hidden) return null;
+    }, [shouldShow, hidden]);
+    if (!shouldShow || hidden) return null;
     return (
         <div className={`preloader ${slideUp ? 'out' : ''}`}>
             <p className={`logo ${showLogo ? 'show' : ''}`}>MD</p>

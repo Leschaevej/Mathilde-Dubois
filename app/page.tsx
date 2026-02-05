@@ -18,6 +18,7 @@ export default function Home() {
                     alt=""
                     fill
                     priority
+                    fetchPriority="high"
                     placeholder="blur"
                     sizes="100vw"
                     className="hero-bg"

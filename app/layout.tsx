@@ -253,6 +253,7 @@ export default function RootLayout({
             <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
             <link rel="dns-prefetch" href="https://vercel.live" />
             <link rel="dns-prefetch" href="https://vitals.vercel-analytics.com" />
+            <link rel="preload" href="/fond.webp" as="image" type="image/webp" fetchPriority="high" />
             <link
                 href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined"
                 rel="preload"
