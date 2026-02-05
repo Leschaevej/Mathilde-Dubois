@@ -254,10 +254,6 @@ export default function RootLayout({
             <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
             <link rel="dns-prefetch" href="https://vercel.live" />
             <link rel="dns-prefetch" href="https://vitals.vercel-analytics.com" />
-            <link
-                href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined&display=swap"
-                rel="stylesheet"
-            />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(businessSchema) }} />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }} />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />

@@ -3,6 +3,9 @@ import "./page.scss";
 import Contact from './components/contact/Contact';
 import projectsData from './data/projects.json';
 import { lazy, Suspense } from 'react';
+import { MdLocationOn } from "@react-icons/all-files/md/MdLocationOn";
+import { MdEmail } from "@react-icons/all-files/md/MdEmail";
+import { MdPhone } from "@react-icons/all-files/md/MdPhone";
 
 const Carousel = lazy(() => import('./components/carousel/Carousel'));
 const Map = lazy(() => import('./components/map/Map'));
@@ -142,19 +145,19 @@ export default function Home() {
                         <div className="info">
                             <div className="item">
                                 <div className="circle">
-                                    <span className="icons">location_on</span>
+                                    <MdLocationOn className="icons" />
                                 </div>
                                 <p>Saint-Aygulf</p>
                             </div>
                             <div className="item">
                                 <div className="circle">
-                                    <span className="icons">email</span>
+                                    <MdEmail className="icons" />
                                 </div>
                                 <p>contact@mathildedubois.fr</p>
                             </div>
                             <div className="item">
                                 <div className="circle">
-                                    <span className="icons">phone</span>
+                                    <MdPhone className="icons" />
                                 </div>
                                 <p>06 18 35 14 83</p>
                             </div>

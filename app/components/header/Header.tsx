@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
+import { MdMenu } from "@react-icons/all-files/md/MdMenu";
 import "./Header.scss";
 
 export default function Header() {
@@ -107,7 +108,7 @@ export default function Header() {
                 </a>
             </div>
             <button className="menu" onClick={toggleMobileMenu} aria-label="Toggle menu">
-                <span className="material-icons icon">menu</span>
+                <MdMenu className="icon" />
             </button>
             <nav className="nav">
                 <ul>

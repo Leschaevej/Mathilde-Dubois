@@ -11,6 +11,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@react-icons/all-files": "^4.1.0",
     "@types/leaflet": "^1.9.21",
     "@types/nodemailer": "^7.0.9",
     "@vercel/analytics": "^1.6.1",
