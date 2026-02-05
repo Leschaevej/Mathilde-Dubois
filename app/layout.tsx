@@ -250,17 +250,12 @@ export default function RootLayout({
             <link rel="icon" href="/favicon.ico" sizes="any" />
             <link rel="apple-touch-icon" href="/apple.png" />
             <link rel="manifest" href="/site.webmanifest" />
-            <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
+            <link rel="preconnect" href="https://fonts.googleapis.com" />
+            <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
             <link rel="dns-prefetch" href="https://vercel.live" />
             <link rel="dns-prefetch" href="https://vitals.vercel-analytics.com" />
-            <link rel="preload" href="/fond.webp" as="image" type="image/webp" fetchPriority="high" />
             <link
-                href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined"
-                rel="preload"
-                as="style"
-            />
-            <link
-                href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined"
+                href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined&display=swap"
                 rel="stylesheet"
             />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(businessSchema) }} />
