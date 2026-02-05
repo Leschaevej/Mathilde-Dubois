@@ -12,7 +12,7 @@ const Map = lazy(() => import('./components/map/Map'));
 
 export default function Home() {
     return (
-        <>
+        <main>
             <section className="hero">
                 <div className="content">
                     <h2>
@@ -165,6 +165,6 @@ export default function Home() {
                     </div>
                 </div>
             </section>
-        </>
+        </main>
     )
 }

@@ -32,5 +32,8 @@
     "eslint": "^9",
     "eslint-config-next": "^16.1.6",
     "typescript": "^5"
-  }
+  },
+  "browserslist": [
+    "defaults and fully supports es6-module"
+  ]
 }
