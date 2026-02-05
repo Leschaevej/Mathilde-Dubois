@@ -1,4 +1,6 @@
-@use '../../mixins.scss' as *;
+@use '../../Functions' as *;
+
+$mobile: 768px;
 
 .carousel {
     display: flex;
@@ -9,8 +11,11 @@
     cursor: default;
     user-select: none;
     pointer-events: none;
-    @include gap(10px, 30px, 30px);
-    &.fade-in {
+    gap: 30px;
+    @media (max-width: $mobile) {
+        gap: 10px;
+    }
+    &.animate {
         opacity: 1;
     }
     &.dragging {
@@ -49,7 +54,7 @@
                 transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1) !important;
             }
         }
-        @media (max-width: 768px) {
+        @media (max-width: $mobile) {
             height: 49.5vw;
             gap: 10px;
             padding: 0;
@@ -89,7 +94,7 @@
         transform: translateZ(0);
         -webkit-backface-visibility: hidden;
         backface-visibility: hidden;
-        @media (max-width: 768px) {
+        @media (max-width: $mobile) {
             width: 70vw;
             height: 49.5vw;
         }
@@ -102,7 +107,7 @@
         top: 0;
         left: 0;
         z-index: 10;
-        @media (max-width: 768px) {
+        @media (max-width: $mobile) {
             width: 70vw;
             height: 49.5vw;
         }
@@ -150,18 +155,21 @@
         transition: opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1);
         cursor: default;
         pointer-events: auto;
-        @include gap(10px, 30px, 30px);
+        gap: 30px;
+        @media (max-width: $mobile) {
+            gap: 10px;
+        }
         &.transitioning {
             opacity: 0;
         }
         h3 {
             font-family: inherit;
             height: clamp(55px, calc(81px + (55 - 81) * ((100vw - 320px) / (1440 - 320))), 81px);
-            font-size: clamp(24px, 24px + (48 - 24) * ((100vw - 768px) / (1440 - 768)), 48px);
+            font-size: fluid(24, 48);
         }
         p {
             height: clamp(58px, calc(114px + (58 - 114) * ((100vw - 320px) / (1440 - 320))), 114px);
-            font-size: clamp(16px, 16px + (24 - 16) * ((100vw - 768px) / (1440 - 768)), 24px);
+            font-size: fluid(16, 24);
         }
     }
     .controls {
@@ -202,13 +210,13 @@
         }
         &.prev {
             left: calc(50% - clamp(339px, 39.35vw, 566px) / 2);
-            @media (max-width: 768px) {
+            @media (max-width: $mobile) {
                 left: calc(50% - 35vw);
             }
         }
         &.next {
             right: calc(50% - clamp(339px, 39.35vw, 566px) / 2);
-            @media (max-width: 768px) {
+            @media (max-width: $mobile) {
                 right: calc(50% - 35vw);
             }
         }
@@ -252,7 +260,7 @@
             &:hover {
                 color: var(--mainColor);
             }
-            @media (max-width: 768px) {
+            @media (max-width: $mobile) {
                 top: 20px;
                 right: 20px;
                 font-size: 40px;
@@ -278,55 +286,27 @@
         }
     }
     @keyframes fadeIn {
-        from {
-            opacity: 0;
-        }
-        to {
-            opacity: 1;
-        }
+        from { opacity: 0; }
+        to { opacity: 1; }
     }
     @keyframes fadeOut {
-        from {
-            opacity: 1;
-        }
-        to {
-            opacity: 0;
-        }
+        from { opacity: 1; }
+        to { opacity: 0; }
     }
     @keyframes scaleIn {
-        from {
-            transform: scale(0.9);
-            opacity: 0;
-        }
-        to {
-            transform: scale(1);
-            opacity: 1;
-        }
+        from { transform: scale(0.9); opacity: 0; }
+        to { transform: scale(1); opacity: 1; }
     }
     @keyframes scaleOut {
-        from {
-            transform: scale(1);
-            opacity: 1;
-        }
-        to {
-            transform: scale(0.9);
-            opacity: 0;
-        }
+        from { transform: scale(1); opacity: 1; }
+        to { transform: scale(0.9); opacity: 0; }
     }
     @keyframes slideImagesLeft {
-        from {
-            transform: translateX(0);
-        }
-        to {
-            transform: translateX(-50%);
-        }
+        from { transform: translateX(0); }
+        to { transform: translateX(-50%); }
     }
     @keyframes slideImagesRight {
-        from {
-            transform: translateX(-50%);
-        }
-        to {
-            transform: translateX(0);
-        }
+        from { transform: translateX(-50%); }
+        to { transform: translateX(0); }
     }
 }

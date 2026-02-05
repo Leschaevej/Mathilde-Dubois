@@ -1,127 +1,15 @@
-"use client";
-
 import Image from 'next/image'
 import "./page.scss";
 import Contact from './components/contact/Contact';
 import projectsData from './data/projects.json';
-import { useEffect, lazy, Suspense } from 'react';
+import { lazy, Suspense } from 'react';
 
 const Carousel = lazy(() => import('./components/carousel/Carousel'));
 const Map = lazy(() => import('./components/map/Map'));
 
 import fondImage from '../public/fond.webp';
 
-function useHashNavigation() {
-    useEffect(() => {
-        const hash = window.location.hash;
-        if (hash) {
-            setTimeout(() => {
-                const element = document.querySelector(hash);
-                if (element) {
-                    element.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            }, 100);
-        }
-    }, []);
-}
-
-function useScrollAnimations() {
-    useEffect(() => {
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach((entry) => {
-                if (entry.isIntersecting) {
-                    if (entry.target.tagName === 'H2') {
-                        entry.target.classList.add('fade-in');
-                    } else if (entry.target.classList.contains('card')) {
-                        entry.target.classList.add('slide-in');
-                    } else if (entry.target.classList.contains('carousel')) {
-                        entry.target.classList.add('fade-in');
-                    } else if (entry.target.classList.contains('box')) {
-                        entry.target.classList.add('slide-in');
-                    } else if (entry.target.tagName === 'IMG' && entry.target.closest('.about')) {
-                        entry.target.classList.add('slide-in');
-                    } else if (entry.target.classList.contains('quote') && entry.target.closest('.about')) {
-                        entry.target.classList.add('fade-up');
-                    } else if (entry.target.tagName === 'P' && entry.target.closest('.contact .left')) {
-                        entry.target.classList.add('slide-in');
-                    } else if (entry.target.classList.contains('wrapper')) {
-                        entry.target.classList.add('slide-in');
-                    } else if (entry.target.closest('.contact .right') && !entry.target.classList.contains('item') && !entry.target.classList.contains('group') && !entry.target.classList.contains('submit')) {
-                        entry.target.classList.add('slide-in');
-                    } else if (entry.target.classList.contains('group')) {
-                        entry.target.classList.add('slide-in');
-                    } else if (entry.target.classList.contains('submit')) {
-                        entry.target.classList.add('slide-in');
-                    } else if (entry.target.classList.contains('item')) {
-                        entry.target.classList.add('fade-up');
-                    }
-                }
-            });
-        }, observerOptions);
-
-        const h2Elements = document.querySelectorAll('h2');
-        const cardElements = document.querySelectorAll('.card');
-        const carouselElement = document.querySelector('.carousel');
-        const boxElement = document.querySelector('.about .box');
-        const portraitElement = document.querySelector('.about img');
-        const aboutQuoteElement = document.querySelector('.about .quote');
-        const contactParagraphs = document.querySelectorAll('.contact .left p');
-
-        const checkForMap = () => {
-            const mapElement = document.querySelector('.wrapper');
-            if (mapElement) {
-                observer.observe(mapElement);
-            } else {
-                setTimeout(checkForMap, 100);
-            }
-        };
-        checkForMap();
-
-        const contactForm = document.querySelector('.contact .right > div:first-child');
-        const formGroups = document.querySelectorAll('.form .group');
-        const submitButton = document.querySelector('.form .submit');
-        const contactItems = document.querySelectorAll('.contact .item');
-
-        h2Elements.forEach((h2) => observer.observe(h2));
-        cardElements.forEach((card) => observer.observe(card));
-        if (carouselElement) observer.observe(carouselElement);
-        if (boxElement) observer.observe(boxElement);
-        if (portraitElement) observer.observe(portraitElement);
-        if (aboutQuoteElement) observer.observe(aboutQuoteElement);
-        contactParagraphs.forEach((p) => observer.observe(p));
-        if (contactForm) observer.observe(contactForm);
-        formGroups.forEach((group) => observer.observe(group));
-        if (submitButton) observer.observe(submitButton);
-        contactItems.forEach((item) => observer.observe(item));
-
-        return () => {
-            h2Elements.forEach((h2) => observer.unobserve(h2));
-            cardElements.forEach((card) => observer.unobserve(card));
-            if (carouselElement) observer.unobserve(carouselElement);
-            if (boxElement) observer.unobserve(boxElement);
-            if (portraitElement) observer.unobserve(portraitElement);
-            if (aboutQuoteElement) observer.unobserve(aboutQuoteElement);
-            contactParagraphs.forEach((p) => observer.unobserve(p));
-            const mapElement = document.querySelector('.wrapper');
-            if (mapElement) observer.unobserve(mapElement);
-            if (contactForm) observer.unobserve(contactForm);
-            formGroups.forEach((group) => observer.unobserve(group));
-            if (submitButton) observer.unobserve(submitButton);
-            contactItems.forEach((item) => observer.unobserve(item));
-        };
-    }, []);
-}
-
 export default function Home() {
-    useHashNavigation();
-    useScrollAnimations();
     return (
         <>
             <section className="hero">

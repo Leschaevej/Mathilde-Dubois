@@ -1,4 +1,7 @@
-@use './mixins' as *;
+@use './Functions' as *;
+
+$mobile: 768px;
+$tablet: 1024px;
 
 .hero {
     position: relative;
@@ -6,9 +9,14 @@
     padding: 100px;
     display: flex;
     align-items: center;
-    justify-content: center;
-    @include justifyContent(center, flex-start, flex-start);
-    @include centeredContent();
+    justify-content: flex-start;
+    @media (min-width: 1440px) {
+        padding-left: calc((100vw - 1240px) / 2);
+        padding-right: calc((100vw - 1240px) / 2);
+    }
+    @media (max-width: $mobile) {
+        justify-content: center;
+    }
     .hero-bg {
         position: absolute;
         inset: 0;
@@ -25,28 +33,35 @@
             opacity: 1;
             transform: translateX(0);
             transition: none;
-            .main{
-                font-size: clamp(48px, 48px + (64 - 48) * ((100vw - 768px) / (1440 - 768)), 64px);
+            .main {
+                font-size: fluid(48, 64);
             }
-            .sub{
-                font-size: clamp(48px, 48px + (96 - 48) * ((100vw - 768px) / (1440 - 768)), 96px);
+            .sub {
+                font-size: fluid(48, 96);
             }
         }
     }
 }
-.role{
+
+.role {
     background-color: var(--secondColor);
-    padding: clamp(30px, 30px + (100 - 30) * ((100vw - 768px) / (1440 - 768)), 100px) clamp(30px, 30px + (100 - 30) * ((100vw - 768px) / (1440 - 768)), 100px);
-    @include centeredContent();
-    .content{
+    padding: fluid(30, 100);
+    @media (min-width: 1440px) {
+        padding-left: calc((100vw - 1240px) / 2);
+        padding-right: calc((100vw - 1240px) / 2);
+    }
+    .content {
         display: flex;
         flex-direction: column;
         gap: 30px;
-        .grid{
+        .grid {
             display: grid;
-            @include gridColumns(1fr, 1fr, 1fr 1fr 1fr);
+            grid-template-columns: 1fr 1fr 1fr;
             gap: 30px;
-            .card{
+            @media (max-width: $tablet) {
+                grid-template-columns: 1fr;
+            }
+            .card {
                 display: flex;
                 flex-direction: column;
                 background-color: var(--backgroundColor);
@@ -54,8 +69,8 @@
                 transform: translateX(50px);
                 transition: opacity 0.8s ease-out, transform 0.8s ease-out;
                 padding: 30px;
-                @include gap(30px, 30px, 30px);
-                &.slide-in {
+                gap: 30px;
+                &.animate {
                     opacity: 1;
                     transform: translateX(0);
                 }
@@ -66,46 +81,55 @@
         }
     }
 }
-.tagline{
+
+.tagline {
     background-color: var(--thirdColor);
-    .quote{
+    .quote {
         padding: 30px;
     }
 }
-.services{
-    padding: clamp(30px, 30px + (100 - 30) * ((100vw - 768px) / (1440 - 768)), 100px) clamp(30px, 30px + (100 - 30) * ((100vw - 768px) / (1440 - 768)), 100px) 0;
-    @include centeredContent();
-    .content{
+
+.services {
+    padding: fluid(30, 100);
+    padding-bottom: 0;
+    @media (min-width: 1440px) {
+        padding-left: calc((100vw - 1240px) / 2);
+        padding-right: calc((100vw - 1240px) / 2);
+    }
+    .content {
         display: flex;
         flex-direction: column;
         gap: 30px;
-        .grid{
+        .grid {
             display: grid;
-            @include gridColumns(1fr, 1fr, 1fr 1fr 1fr);
+            grid-template-columns: 1fr 1fr 1fr;
             gap: 30px;
-            .card{
+            @media (max-width: $tablet) {
+                grid-template-columns: 1fr;
+            }
+            .card {
                 display: flex;
                 flex-direction: column;
                 border: 3px solid var(--textColor);
                 opacity: 0;
                 transform: translateX(50px);
                 transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-                &.slide-in {
+                &.animate {
                     opacity: 1;
                     transform: translateX(0);
                 }
                 &:nth-child(1) { transition-delay: 0.2s; }
                 &:nth-child(2) { transition-delay: 0.4s; }
                 &:nth-child(3) { transition-delay: 0.6s; }
-                img{
+                img {
                     width: 100%;
                     height: auto;
                     box-sizing: border-box;
                 }
-                .text{
+                .text {
                     display: flex;
                     flex-direction: column;
-                    .main{
+                    .main {
                         &::after {
                             content: '';
                             display: block;
@@ -113,15 +137,18 @@
                             height: 1px;
                             background-color: var(--textColor);
                         }
-                        h3{
+                        h3 {
                             padding: 30px;
                             font-weight: 600;
                             position: relative;
-                            @include height(fit-content, fit-content, 186px);
-                            font-size: clamp(24px, 24px + (36 - 24) * ((100vw - 768px) / (1440 - 768)), 36px);
+                            height: 186px;
+                            font-size: fluid(24, 36);
+                            @media (max-width: $tablet) {
+                                height: fit-content;
+                            }
                         }
                     }
-                    .sub{
+                    .sub {
                         padding: 30px;
                     }
                 }
@@ -129,30 +156,44 @@
         }
     }
 }
-.portfolio{
+
+.portfolio {
     box-sizing: border-box;
-    padding: clamp(30px, 30px + (100 - 30) * ((100vw - 768px) / (1440 - 768)), 100px) clamp(30px, 30px + (100 - 30) * ((100vw - 768px) / (1440 - 768)), 100px);
-    @include centeredContent();
+    padding: fluid(30, 100);
+    @media (min-width: 1440px) {
+        padding-left: calc((100vw - 1240px) / 2);
+        padding-right: calc((100vw - 1240px) / 2);
+    }
     .content {
         display: flex;
         flex-direction: column;
         gap: 30px;
     }
 }
-.about{
+
+.about {
     background-color: var(--mainColor);
-    padding: clamp(30px, 30px + (100 - 30) * ((100vw - 768px) / (1440 - 768)), 100px) clamp(30px, 30px + (100 - 30) * ((100vw - 768px) / (1440 - 768)), 100px);
-    @include centeredContent();
+    padding: fluid(30, 100);
+    @media (min-width: 1440px) {
+        padding-left: calc((100vw - 1240px) / 2);
+        padding-right: calc((100vw - 1240px) / 2);
+    }
     .content {
         display: flex;
         gap: 30px;
-        @include flexDirection(column, column, row);
-        .left{
+        flex-direction: row;
+        @media (max-width: $tablet) {
+            flex-direction: column;
+        }
+        .left {
             display: flex;
             flex-direction: column;
             gap: 30px;
-            @include width(100%, 100%, 50%);
-            .box{
+            width: 50%;
+            @media (max-width: $tablet) {
+                width: 100%;
+            }
+            .box {
                 display: flex;
                 flex-direction: column;
                 gap: 30px;
@@ -161,25 +202,27 @@
                 opacity: 0;
                 transform: translateX(-50px);
                 transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-                &.slide-in {
+                &.animate {
                     opacity: 1;
                     transform: translateX(0);
                 }
             }
         }
-        .right{
+        .right {
             display: flex;
             flex-direction: column;
             gap: 30px;
-            @include width(100%, 100%, 50%);
+            width: 50%;
+            @media (max-width: $tablet) {
+                width: 100%;
+            }
             img {
                 width: 100%;
                 height: auto;
                 opacity: 0;
                 transform: translateX(50px);
                 transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-                
-                &.slide-in {
+                &.animate {
                     opacity: 1;
                     transform: translateX(0);
                 }
@@ -189,7 +232,7 @@
                 transform: translateY(30px);
                 transition: opacity 0.8s ease-out, transform 0.8s ease-out;
                 transition-delay: 0.6s;
-                &.fade-up {
+                &.animate {
                     opacity: 1;
                     transform: translateY(0);
                 }
@@ -197,23 +240,33 @@
         }
     }
 }
-.contact{
-    padding: clamp(30px, 30px + (100 - 30) * ((100vw - 768px) / (1440 - 768)), 100px) clamp(30px, 30px + (100 - 30) * ((100vw - 768px) / (1440 - 768)), 100px);
-    @include centeredContent();
-    .content{
+
+.contact {
+    padding: fluid(30, 100);
+    @media (min-width: 1440px) {
+        padding-left: calc((100vw - 1240px) / 2);
+        padding-right: calc((100vw - 1240px) / 2);
+    }
+    .content {
         display: flex;
         gap: 30px;
-        @include flexDirection(column, column, row);
+        flex-direction: row;
+        @media (max-width: $tablet) {
+            flex-direction: column;
+        }
         .left {
             display: flex;
             flex-direction: column;
             gap: 30px;
-            @include width(100%, 100%, 50%);
+            width: 50%;
+            @media (max-width: $tablet) {
+                width: 100%;
+            }
             p {
                 opacity: 0;
                 transform: translateX(-30px);
                 transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-                &.slide-in {
+                &.animate {
                     opacity: 1;
                     transform: translateX(0);
                 }
@@ -221,16 +274,19 @@
                 &:nth-of-type(2) { transition-delay: 0.4s; }
             }
         }
-        .right{
+        .right {
             display: flex;
             flex-direction: column;
             gap: 30px;
-            @include width(100%, 100%, 50%);
+            width: 50%;
+            @media (max-width: $tablet) {
+                width: 100%;
+            }
             > div:first-child {
                 opacity: 0;
                 transform: translateX(50px);
                 transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-                &.slide-in {
+                &.animate {
                     opacity: 1;
                     transform: translateX(0);
                 }
@@ -241,11 +297,11 @@
                 gap: 30px;
                 .item {
                     display: flex;
-                    gap:10px;
+                    gap: 10px;
                     opacity: 0;
                     transform: translateY(20px);
                     transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-                    &.fade-up {
+                    &.animate {
                         opacity: 1;
                         transform: translateY(0);
                     }
@@ -258,15 +314,19 @@
                         display: flex;
                         align-items: center;
                         justify-content: center;
-                        @include height(25px, 50px, 50px);
-                        @include width(25px, 50px, 50px);
+                        height: 50px;
+                        width: 50px;
+                        @media (max-width: $mobile) {
+                            height: 25px;
+                            width: 25px;
+                        }
                         .icons {
                             font-family: 'Material Icons Outlined';
                             display: flex;
                             align-items: center;
                             justify-content: center;
                             color: var(--textColor);
-                            font-size: clamp(15px, 15px + (30 - 15) * ((100vw - 768px) / (1440 - 768)), 30px);
+                            font-size: fluid(15, 30);
                         }
                     }
                 }

@@ -6,6 +6,7 @@ import Header from "./components/header/Header";
 import Footer from "./components/footer/Footer";
 import Preloader from "./components/preloader/Preloader";
 import Cookies from "./components/cookies/Cookies";
+import Animations from "./Animations";
 import "./globals.scss";
 
 interface BusinessInfo {
@@ -271,6 +272,7 @@ export default function RootLayout({
             {children}
             <Footer />
             <Cookies />
+            <Animations />
             <Analytics />
             <SpeedInsights />
         </body>

@@ -1,4 +1,7 @@
-@use '../../mixins.scss' as *;
+@use '../../Functions' as *;
+
+$mobile: 768px;
+$tablet: 1024px;
 
 .overlay {
     position: fixed;
@@ -21,7 +24,10 @@
         max-height: 80vh;
         box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
         padding: 30px;
-        @include gap (10px, 30px, 30px);
+        gap: 30px;
+        @media (max-width: $mobile) {
+            gap: 10px;
+        }
         .header {
             display: flex;
             flex-direction: column;
@@ -30,35 +36,41 @@
             h2 {
                 opacity: 1;
                 font-family: var(--font-montserrat);
-                font-size: clamp(20px, 20px + (24 - 20) * ((100vw - 768px) / (1440 - 768)), 24px);
+                font-size: fluid(20, 24);
                 color: var(--textColor);
                 transform: translateX(0);
             }
-            p{
-                font-size: clamp(16px, 16px + (20 - 16) * ((100vw - 768px) / (1440 - 768)), 20px);
+            p {
+                font-size: fluid(16, 20);
             }
         }
         .content {
             display: flex;
             flex-direction: column;
-            @include gap (10px, 30px, 30px);
+            gap: 30px;
+            @media (max-width: $mobile) {
+                gap: 10px;
+            }
             .cookie {
                 display: flex;
                 flex-direction: column;
                 gap: 10px;
                 border: 3px solid var(--mainColor);
-                @include padding (10px, 30px, 30px);
+                padding: 30px;
+                @media (max-width: $mobile) {
+                    padding: 10px;
+                }
                 .top {
                     display: flex;
                     flex-direction: column;
                     gap: 10px;
                     h3 {
                         font-family: var(--font-montserrat);
-                        font-size: clamp(18px, 18px + (20 - 18) * ((100vw - 768px) / (1440 - 768)), 20px);
+                        font-size: fluid(18, 20);
                         color: var(--textColor);
                         margin: 0;
                     }
-                    .text{
+                    .text {
                         font-family: var(--font-montserrat);
                     }
                     .switch {
@@ -101,11 +113,15 @@
         }
         .actions {
             display: flex;
-            @include gap (10px, 30px, 30px);
-            @include flexDirection (column, row, row);
+            gap: 30px;
+            flex-direction: row;
+            @media (max-width: $mobile) {
+                gap: 10px;
+                flex-direction: column;
+            }
             button {
                 font-family: var(--font-montserrat);
-                font-size: clamp(16px, 16px + (20 - 16) * ((100vw - 768px) / (1440 - 768)), 20px);
+                font-size: fluid(16, 20);
                 padding: 12px 20px;
                 border: 2px solid;
                 cursor: pointer;

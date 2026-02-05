@@ -80,7 +80,6 @@ export default function Legals() {
             <p>Concernant les cookies générés par les réseaux sociaux lors du partage de contenus, la durée de validité est fixée par ces réseaux. Nous vous invitons à consulter leurs politiques de protection de la vie privée pour connaître la durée et les informations recueillies grâce à leurs boutons de partage.</p>
             <div className="cookie-settings">
                 <button onClick={handleCookieSettings} className="cookie-settings-btn">
-                    <span className="material-icons">cookie</span>
                     <span>Gérer mes cookies</span>
                 </button>
             </div>

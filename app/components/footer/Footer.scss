@@ -1,19 +1,30 @@
-@use '../../mixins.scss' as *;
+@use '../../Functions' as *;
+
+$mobile: 768px;
+$tablet: 1024px;
 
 footer {
     background-color: var(--thirdColor);
-    @include textAlign(left, center, center);
-    @include padding(30px, 50px 100px, 50px 100px);
-    .content{
+    text-align: center;
+    padding: 50px 100px;
+    @media (max-width: $mobile) {
+        text-align: left;
+        padding: 30px;
+    }
+    .content {
         display: flex;
         justify-content: space-between;
         padding: 0 0 10px 0;
-        @include flexDirection(column-reverse, row, row);
-        @include alignItems(flex-start, center, center);
+        flex-direction: row;
+        align-items: center;
+        @media (max-width: $mobile) {
+            flex-direction: column-reverse;
+            align-items: flex-start;
+        }
         .logo {
             align-self: flex-end;
             font-family: var(--font-ephesis);
-            font-size: clamp(96px, 96px + (128 - 96) * ((100vw - 768px) / (1440 - 768)), 128px);
+            font-size: fluid(96, 128);
         }
     }
 }

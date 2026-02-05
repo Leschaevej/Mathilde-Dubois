@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
 import "./Header.scss";
 
 export default function Header() {
@@ -11,6 +12,8 @@ export default function Header() {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [isModalClosing, setIsModalClosing] = useState(false);
     const [isModalOpening, setIsModalOpening] = useState(false);
+    const pathname = usePathname();
+    const router = useRouter();
     useEffect(() => {
         const updateBodyMargin = () => {
             const header = document.querySelector('header');
@@ -84,16 +87,24 @@ export default function Header() {
             }, 10);
         }
     };
+    const handleLogoClick = (e: React.MouseEvent) => {
+        if (pathname === '/') {
+            e.preventDefault();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        } else {
+            router.push('/');
+        }
+    };
     return (
         <header className={isVisible ? 'visible' : 'hidden'}>
             <div className="brand">
-                <Link href="/" className="link">
+                <a href="/" className="link" onClick={handleLogoClick}>
                     <h1>
                         <span className="logo">MD</span>
                         <span className="name">Mathilde Dubois</span>
                     </h1>
                     <p>Dessinatrice<br/>projeteuse</p>
-                </Link>
+                </a>
             </div>
             <button className="menu" onClick={toggleMobileMenu} aria-label="Toggle menu">
                 <span className="material-icons icon">menu</span>

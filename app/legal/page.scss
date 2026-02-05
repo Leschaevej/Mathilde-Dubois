@@ -1,31 +1,32 @@
-@use '../mixins' as *;
+@use '../Functions' as *;
 
 .legals, .confidentiality, .cookies {
     display: flex;
     flex-direction: column;
     gap: 30px;
-    padding: clamp(30px, 30px + (100 - 30) * ((100vw - 768px) / (1440 - 768)), 100px) clamp(30px, 30px + (100 - 30) * ((100vw - 768px) / (1440 - 768)), 100px);
-    @include centeredContent();
-    h2{
+    padding: fluid(30, 100);
+    @media (min-width: 1440px) {
+        padding-left: calc((100vw - 1240px) / 2);
+        padding-right: calc((100vw - 1240px) / 2);
+    }
+    h2 {
         font-size: 64px;
         opacity: 1;
         transform: none;
     }
-    h3{
+    h3 {
         font-size: 36px;
     }
-    h4{
+    h4 {
         font-size: 36px;
     }
-    p{
+    p {
         font-size: 20px;
     }
-    
     .cookie-settings {
         margin-top: 40px;
         display: flex;
         justify-content: center;
-        
         .cookie-settings-btn {
             display: flex;
             align-items: center;
@@ -40,13 +41,11 @@
             font-weight: 500;
             cursor: pointer;
             transition: all var(--animation-duration-fast) var(--animation-easing);
-            
             &:hover {
                 background-color: var(--secondColor);
                 border-color: var(--secondColor);
                 transform: translateY(-2px);
             }
-            
             .material-icons {
                 font-size: 24px;
             }

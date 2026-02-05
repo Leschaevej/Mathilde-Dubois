@@ -1,4 +1,4 @@
-@use './mixins' as *;
+@use './Functions' as *;
 
 :root {
     --mainColor: #D2B093;
@@ -22,7 +22,6 @@
 html {
     scrollbar-width: thin;
     scrollbar-color: color-mix(in srgb, var(--mainColor) 60%, transparent) color-mix(in srgb, var(--mainColor) 10%, transparent);
-    scroll-behavior: smooth;
     overflow-x: hidden;
 }
 body {
@@ -39,22 +38,22 @@ h2{
     opacity: 0;
     transform: translateX(-50px);
     transition: opacity var(--animation-duration-slow) var(--animation-easing), transform var(--animation-duration-slow) var(--animation-easing);
-    &.fade-in {
+    &.animate {
         opacity: 1;
         transform: translateX(0);
     }
     .main {
         font-family: var(--font-satisfy);
-        font-size: clamp(32px, 32px + (36 - 32) * ((100vw - 768px) / (1440 - 768)), 36px);
+        font-size: fluid(32, 36);
     }
     .sub {
         font-family: var(--font-montserrat);
-        font-size: clamp(54px, 54px + (64 - 54) * ((100vw - 768px) / (1440 - 768)), 64px);
+        font-size: fluid(54, 64);
     }
 }
 h3{
     font-family: var(--font-montserrat);
-    font-size: clamp(20px, 20px + (24 - 20) * ((100vw - 768px) / (1440 - 768)), 24px);
+    font-size: fluid(20, 24);
 }
 p{
     font-family: var(--font-montserrat);
@@ -81,7 +80,7 @@ ul {
 .quote{
     font-family: var(--font-satisfy);
     text-align: center;
-    font-size: clamp(24px, 24px + (32 - 24) * ((100vw - 768px) / (1440 - 768)), 32px);
+    font-size: fluid(24, 32);
 }
 button {
     cursor: pointer;

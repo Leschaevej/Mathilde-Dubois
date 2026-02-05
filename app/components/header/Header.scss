@@ -1,4 +1,7 @@
-@use '../../mixins.scss' as *;
+@use '../../Functions' as *;
+
+$mobile: 768px;
+$tablet: 1024px;
 
 header {
     position: fixed;
@@ -16,14 +19,14 @@ header {
     width: 100%;
     max-width: 100vw;
     overflow: visible;
-    padding: clamp(0px, 0px + (15 - 0) * ((100vw - 1440px) / (768 - 1440)), 15px) clamp(30px, 30px + (50 - 30) * ((100vw - 768px) / (1440 - 768)), 50px);
+    padding: fluid(0, 15) fluid(30, 50);
     &.hidden {
         transform: translateY(-100%);
     }
     &.visible {
         transform: translateY(0);
     }
-    .brand{
+    .brand {
         display: flex;
         align-items: center;
         .link {
@@ -38,8 +41,8 @@ header {
         .logo {
             font-family: var(--font-ephesis);
             font-weight: 400;
-            font-size: clamp(40px, 40px + (96 - 40) * ((100vw - 768px) / (1440 - 768)), 96px);
-            padding-right: clamp(10px, 10px + (45 - 10) * ((100vw - 768px) / (1440 - 768)), 45px);
+            font-size: fluid(40, 96);
+            padding-right: fluid(10, 45);
         }
         .name {
             position: absolute;
@@ -54,11 +57,14 @@ header {
         }
         p {
             font-family: var(--font-montserrat);
-            font-size: clamp(20px, 20px + (24 - 20) * ((100vw - 768px) / (1440 - 768)), 24px);
+            font-size: fluid(20, 24);
         }
     }
     .nav {
-        @include display(none, none, flex);
+        display: flex;
+        @media (max-width: $tablet) {
+            display: none;
+        }
         ul {
             list-style: none;
             display: flex;
@@ -72,7 +78,10 @@ header {
         border: none;
         cursor: pointer;
         color: var(--textColor);
-        @include display(block, block, none);
+        display: none;
+        @media (max-width: $tablet) {
+            display: block;
+        }
         .icon {
             font-size: 40px
         }
